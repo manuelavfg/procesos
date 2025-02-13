@@ -1,10 +1,11 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-articulos',
-  imports: [ MatTableModule, MatPaginatorModule ],
+  imports: [ MatTableModule, MatPaginatorModule, MatButtonModule ],
   templateUrl: './articulos.component.html',
   styleUrl: './articulos.component.scss'
 })

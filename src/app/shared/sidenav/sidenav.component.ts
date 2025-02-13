@@ -15,4 +15,6 @@ export class SidenavComponent {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
+  imgsrc = '../../../assets/img/snoopy.jpg';
+
 }

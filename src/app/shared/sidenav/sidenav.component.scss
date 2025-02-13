@@ -5,9 +5,14 @@
     padding: 0;
     background-color: white;
 
-    img{
+    .img{
       width: 100%;
       height: 100px;
+      background-image: url('../../../assets/img/sumelzuca-logo.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-bottom: 1rem;
     }
 
     ul {

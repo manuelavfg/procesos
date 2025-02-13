@@ -9,7 +9,7 @@ h1{
 }
 
 .table-container {
-  margin-top: 4.5rem;
+  margin-top: 2.5rem;
   padding: 1rem;
 
   th {
@@ -27,6 +27,13 @@ h1{
   .mat-mdc-table{
     border-radius: 12px;
     min-width: 1020px;
+  }
+}
+
+button{
+  a{
+    text-decoration: none;
+    color: #333;
   }
 }
 }
