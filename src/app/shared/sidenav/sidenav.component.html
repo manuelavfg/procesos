@@ -1,6 +1,53 @@
-<mat-drawer-container class="example-container">
-    <mat-drawer mode="side" opened>Drawer content</mat-drawer>
-    <mat-drawer-content>Main content</mat-drawer-content>
-    <router-outlet></router-outlet>
-  </mat-drawer-container>
+<section class="sidenav-container">
+  <img src="../../../assets/img/Zumelzulca-logo.svg" alt="">
+  <nav>
+    <ul>
+      <li>
+        <a href="/">
+          <mat-icon>home</mat-icon> 
+          Inicio
+        </a>
+      </li>
+      <li>
+        <a href="/articulos">
+          <mat-icon>dvr</mat-icon> 
+          Artículos
+        </a>
+      </li>
+      <li>
+        <a href="">
+          <mat-icon>note</mat-icon> 
+          Factura
+        </a>
+      </li>
+      <li>
+        <a href="">
+          <mat-icon>local_mall</mat-icon> 
+          Almacén
+        </a>
+      </li>
+      <li><a href="">
+        <mat-icon>supervised_user_circle</mat-icon> 
+        Proveedores
+      </a>
+    </li>
+      <li>
+        <a href="">
+          <mat-icon>supervised_user_circle</mat-icon> 
+          Cientes
+        </a>
+      </li>
+      <li>
+        <div class="dropdown">
+          <mat-icon>expand_more</mat-icon>
+          <button class="dropdown-btn" (click)="toggleDropdown()">Cuentas</button>
+        </div>
+        <ul class="dropdown-menu" [class.show]="dropdownOpen">
+          <li class="dropdown-list"><a href="">Cuentas por pagar</a></li>
+          <li class="dropdown-list"><a href="">Cuentas por cobrar</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</section>
   

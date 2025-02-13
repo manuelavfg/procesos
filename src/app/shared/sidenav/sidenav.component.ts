@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import { RouterOutlet } from '@angular/router';
-
+import {MatIconModule} from '@angular/material/icon'
 
 @Component({
   selector: 'app-sidenav',
-  imports: [MatSidenavModule, RouterOutlet],
+  imports: [ MatIconModule ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent {
+  dropdownOpen = false;
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
 
 }

@@ -1,8 +1,12 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
+import { HomePageComponent } from './pages/homepage/home-page.component';
 
 export const routes: Routes = [
-    {path: '',component: HomePageComponent},
-    {path: 'Artículos', loadChildren:()=> import('./modules/articulos/articulos.module').then(m=>m.ArticulosModule)}
+    {
+        path: '', component: HomePageComponent
+    },
+    {
+        path: 'articulos', loadChildren:()=> import('./modules/articulos/articulos.module').then(m=>m.ArticulosModule)
+    },
     
 ];

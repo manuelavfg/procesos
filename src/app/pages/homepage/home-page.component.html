@@ -1,0 +1,12 @@
+<section>
+    <h1>Bienvenido Usuario</h1>
+
+    <section class="homepage-container">
+        @for (item of homepage; track $index) {
+            <div class="homepage-item">
+                <mat-icon>{{item.icono}}</mat-icon>
+                <p>{{item.description}}</p>
+            </div>
+        }
+    </section>
+</section>
