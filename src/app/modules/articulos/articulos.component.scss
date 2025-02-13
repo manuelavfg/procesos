@@ -1,0 +1,32 @@
+.articulos-container{
+margin-top: 3rem;
+
+h1{
+  font-size: 2rem;
+  color: #333;
+  margin-top: 2.8rem;
+  margin-bottom: 2rem;
+}
+
+.table-container {
+  margin-top: 4.5rem;
+  padding: 1rem;
+
+  th {
+    background-color: #f0cdcd;
+    color: #333;
+    font-size: large;
+    font-weight: 600;
+  }
+
+  td {
+    font-size: medium;
+    color: #333;
+  }
+
+  .mat-mdc-table{
+    border-radius: 12px;
+    min-width: 1020px;
+  }
+}
+}
