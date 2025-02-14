@@ -1,1 +1,24 @@
-<p>proveedores works!</p>
+<section class="proveedores-container">
+    <h1>Proveedores</h1>
+    <hr>
+
+    <div class="carousel">
+        <div #carouselWrapper class="carousel-wrapper">
+            @for (item of cards; track $index) {
+                <div class="carousel-item">
+                    <div class="card">
+                        <mat-icon>{{item.icon}}</mat-icon>
+                      <h3>{{ item.title }}</h3>
+                      <p>{{ item.description }}</p>
+                      <hr class="line">
+                      <a href="/proveedores/detalles">Ver detalles</a>
+                    </div>
+                  </div>
+            }
+        </div>
+      
+        <!-- Botones de navegación -->
+        <button class="prev" (click)="prevSlide()">&#10094;</button>
+        <button class="next" (click)="nextSlide()">&#10095;</button>
+      </div>
+</section>

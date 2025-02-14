@@ -1,1 +1,33 @@
-<p>salida works!</p>
+<section class="salida-container">
+    <section class="form-card">
+        <h1>Registrar salida</h1>
+        <p>Completa los datos para registrar una venta, ajuste o baja de producto.</p>
+    
+        <div class="form-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Producto</mat-label>
+                    <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                      </mat-select>
+                  </mat-form-field>            
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Cantidad a ingresar</mat-label>
+                    <input matInput placeholder="Ingrese número">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Motivo de salida</mat-label>
+                    <input matInput placeholder="Ingrese motivo">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Fecha de salida</mat-label>
+                    <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                      </mat-select>
+                  </mat-form-field> 
+        </div>
+        <button mat-raised-button type="submit">Registrar salida</button>
+    </section>
+</section>

@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
+import { AlmacenRoutingModule } from './almacen-routing.module';
 
 @NgModule({
-  declarations: [],
+  declarations: [ ],
   imports: [
-    CommonModule
+    CommonModule,
+    AlmacenRoutingModule
   ]
 })
 export class AlmacenModule { }

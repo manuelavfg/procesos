@@ -1,1 +1,39 @@
-<p>generar-factura works!</p>
+<section class="bill-container">
+    <section class="form-card">
+        <h1>Generar factura</h1>
+        <p>Completa los datos del nuevo producto eléctrico para registrarlo en el catálogo.</p>
+    
+        <div class="form-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre natural o jurídico</mat-label>
+                    <input matInput placeholder="Ingrese nombre">
+                  </mat-form-field>            
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>RIF / Cédula</mat-label>
+                    <input matInput placeholder="Ingrese identificación">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput placeholder="Ingrese teléfono">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Dirección</mat-label>
+                    <input matInput placeholder="Ingrese dirección">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Productos adquiridos</mat-label>
+                    <input matInput placeholder="Ingrese todos los productos">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Total de la compra</mat-label>
+                    <input matInput placeholder="Ingrese número">
+                  </mat-form-field>
+        </div>
+        <button mat-raised-button type="submit">Generar factura</button>
+    </section>
+</section>

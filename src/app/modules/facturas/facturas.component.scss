@@ -1,0 +1,47 @@
+.factura-container{
+    margin-top: 3rem;
+    
+    h1{
+      font-size: 2rem;
+      color: #333;
+      margin-top: 2.8rem;
+      padding: 1rem 0 0;
+      margin-bottom: 0;
+    }
+    
+    hr{
+      border: 1.5px solid #aa2f2f;
+      width: 15%;
+      margin-left: 0;
+    }
+    
+    .table-container {
+      margin-top: 2rem;
+      padding: 1rem;
+      min-width: 950px;
+    
+      .estado-factura{
+        color: #2a2a2a;
+        font-weight: 550;
+      }
+
+      mat-paginator {
+        background-color: #f7eaf9;
+      }
+    
+    }
+    
+    .generate-bill{
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 2rem;
+    
+      button{
+        a{
+          text-decoration: none;
+          color: #333;
+        }
+      }
+    }
+}
+    

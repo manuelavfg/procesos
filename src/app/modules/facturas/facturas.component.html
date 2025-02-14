@@ -1,1 +1,58 @@
-<p>facturas works!</p>
+<section class="factura-container">
+    <h1>Facturas</h1>
+    <hr>
+
+    <div class="table-container">
+        <table mat-table [dataSource]="dataSource">
+          <!-- Position Column -->
+          <ng-container matColumnDef="cliente">
+            <th mat-header-cell *matHeaderCellDef> Cliente </th>
+            <td mat-cell *matCellDef="let element"> {{element.cliente}} </td>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="factura">
+            <th mat-header-cell *matHeaderCellDef> No. de factura </th>
+            <td mat-cell *matCellDef="let element"> {{element.factura}} </td>
+          </ng-container>
+      
+          <!-- Weight Column -->
+          <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado de factura </th>
+            <td mat-cell *matCellDef="let element" class="estado-factura"> {{element.estado}} </td>
+          </ng-container>
+      
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="metodo">
+            <th mat-header-cell *matHeaderCellDef> Método de pago </th>
+            <td mat-cell *matCellDef="let element"> {{element.metodo}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="warn">
+                <mat-icon>picture_as_pdf</mat-icon>
+              </button>
+              <button mat-icon-button color="warn">
+                <mat-icon>remove_red_eye</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5]"
+                       showFirstLastButtons
+                        length="100"
+                        pageSize="5"
+                       aria-label="Select page of Articles">
+        </mat-paginator>
+      </div>
+
+      <div class="generate-bill">
+        <button  mat-raised-button><a href="/facturas/generar-factura">Generar factura</a></button>
+      </div>
+</section>

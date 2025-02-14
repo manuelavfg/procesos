@@ -1,0 +1,37 @@
+.proveedores-container{  
+    h1{
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 0;
+    }
+    
+    hr{
+      border: 1.5px solid #aa2f2f;
+      width: 15%;
+      margin-left: 0;
+    }
+    
+    .table-container {
+      padding: 1rem;
+      min-width: 950px;
+
+      mat-paginator {
+        background-color: #f7eaf9;
+      }
+    
+    }
+    
+    .button-container{
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 2rem;
+      gap: 1rem;
+    
+      button{
+        a{
+          text-decoration: none;
+          color: #333;
+        }
+      }
+    }
+}

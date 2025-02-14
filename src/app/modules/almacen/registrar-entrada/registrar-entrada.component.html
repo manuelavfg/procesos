@@ -1,1 +1,33 @@
-<p>registrar-entrada works!</p>
+<section class="entrada-container">
+    <section class="form-card">
+        <h1>Registrar entrada</h1>
+        <p>Completa los datos para agregar stock.</p>
+    
+        <div class="form-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Producto</mat-label>
+                    <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                      </mat-select>
+                  </mat-form-field>            
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Cantidad a ingresar</mat-label>
+                    <input matInput placeholder="Ingrese número">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Proveedor</mat-label>
+                    <input matInput placeholder="Ingrese nombre">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Fecha de entrada</mat-label>
+                    <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                      </mat-select>
+                  </mat-form-field> 
+        </div>
+        <button mat-raised-button type="submit">Registrar entrada</button>
+    </section>
+</section>

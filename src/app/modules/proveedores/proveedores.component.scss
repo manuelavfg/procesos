@@ -1,0 +1,108 @@
+.proveedores-container{
+    h1{
+        font-size: 2rem;
+        color: #333;
+        margin-top: 2.8rem;
+        padding: 1rem 0 0;
+        margin-bottom: 0;
+    }
+    
+    hr{
+        border: 1.5px solid #aa2f2f;
+        width: 90%;
+        margin-left: 0;
+    }
+    
+    .carousel {
+        position: absolute;
+        width: 65%;
+        margin: auto;
+        overflow: hidden;
+        top: 25%;
+        margin-left: 4rem;
+
+        .carousel-wrapper {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            padding: 20px 0;
+            scrollbar-width: none; // Oculta la barra de desplazamiento en Firefox
+          
+            &::-webkit-scrollbar {
+              display: none; // Oculta la barra de desplazamiento en Chrome y Safari
+            }
+          }
+          
+          .carousel-item {
+            flex: 0 0 auto;
+            width: 350px;
+            scroll-snap-align: center;
+          }
+          
+          .card {
+            background: #fff;
+            height: 300px;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+          
+          button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 50%;
+            
+            &.prev { left: 10px; }
+            &.next { right: 10px; }
+            
+          }
+        
+          h3{
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+          }
+        
+          p{
+            margin: 0;
+          }
+        
+          mat-icon{
+            font-size: 12rem;
+            height: 100%;
+            width: 100%;
+          }
+        
+          .line{
+            display: block;
+            border: 1.5px solid #300505;
+            width: 20%;
+            margin: 0.8rem;
+          }
+        
+          a{
+            text-decoration: none;
+            background-color: rgb(228, 187, 189);
+            color: black;
+            padding: 0.7rem;
+            font-weight: 550;
+            border-radius: 8px;
+            font-size: 1rem;
+          }
+      }
+      
+      
+}
+
