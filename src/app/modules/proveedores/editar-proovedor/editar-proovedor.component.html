@@ -1,1 +1,43 @@
-<p>editar-proovedor works!</p>
+<section class="edit-container">
+    <section class="form-card">
+        <h1>Editar proveedor</h1>
+        <p>Actualiza la información de este proveedor.</p>
+    
+        <div class="form-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre proveedor</mat-label>
+                    <input matInput placeholder="Ingrese nombre">
+                  </mat-form-field>            
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>RIF / NIT</mat-label>
+                    <input matInput placeholder="Ingrese identificación">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput placeholder="Ingrese teléfono">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Dirección</mat-label>
+                    <input matInput placeholder="Ingrese dirección">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Lista de productos</mat-label>
+                    <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Estado proveedor</mat-label>
+                    <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+        </div>
+        <button mat-raised-button type="submit">Editar proveedor</button>
+    </section>
+</section>

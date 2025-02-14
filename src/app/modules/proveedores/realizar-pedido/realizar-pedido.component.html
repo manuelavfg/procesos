@@ -1,1 +1,33 @@
-<p>realizar-pedido works!</p>
+<section class="pedido-container">
+    <section class="form-card">
+        <h1>Realizar nuevo pedido</h1>
+        <p>Selecciona los productos y cantidades a solicitar.</p>
+    
+        <div class="form-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Fecha de pedido</mat-label>
+                    <input matInput placeholder="Ingrese fecha">
+                  </mat-form-field>            
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Notas adicionales</mat-label>
+                    <input matInput placeholder="Ingrese notas">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Lista de productos disponibles</mat-label>
+                    <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Método de pago</mat-label>
+                    <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+        </div>
+        <button mat-raised-button type="submit">Realizar pedido</button>
+    </section>
+</section>

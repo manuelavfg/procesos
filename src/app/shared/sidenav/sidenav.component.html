@@ -33,7 +33,7 @@
       </a>
     </li>
       <li>
-        <a href="">
+        <a href="/clientes">
           <mat-icon>supervised_user_circle</mat-icon> 
           Cientes
         </a>
@@ -44,9 +44,14 @@
           <button class="dropdown-btn" (click)="toggleDropdown()">Cuentas</button>
         </div>
         <ul class="dropdown-menu" [class.show]="dropdownOpen">
-          <li class="dropdown-list"><a href="">Cuentas por pagar</a></li>
-          <li class="dropdown-list"><a href="">Cuentas por cobrar</a></li>
+          <li class="dropdown-list"><a href="/cuentas-por-pagar">Cuentas por pagar</a></li>
+          <li class="dropdown-list"><a href="/cuentas-por-cobrar">Cuentas por cobrar</a></li>
         </ul>
+      </li>
+      <li>
+        <a href="">
+          <mat-icon>settings</mat-icon>
+          Configuración</a>
       </li>
       <li>
         <button mat-raised-button style="margin-top: 0.5rem; color: black;">

@@ -1,1 +1,54 @@
-<p>clientes works!</p>
+<section class="clients-container">
+    <h1>Clientes</h1>
+    <hr>
+
+    <div class="table-container">
+        <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="cliente">
+            <th mat-header-cell *matHeaderCellDef> Nombre del cliente </th>
+            <td mat-cell *matCellDef="let element"> {{element.cliente}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="telefono">
+            <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+            <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="compras">
+            <th mat-header-cell *matHeaderCellDef> Total de compras </th>
+            <td mat-cell *matCellDef="let element"> {{element.compras}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="warn">
+                <a href="/clientes/editar-cliente">
+                    <mat-icon>edit</mat-icon>
+                </a>
+              </button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5]"
+                       showFirstLastButtons
+                        length="100"
+                        pageSize="5"
+                       aria-label="Select page of Articles">
+        </mat-paginator>
+      </div>
+
+      <div class="add-product">
+        <button  mat-raised-button><a href="/clientes/registrar-cliente">Registrar nuevo cliente</a></button>
+      </div>
+</section>

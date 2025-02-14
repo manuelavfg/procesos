@@ -1,1 +1,31 @@
-<p>registrar-cliente works!</p>
+<section class="client-container">
+    <section class="form-card">
+        <h1>Registrar nuevos cliente</h1>
+        <p>Agrega nuevos clientes al sistema</p>
+    
+        <div class="form-container">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre completo</mat-label>
+                    <input matInput placeholder="Ingrese nombre">
+                  </mat-form-field>            
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput placeholder="Ingrese teléfono">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Dirección</mat-label>
+                    <input matInput placeholder="Ingrese dirección">
+                  </mat-form-field>
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Estado del cliente</mat-label>
+                    <mat-select>
+                        <mat-option value="option">Option</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+        </div>
+        <button mat-raised-button type="submit">Guardar cambios</button>
+    </section>
+</section>

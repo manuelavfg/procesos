@@ -1,1 +1,53 @@
-<p>cuentas-por-pagar works!</p>
+<section class="cuentas-container">
+    <h1>Cuentas por pagar</h1>
+    <hr>
+
+    <div class="table-container">
+        <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="proveedor">
+            <th mat-header-cell *matHeaderCellDef> Proveedor </th>
+            <td mat-cell *matCellDef="let element"> {{element.proveedor}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="factura">
+            <th mat-header-cell *matHeaderCellDef> Número de factura </th>
+            <td mat-cell *matCellDef="let element"> {{element.factura}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="monto">
+            <th mat-header-cell *matHeaderCellDef> Monto a pagar </th>
+            <td mat-cell *matCellDef="let element"> {{element.monto}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef> Fecha límite </th>
+            <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="warn">
+                <mat-icon>picture_as_pdf</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5]"
+                       showFirstLastButtons
+                        length="100"
+                        pageSize="5"
+                       aria-label="Select page of Articles">
+        </mat-paginator>
+      </div>
+</section>

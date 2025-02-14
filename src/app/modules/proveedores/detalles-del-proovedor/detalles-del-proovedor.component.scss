@@ -3,6 +3,7 @@
       font-size: 2rem;
       color: #333;
       margin-bottom: 0;
+      margin-top: 2rem;
     }
     
     hr{
@@ -13,7 +14,8 @@
     
     .table-container {
       padding: 1rem;
-      min-width: 950px;
+      min-width: 1020px;
+      margin-top: 1rem;
 
       mat-paginator {
         background-color: #f7eaf9;
