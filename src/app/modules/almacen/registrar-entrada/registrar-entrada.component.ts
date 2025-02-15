@@ -13,4 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class RegistrarEntradaComponent {
 
+// aquí vas a manejar toda la lógica del formulario incluyendo las validaciones de los campos
+// además de mandar a llamar al servicio para hacer el registro de entrada al inventario
+// y posteriormente redireccionar a la vista de almacen.
+
 }

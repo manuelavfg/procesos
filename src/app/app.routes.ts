@@ -1,9 +1,13 @@
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './pages/homepage/home-page.component';
+import { LogInComponent } from './pages/login/log-in.component';
 
 export const routes: Routes = [
     {
-        path: '', component: HomePageComponent
+        path:'', component: LogInComponent 
+    },
+    {
+        path: 'home', loadComponent: () => import('./pages/homepage/home-page.component').then(m=>m.HomePageComponent)
     },
     {
         path: 'articulos', loadChildren:()=> import('./modules/articulos/articulos.module').then(m=>m.ArticulosModule)
@@ -24,7 +28,10 @@ export const routes: Routes = [
         path: 'cuentas-por-pagar', loadComponent: () => import('./modules/cuentas/cuentas-por-pagar/cuentas-por-pagar.component').then(m=>m.CuentasPorPagarComponent)
     },
 
-        {
+    {
         path: 'cuentas-por-cobrar', loadComponent: () => import('./modules/cuentas/cuentas-por-cobrar/cuentas-por-cobrar.component').then(m=>m.CuentasPorCobrarComponent)
+    },
+    {
+        path: 'configuracion', loadComponent: () => import('./pages/config/config.component').then(m=>m.ConfigComponent)
     },
 ];
