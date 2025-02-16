@@ -24,10 +24,17 @@
 
                   <mat-form-field appearance="outline">
                     <mat-label>Fecha de entrada</mat-label>
-                    <mat-select>
-                        <mat-option value="option">Option</mat-option>
-                      </mat-select>
-                  </mat-form-field> 
+                    <input matInput [matDatepicker]="datepicker" />
+                    <mat-hint>DD/MM/AA</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                      <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel>Cancel</button>
+                        <button mat-raised-button matDatepickerApply>Apply</button>
+                      </mat-datepicker-actions>
+                    </mat-datepicker>
+                  </mat-form-field>
+                  
         </div>
         <button mat-raised-button type="submit">Registrar entrada</button>
     </section>

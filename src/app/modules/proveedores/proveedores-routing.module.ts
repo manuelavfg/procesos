@@ -4,6 +4,7 @@ import { ProveedoresComponent } from './proveedores.component';
 import { DetallesDelProovedorComponent } from './detalles-del-proovedor/detalles-del-proovedor.component';
 import { EditarProovedorComponent } from './editar-proovedor/editar-proovedor.component';
 import { RealizarPedidoComponent } from './realizar-pedido/realizar-pedido.component';
+import { AggProveedorComponent } from './agg-proveedor/agg-proveedor.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,9 @@ const routes: Routes = [
   },
   {
     path: 'realizar-pedido', component: RealizarPedidoComponent
+  },
+  {
+    path:'agregar-proveedor', component: AggProveedorComponent
   }
 ];
 
