@@ -15,6 +15,21 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'Sulmezuca';
+  
+  usuario = true;
+	showNav = true;
+
+	public showNavBar = true;
+
+	toggleNavBar(component : Component) {
+		 if(component instanceof LogInComponent) {
+				this.usuario = false;
+				this.showNavBar = false;
+		 } else {
+			this.usuario = true;
+				this.showNavBar = true;
+		 }
+	}
 
 
   // aqui se va a manejar todo lo relacionado al login, logout y demas funcionalidades del usuario
