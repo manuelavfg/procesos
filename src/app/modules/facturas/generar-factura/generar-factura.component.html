@@ -5,7 +5,7 @@
     
         <div class="form-container">
                 <mat-form-field appearance="outline">
-                    <mat-label>Nombre natural o jurídico</mat-label>
+                    <mat-label>Nombre Cliente</mat-label>
                     <input matInput placeholder="Ingrese nombre">
                   </mat-form-field>            
     
@@ -25,8 +25,21 @@
                   </mat-form-field>
     
                   <mat-form-field appearance="outline">
-                    <mat-label>Productos adquiridos</mat-label>
+                    <mat-label>Proforma</mat-label>
                     <input matInput placeholder="Ingrese todos los productos">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Fecha de entrada</mat-label>
+                    <input matInput [matDatepicker]="datepicker" />
+                    <mat-hint>DD/MM/AA</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker>
+                      <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel>Cancel</button>
+                        <button mat-raised-button matDatepickerApply>Apply</button>
+                      </mat-datepicker-actions>
+                    </mat-datepicker>
                   </mat-form-field>
         </div>
         <button mat-raised-button type="submit">Generar factura</button>

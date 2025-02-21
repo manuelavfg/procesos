@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './facturas.component.scss'
 })
 export class FacturasComponent implements AfterViewInit{
- displayedColumns: string[] = ['cliente', 'factura', 'estado', 'metodo', 'acciones'];
+ displayedColumns: string[] = ['cliente', 'factura', 'estado', 'metodo', 'tipo', 'acciones'];
   dataSource = new MatTableDataSource<Facturas>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -26,11 +26,12 @@ export interface Facturas {
   factura: string;
   estado: string;
   metodo: string;
+  tipo: string;
 }
 
 const ELEMENT_DATA: Facturas[] = [
-  {cliente: 'Tecnologias avanzadas', factura: '0977', estado: 'pagada', metodo: 'Transferencia'},
-  {cliente: 'Tecnologias avanzadas', factura: '0977', estado: 'pagada', metodo: 'Transferencia'},
-  {cliente: 'Tecnologias avanzadas', factura: '0977', estado: 'pagada', metodo: 'Transferencia'},
+  {cliente: 'Tecnologias avanzadas', factura: '0977', estado: 'pagada', metodo: 'Transferencia', tipo: 'Digital' },
+  {cliente: 'Tecnologias avanzadas', factura: '0977', estado: 'pagada', metodo: 'Transferencia', tipo: 'Común' },
+  {cliente: 'Tecnologias avanzadas', factura: '0977', estado: 'pagada', metodo: 'Transferencia', tipo: 'Digital' },
  
 ];

@@ -5,6 +5,7 @@ import { UsuarioComponent } from './shared/usuario/usuario.component';
 import { Router } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
+import { LogInComponent } from './pages/login/log-in.component';
 
 
 @Component({
