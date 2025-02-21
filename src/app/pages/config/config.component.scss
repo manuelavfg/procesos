@@ -1,8 +1,5 @@
 .config-container{
     width: 80%;
-    display: grid;
-    place-content: center;
-    height: 90vh;
     margin-left: 3.5rem;
     margin-top: 1rem;
 
@@ -23,12 +20,19 @@
             font-size: 1rem;
             color: #666;
             margin-bottom: 1rem;
+            margin-top: 1rem;
         }
 
-        .form-container{
-            display: grid;
-            grid-template-columns: 2fr 2fr;
-            gap: 1rem;
+        .image{
+            width: 100%;
+            height: 100px;
+            background-image: url('../../../assets/img/sumelzuca-logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-bottom: 1rem;
+        }
+        h2{
+            margin-bottom: 0;
         }
     }
 
