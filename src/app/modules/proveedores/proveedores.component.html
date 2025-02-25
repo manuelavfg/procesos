@@ -1,28 +1,57 @@
 <section class="proveedores-container">
-    <h1>Proveedores</h1>
-    <hr>
+  <h1>Proveedores</h1>
+  <hr>
 
-    <div class="carousel">
-        <div #carouselWrapper class="carousel-wrapper">
-            @for (item of cards; track $index) {
-                <div class="carousel-item">
-                    <div class="card">
-                        <mat-icon>{{item.icon}}</mat-icon>
-                      <h3>{{ item.title }}</h3>
-                      <p>{{ item.description }}</p>
-                      <hr class="line">
-                      <a href="/proveedores/detalles">Ver detalles</a>
-                    </div>
-                  </div>
-            }
-        </div>
-      
-        <!-- Botones de navegación -->
-        <button class="prev" (click)="prevSlide()">&#10094;</button>
-        <button class="next" (click)="nextSlide()">&#10095;</button>
-      </div>
+  <div class="search-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar artículo</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <div class="search-button">
+      <button><mat-icon>search</mat-icon></button>
+    </div>
+    </div>
 
-      <div class="add-button-container">
-        <button mat-raised-button class="add-button"><a href="/proveedores/agregar-proveedor">Añadir proveedor</a></button>
-      </div>
+  <div class="table-container">
+      <table mat-table [dataSource]="dataSource">
+                  
+        <ng-container matColumnDef="nombreproveedores">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombreproveedores}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="rifproveedores">
+          <th mat-header-cell *matHeaderCellDef> RIF </th>
+          <td mat-cell *matCellDef="let element"> {{element.rifproveedores}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="direccionproveedores">
+          <th mat-header-cell *matHeaderCellDef> Dirección </th>
+          <td mat-cell *matCellDef="let element"> {{element.direccionproveedores}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="telefonoproveedores">
+          <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+          <td mat-cell *matCellDef="let element"> {{element.telefonoproveedores}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="correoproveedores">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.correoproveedores}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5]"
+                     showFirstLastButtons
+                     aria-label="Select page of Proveedores">
+      </mat-paginator>
+    </div>
+
+    <div class="add-product">
+      <button  mat-raised-button><a href="/proveedores/agregar-proveedor">Añadir Proveedor</a></button>
+      <button  mat-raised-button><a href="/proveedores/editar-proovedor">Editar Proveedores</a></button>
+    </div>
 </section>

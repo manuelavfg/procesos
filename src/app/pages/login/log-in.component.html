@@ -3,17 +3,19 @@
 
   <div class="login-card">
     <h1>Iniciar Sesión</h1>
-    <div class="form-container">
-      <mat-form-field appearance="outline">
-          <mat-label>Correo electrónico</mat-label>
-          <input matInput placeholder="">
-        </mat-form-field>           
-
+    <form [formGroup]="loginForm" (ngSubmit)="login()" method="get">
+      <div class="form-container">
         <mat-form-field appearance="outline">
-          <mat-label>Contraseña</mat-label>
-          <input matInput placeholder="">
-        </mat-form-field>
-</div>
-  <button mat-raised-button type="submit">Iniciar sesión</button>
+            <mat-label>Correo electrónico</mat-label>
+            <input formControlName="correousuario" matInput placeholder="">
+          </mat-form-field>           
+
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input formControlName="contrasenausuarios" matInput placeholder="">
+          </mat-form-field>
+          <button mat-raised-button type="submit">Iniciar sesión</button>
+      </div>
+    </form>
   </div>
 </section>
