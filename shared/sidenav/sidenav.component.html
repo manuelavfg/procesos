@@ -1,0 +1,59 @@
+<section class="sidenav-container">
+  <div class="img"></div>
+  
+  <nav>
+    <ul>
+      <li>
+        <a href="/home">
+          <mat-icon>home</mat-icon> 
+          Inicio
+        </a>
+      </li>
+      <li>
+        <a href="/articulos">
+          <mat-icon>dvr</mat-icon> 
+          Artículos
+        </a>
+      </li>
+      <li>
+        <a href="/facturas">
+          <mat-icon>note</mat-icon> 
+          Factura
+        </a>
+      </li>
+      <li><a href="/proveedores">
+        <mat-icon>supervised_user_circle</mat-icon> 
+        Proveedores
+      </a>
+    </li>
+      <li>
+        <a href="/clientes">
+          <mat-icon>supervised_user_circle</mat-icon> 
+          Clientes
+        </a>
+      </li>
+      <li>
+        <div class="dropdown">
+          <mat-icon>expand_more</mat-icon>
+          <button class="dropdown-btn" (click)="toggleDropdown()">Cuentas</button>
+        </div>
+        <ul class="dropdown-menu" [class.show]="dropdownOpen">
+          <li class="dropdown-list"><a href="/cuentas-por-pagar">Cuentas por pagar</a></li>
+          <li class="dropdown-list"><a href="/cuentas-por-cobrar">Cuentas por cobrar</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="/configuracion">
+          <mat-icon>settings</mat-icon>
+          Configuración</a>
+      </li>
+      <li>
+        <button mat-raised-button style="margin-top: 0.5rem; color: black;">
+          <mat-icon>logout</mat-icon>
+          <a href="">Cerrar sesión</a>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</section>
+  

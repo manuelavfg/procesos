@@ -1,0 +1,5 @@
+<main class="container-fluid">
+	<app-sidenav  *ngIf="showNavBar">></app-sidenav>
+	<app-usuario *ngIf="usuario"></app-usuario>
+	<router-outlet (activate)="toggleNavBar($event)"></router-outlet>
+</main>

@@ -1,0 +1,38 @@
+<section class="bill-container">
+    <section class="form-card">
+        <h1>Generar factura</h1>
+        <p>Completa los datos del nuevo producto eléctrico para registrarlo en el catálogo.</p>
+        <div>
+					<form class="form-container" (ngSubmit)="onInsert()" [formGroup]="articuloForm" method="post">
+						
+            <mat-form-field appearance="outline">
+              <mat-label>Proveedor</mat-label>
+              <mat-select  [(value)]="opcionSeleccionada" (selectionChange)="getDropdown()" formControlName = "idproveedorfactura">
+                <mat-option *ngFor="let proveedor of proveedores"  [value]="proveedor">
+                  {{proveedor}}
+                </mat-option>
+              </mat-select>
+              
+            </mat-form-field>  
+
+
+            <mat-form-field appearance="outline">
+              <mat-label>Tipo</mat-label>
+              <mat-select  [(value)]="opcionSeleccionada2" (selectionChange)="getDropdown2()" formControlName = "tipofactura">
+                <mat-option *ngFor="let tipo of tipos"  [value]="tipo">
+                  {{tipo}}
+                </mat-option>
+              </mat-select>
+              
+            </mat-form-field>  
+            
+									<mat-form-field appearance="outline">
+										<mat-label>Código</mat-label>
+										<input formControlName="codigofactura" matInput placeholder="Ingrese el codigo de factura">
+									</mat-form-field>
+                  <button mat-raised-button type="submit">Generar factura</button>
+
+					</form>
+				</div>
+    </section>
+</section>

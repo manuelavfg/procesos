@@ -1,0 +1,46 @@
+.login-container{
+  width: 70vw;
+  display: grid;
+  place-content: center;
+  height: 90vh;
+  position: absolute;
+  left: 15%;
+
+.image{
+    width: 100%;
+    height: 150px;
+    background-image: url('../../../assets/img/sumelzuca-logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 1rem;
+}
+
+  .login-card{
+      background-color: white;
+      margin-top: 2rem;
+      padding: 2rem;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+
+      h1{
+          font-size: 2rem;
+          color: #333;
+          margin-bottom: 2.5rem;
+          text-align: center;
+      }
+
+      p{
+          font-size: 1rem;
+          color: #666;
+          margin-bottom: 1rem;
+      }
+
+      mat-form-field{
+          width: 100%;
+      }
+  }
+
+}

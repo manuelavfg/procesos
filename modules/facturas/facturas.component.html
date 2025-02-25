@@ -1,0 +1,40 @@
+<section class="factura-container">
+    <h1>Facturas</h1>
+    <hr>
+
+    <div class="table-container">
+        <table mat-table [dataSource]="dataSource">
+          <!-- Position Column -->
+          <ng-container matColumnDef="codigofactura">
+            <th mat-header-cell *matHeaderCellDef> Codigo </th>
+            <td mat-cell *matCellDef="let element"> {{element.codigofactura}} </td>
+          </ng-container>
+      
+          Name Column -->
+          <ng-container matColumnDef="nombreproveedores">
+            <th mat-header-cell *matHeaderCellDef>Proveedor</th>
+            <td mat-cell *matCellDef="let element"> {{element.nombreproveedores}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="tipofactura">
+            <th mat-header-cell *matHeaderCellDef> Tipo de factura </th>
+            <td mat-cell *matCellDef="let element"> {{element.tipofactura}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5]"
+                       showFirstLastButtons
+                        length="100"
+                        pageSize="5"
+                       aria-label="Select page of Articles">
+        </mat-paginator>
+      </div>
+
+      <div class="generate-bill">
+        <button  mat-raised-button><a href="/facturas/generar-factura">Generar factura</a></button>
+        <button  mat-raised-button (click)="printTable()">Generar Reporte</button>
+      </div>
+</section>
