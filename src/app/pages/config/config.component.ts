@@ -13,12 +13,13 @@ import { APIService } from '../../api.service';
 })
 export class ConfigComponent {
 tasa = 'tasa'
-correo = 'correo'
+nombre = ' Suministros eléctricos del Zulia, C.A (Sumelzuca)'
+correo = 'sumelzuca@gmail.com'
 logo = new Image()
 logoSrc = '/assets/img/sumelzucalogo.png';
-rif = 'rif'
-crltvfactura = 'crltvfactura'
-crltvpresupuesto = 'crltvpresupuesto'
+rif = 'J-50206515-6'
+crltvfactura = 'FACT-2025'
+crltvpresupuesto = 'PRES-2025'
 
 constructor(private api: APIService) {
 
