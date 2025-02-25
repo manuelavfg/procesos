@@ -57,7 +57,9 @@ export class EditarClienteComponent
   onInsert()
   {
 
-    this.api.update("clientes", "add", this.articuloForm.value).subscribe({next: res=>
+	this.articuloForm.value.idclientes = this.indiceSeleccionado
+
+    this.api.update("clientes", "update", this.articuloForm.value).subscribe({next: res=>
       {
 
         console.log(res)

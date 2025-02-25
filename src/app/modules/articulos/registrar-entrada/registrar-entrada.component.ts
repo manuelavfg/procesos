@@ -11,10 +11,11 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatTable, MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-registrar-entrada',
-  imports: [MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, CommonModule, MatDatepickerModule],
+  imports: [MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, CommonModule, MatDatepickerModule, MatTableModule],
   templateUrl: './registrar-entrada.component.html',
   styleUrl: './registrar-entrada.component.scss',
   providers: [provideNativeDateAdapter()],
@@ -24,6 +25,7 @@ export class RegistrarEntradaComponent {
 
     facturas : any[] = [];
     productos: any[]=[]
+	  displayedColumns: string[] = ['descripcionarticulo', 'tipoarticulo', 'existenciaarticulo', 'codigoarticulo', 'costoarticulo'];
     
     opcionSeleccionada: any
     opcionSeleccionada2: any

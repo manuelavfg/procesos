@@ -24,6 +24,7 @@ import { CommonModule } from '@angular/common';
 export class AggProductoComponent {
 
 	proveedores : any[] = [];
+	displayedColumns: string[] = ['descripcionarticulo', 'tipoarticulo', 'existenciaarticulo', 'codigoarticulo', 'costoarticulo'];
 	
 	opcionSeleccionada: any
  	indiceSeleccionado: any
