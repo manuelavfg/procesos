@@ -10,15 +10,20 @@ export class AuthGuard implements CanActivate {
         private api: APIService
     ) {}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const user = localStorage.getItem('cuenta');
-        if (user) {
-            // authorised so return true
-            return true;
-        }
-
-        // not logged in so redirect to login page with the return url
-        this.router.navigate(['']);
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        
+        if (typeof window !== 'undefined') {
+            console.log('You are on the browser')
+            const user = localStorage.getItem('cuenta');
+            if (user) {
+                return true;
+            }
+            else {
+                this.router.navigate(['/']);
+                return false;
+            }
+          }
+        
         return false;
     }
 }
