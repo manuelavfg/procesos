@@ -1,40 +1,47 @@
 <section class="add-product--container">
-    <section class="form-card">
-        <h1>Añadir producto</h1>
-        <p>Completa los datos del nuevo producto eléctrico para registrarlo en el catálogo.</p>
-    
-        <div class="form-container">
-                <mat-form-field appearance="outline">
-                    <mat-label>Nombre del Producto</mat-label>
-                    <input matInput placeholder="Ingrese nombre producto">
-                  </mat-form-field>
-                  
-                  <mat-form-field appearance="outline">
-                    <mat-label>Nombre del Proveedor</mat-label>
-                    <input matInput placeholder="Ingrese nombre proveedor">
-                  </mat-form-field>  
-    
-                  <mat-form-field appearance="outline">
-                    <mat-label>Unidad</mat-label>
-                    <input matInput placeholder="Ingrese unidad">
-                  </mat-form-field>
-    
-                  <mat-form-field appearance="outline">
-                    <mat-label>Cantidad</mat-label>
-                    <input matInput placeholder="Ingrese la cantidad">
-                  </mat-form-field>
-    
-                  <mat-form-field appearance="outline">
-                    <mat-label>Código</mat-label>
-                    <input matInput placeholder="Ingrese el codigo de producto">
-                  </mat-form-field>
-    
-                  <mat-form-field appearance="outline">
-                    <mat-label>Precio Unitario</mat-label>
-                    <input matInput placeholder="Ingrese el precio">
-                  </mat-form-field>
-        </div>
-        <button mat-raised-button type="submit">Añadir producto</button>
-    </section>
+		<section class="form-card">
+				<h1>Añadir producto</h1>
+				<p>Completa los datos del nuevo producto eléctrico para registrarlo en el catálogo.</p>
+		
+				<div>
+					<form class="form-container" (ngSubmit)="onInsert()"  [formGroup]="articuloForm" method="post">
+						
+						<mat-form-field appearance="outline">
+							<mat-label>Nombre del Producto</mat-label>
+										<input formControlName="descripcionarticulo" matInput placeholder="Ingrese nombre producto">
+									</mat-form-field>
+									
+									<mat-form-field appearance="outline">
+										<mat-label>Proveedor</mat-label>
+										<mat-select  [(value)]="opcionSeleccionada" formControlName = "idproveedor">
+											<mat-option *ngFor="let proveedor of proveedores"  [value]="proveedor">
+												{{proveedor}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>  
+		
+									<mat-form-field appearance="outline">
+									<mat-label>Unidad</mat-label>
+										<input formControlName="tipoarticulo" matInput placeholder="Ingrese unidad">
+									</mat-form-field>
+		
+									<mat-form-field appearance="outline">
+										<mat-label>Cantidad</mat-label>
+										<input formControlName="existenciaarticulo" matInput placeholder="Ingrese la cantidad">
+									</mat-form-field>
+		
+									<mat-form-field appearance="outline">
+										<mat-label>Código</mat-label>
+										<input formControlName="codigoarticulo" matInput placeholder="Ingrese el codigo de producto">
+									</mat-form-field>
+		
+									<mat-form-field appearance="outline">
+										<mat-label>Precio Unitario</mat-label>
+										<input formControlName="costoarticulo" matInput placeholder="Ingrese el precio">
+									</mat-form-field>
+									<button mat-raised-button type="submit">Añadir producto</button>
+					</form>
+				</div>
+		</section>
 </section>
 

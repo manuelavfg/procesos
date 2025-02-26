@@ -2,46 +2,50 @@
     <section class="form-card">
         <h1>Generar factura</h1>
         <p>Completa los datos del nuevo producto eléctrico para registrarlo en el catálogo.</p>
-    
-        <div class="form-container">
-                <mat-form-field appearance="outline">
-                    <mat-label>Nombre Cliente</mat-label>
-                    <input matInput placeholder="Ingrese nombre">
-                  </mat-form-field>            
-    
-                  <mat-form-field appearance="outline">
-                    <mat-label>RIF / Cédula</mat-label>
-                    <input matInput placeholder="Ingrese identificación">
-                  </mat-form-field>
-    
-                  <mat-form-field appearance="outline">
-                    <mat-label>Teléfono</mat-label>
-                    <input matInput placeholder="Ingrese teléfono">
-                  </mat-form-field>
-    
-                  <mat-form-field appearance="outline">
-                    <mat-label>Dirección</mat-label>
-                    <input matInput placeholder="Ingrese dirección">
-                  </mat-form-field>
-    
-                  <mat-form-field appearance="outline">
-                    <mat-label>Proforma</mat-label>
-                    <input matInput placeholder="Ingrese todos los productos">
-                  </mat-form-field>
+        <div>
+					<form class="form-container" (ngSubmit)="onInsert()" [formGroup]="articuloForm" method="post">
 
-                  <mat-form-field appearance="outline">
-                    <mat-label>Fecha de entrada</mat-label>
-                    <input matInput [matDatepicker]="datepicker" />
-                    <mat-hint>DD/MM/AA</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-                    <mat-datepicker #datepicker>
-                      <mat-datepicker-actions>
-                        <button mat-button matDatepickerCancel>Cancel</button>
-                        <button mat-raised-button matDatepickerApply>Apply</button>
-                      </mat-datepicker-actions>
-                    </mat-datepicker>
-                  </mat-form-field>
-        </div>
-        <button mat-raised-button type="submit">Generar factura</button>
+            
+            <mat-radio-group aria-label="Select an option">
+              <mat-radio-button value="1">Cliente</mat-radio-button>
+              <mat-radio-button value="2">Proveedor</mat-radio-button>
+            </mat-radio-group>
+            
+
+
+
+            <mat-form-field appearance="outline">
+              <mat-label>Proveedor</mat-label>
+              <mat-select  [(value)]="opcionSeleccionada" (selectionChange)="getDropdown()" formControlName = "idproveedorfactura">
+                <mat-option *ngFor="let proveedor of proveedores"  [value]="proveedor">
+                  {{proveedor}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>  
+
+
+            <mat-form-field appearance="outline">
+              <mat-label>Tipo</mat-label>
+              <mat-select  [(value)]="opcionSeleccionada2" (selectionChange)="getDropdown2()" formControlName = "tipofactura">
+                <mat-option *ngFor="let tipo of tipos"  [value]="tipo">
+                  {{tipo}}
+                </mat-option>
+              </mat-select>
+              
+            </mat-form-field>  
+            
+									<mat-form-field appearance="outline">
+										<mat-label>Código</mat-label>
+										<input formControlName="codigofactura" matInput placeholder="Ingrese el codigo de factura">
+									</mat-form-field>
+                              
+									<mat-form-field appearance="outline">
+										<mat-label>Numero</mat-label>
+										<input formControlName="numerofactura" matInput placeholder="Ingrese el numero de factura">
+									</mat-form-field>
+                  <button mat-raised-button type="submit">Generar factura</button>
+
+					</form>
+				</div>
     </section>
 </section>

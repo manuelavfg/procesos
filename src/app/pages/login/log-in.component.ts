@@ -3,16 +3,42 @@ import { Component } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { APIService } from '../../api.service';
+import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-log-in',
-  imports: [ MatInputModule, MatButtonModule, MatFormFieldModule ],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule,ReactiveFormsModule, CommonModule],
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss'
 })
 export class LogInComponent {
 
-// Aquí va toda la lógica de autenticación, así como las validaciones del formulario.
-// También aquí se va a mandar a llamar el servicio de autenticación y redireccionar a la página principal
+
+  constructor(private api: APIService, private router: Router)
+  {
+
+    if (typeof window !== 'undefined') {
+      localStorage.clear()
+    }
+     else {
+      console.log('You are on the server')
+    }
+
+  }
+
+  loginForm =  new FormGroup({
+    correousuario : new FormControl(''),
+    contrasenausuarios : new FormControl(''),
+  })
+
+
+public login()
+{
+  this.api.getlogin(this.loginForm.value.correousuario,this.loginForm.value.contrasenausuarios)
+  this.router.navigate(['/home'])
+}
 
 }

@@ -5,9 +5,16 @@
     
         <div class="form-container">
                 <mat-form-field appearance="outline">
-                    <mat-label>Nombre proveedor</mat-label>
+                    <mat-label>Proveedor</mat-label>
+                    <mat-select>
+                      <mat-option value="option">Option</mat-option>
+                  </mat-select>
+                  </mat-form-field>    
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Nombre</mat-label>
                     <input matInput placeholder="Ingrese nombre">
-                  </mat-form-field>            
+                  </mat-form-field>
     
                   <mat-form-field appearance="outline">
                     <mat-label>RIF / NIT</mat-label>
@@ -25,18 +32,10 @@
                   </mat-form-field>
     
                   <mat-form-field appearance="outline">
-                    <mat-label>Lista de productos</mat-label>
-                    <mat-select>
-                        <mat-option value="option">Option</mat-option>
-                    </mat-select>
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Ingrese email">
                   </mat-form-field>
 
-                  <mat-form-field appearance="outline">
-                    <mat-label>Estado proveedor</mat-label>
-                    <mat-select>
-                        <mat-option value="option">Option</mat-option>
-                    </mat-select>
-                  </mat-form-field>
         </div>
         <button mat-raised-button type="submit">Editar proveedor</button>
     </section>
