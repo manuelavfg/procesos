@@ -1,42 +1,41 @@
 <section class="edit-container">
     <section class="form-card">
-        <h1>Editar proveedor</h1>
-        <p>Actualiza la información de este proveedor.</p>
-    
+
+      <h1>Editar proveedor</h1>
+      <p>Actualiza la información de este proveedor.</p>
+      <form class="form-container" (ngSubmit)="onInsert()"  [formGroup]="articuloForm" method="post">
         <div class="form-container">
                 <mat-form-field appearance="outline">
                     <mat-label>Proveedor</mat-label>
-                    <mat-select>
-                      <mat-option value="option">Option</mat-option>
-                  </mat-select>
+                    <mat-select  [(value)]="opcionSeleccionada" (selectionChange)="getDropdown()" formControlName = "idproveedores">
+                      <mat-option *ngFor="let nombre of nombres"  [value]="nombre">
+                        {{nombre}}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>    
 
                   <mat-form-field appearance="outline">
                     <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Ingrese nombre">
-                  </mat-form-field>
-    
-                  <mat-form-field appearance="outline">
-                    <mat-label>RIF / NIT</mat-label>
-                    <input matInput placeholder="Ingrese identificación">
+                    <input formControlName="nombreproveedores" matInput placeholder="Ingrese nombre">
                   </mat-form-field>
     
                   <mat-form-field appearance="outline">
                     <mat-label>Teléfono</mat-label>
-                    <input matInput placeholder="Ingrese teléfono">
+                    <input formControlName="telefonoproveedores" matInput placeholder="Ingrese teléfono">
                   </mat-form-field>
     
                   <mat-form-field appearance="outline">
                     <mat-label>Dirección</mat-label>
-                    <input matInput placeholder="Ingrese dirección">
+                    <input formControlName="direccionproveedores" matInput placeholder="Ingrese dirección">
                   </mat-form-field>
     
                   <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
-                    <input matInput placeholder="Ingrese email">
+                    <input formControlName="correoproveedores" matInput placeholder="Ingrese email">
                   </mat-form-field>
-
-        </div>
-        <button mat-raised-button type="submit">Editar proveedor</button>
+                  
+                  <button mat-raised-button type="submit">Editar proveedor</button>
+                </div>
+      </form>
     </section>
-</section>
+                
