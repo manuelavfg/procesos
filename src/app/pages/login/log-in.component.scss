@@ -43,4 +43,25 @@
       }
   }
 
+    .login-button{
+        display: flex;
+        justify-content: center;
+        
+        button{
+            width: 80%;
+        }
+    }
+
+    .password-recovery{
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+
+        a{
+            color: #23018a;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+    }
+
 }

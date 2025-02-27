@@ -43,7 +43,39 @@
             </mat-form-field>
             <button mat-raised-button type="submit">Registrar entrada</button>
           </form>
-            
           </div>
     </section>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource">
+                  
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let element"> </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="unidad">
+          <th mat-header-cell *matHeaderCellDef> Unidad </th>
+          <td mat-cell *matCellDef="let element"> </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="existencia">
+          <th mat-header-cell *matHeaderCellDef> Existencia </th>
+          <td mat-cell *matCellDef="let element"></td>
+        </ng-container>
+
+        <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef> Precio </th>
+          <td mat-cell *matCellDef="let element"></td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <div class="button-container">
+      <button mat-raised-button>Añadir producto</button>
+    </div>
+
 </section>

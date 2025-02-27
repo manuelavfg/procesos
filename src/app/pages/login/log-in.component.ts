@@ -7,10 +7,11 @@ import { APIService } from '../../api.service';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-log-in',
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule,ReactiveFormsModule, CommonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule,ReactiveFormsModule, CommonModule, RouterLinkWithHref],
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss'
 })

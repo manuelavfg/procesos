@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,13 +15,16 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-registrar-entrada',
-  imports: [MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, CommonModule, MatDatepickerModule],
+  imports: [MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, CommonModule, MatDatepickerModule, MatTableModule],
   templateUrl: './registrar-entrada.component.html',
   styleUrl: './registrar-entrada.component.scss',
   providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrarEntradaComponent {
+
+    displayedColumns: string[] = ['descripcion', 'unidad', 'existencia', 'precio'];
+    dataSource = new MatTableDataSource<factura>(ELEMENT_DATA);
 
     facturas : any[] = [];
     productos: any[]=[]
@@ -104,3 +108,14 @@ export class RegistrarEntradaComponent {
         }
     }
 }
+
+
+export interface factura {
+  descripcion: string;
+  unidad: string;
+  existencia: string;
+  precio: string;
+}
+
+const ELEMENT_DATA: factura[] = [
+];

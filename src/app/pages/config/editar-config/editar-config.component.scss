@@ -1,8 +1,8 @@
-.entrada-container{
-    width: 80%;
+.editar-container{
+    width: 90%;
     display: grid;
     place-content: center;
-    height: 96vh;
+    height: 90vh;
     margin-left: 3.5rem;
 
     .form-card{
@@ -29,13 +29,6 @@
             grid-template-columns: 2fr 2fr;
             gap: 1rem;
         }
-    }
-
-    .table-container{
-        margin-top: 2.5rem;
-    }
-    .button-container{
-        margin-top: 1rem;
     }
 
 }
