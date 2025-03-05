@@ -6,16 +6,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { APIService } from '../../api.service';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-log-in',
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule,ReactiveFormsModule, CommonModule],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule,ReactiveFormsModule, CommonModule, RouterLinkWithHref],
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss'
 })
 export class LogInComponent {
 
+hide = true
 
   constructor(private api: APIService, private router: Router)
   {
@@ -37,8 +38,15 @@ export class LogInComponent {
 
 public login()
 {
-  this.api.getlogin(this.loginForm.value.correousuario,this.loginForm.value.contrasenausuarios)
-  this.router.navigate(['/home'])
+  this.api.insert("usuario","auth", this.loginForm.value).subscribe({next:(res)=>
+  {
+
+    this.api.getlogin(res)
+    let p: any = res
+    console.log(p)
+    if(p['cargousuario'] == 1){this.api.setHideElement(true); console.log(true)} else{this.api.setHideElement(false); console.log(false)}
+    this.router.navigate(['/home']) 
+  }})
 }
 
 }

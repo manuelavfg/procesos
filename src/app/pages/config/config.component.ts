@@ -4,10 +4,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { APIService } from '../../api.service';
+import { RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-config',
-  imports: [ MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule ],
+  imports: [ MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, RouterLinkWithHref ],
   templateUrl: './config.component.html',
   styleUrl: './config.component.scss'
 })
@@ -23,13 +24,23 @@ crltvfactura = 'FACT-2025'
 telefono = '0261-7920000'
 crltvpresupuesto = 'PRES-2025'
 
-constructor(private api: APIService) {
-
-  this.logo.src = '/assets/img/sumelzucalogo.png'
-  this.logo.loading = 'lazy'
-  this.logo.width = 200
-  this.logo.height = 200
-
+constructor(private api: APIService) 
+{
+  let a : any
+  let p = {limit: 50}
+  this.api.select("config","list",p).subscribe(res=>
+  {
+      a = res
+      this.tasa = a[0]['tasaconfig']
+      this.iva = a[0]['ivaconfig']
+      this.nombre = a[0]['nombreconfig']
+      this.correo = a[0]['correoconfig']
+      this.rif = a[0]['rifconfig']
+      this.telefono = a[0]['telefonoconfig']
+  })
 }
+
+
+
 
 }

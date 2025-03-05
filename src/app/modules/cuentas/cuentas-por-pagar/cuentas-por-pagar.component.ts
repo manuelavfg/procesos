@@ -3,6 +3,7 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { APIService } from '../../../api.service';
 
 @Component({
   selector: 'app-cuentas-por-pagar',
@@ -11,28 +12,43 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './cuentas-por-pagar.component.scss'
 })
 export class CuentasPorPagarComponent implements AfterViewInit {
-  displayedColumns: string[] = ['proveedor', 'factura', 'monto', 'fecha', 'estado', 'acciones'];
-  dataSource = new MatTableDataSource<Pagar>(ELEMENT_DATA);
+  displayedColumns: string[] = ['codigocuentaspagar', 'nombreproveedores' , 'numerofactura', 'total_pagado'];
+  dataSource = new MatTableDataSource<Pagar>();
+
+  limit = 50;
+  offset = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  constructor(private api: APIService)
+  {	
+    
+  }    
+
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    let p:any
+    let params= 
+    {
+      limit : this.limit,
+      offset : this.offset,
+    }
+
+
+    this.api.select("cuentasporpagar","list", params).subscribe(res =>
+    {
+      p = res;
+      this.dataSource = new MatTableDataSource(p)
+			this.dataSource.paginator = this.paginator;
+    })
   }
+
 }
 
 export interface Pagar {
-  proveedor: string;
-  factura: string;
-  monto: string;
-  fecha: string;
-  estado: string;
+  nombreproveedores: any;
+  codigocuentaspagar: any;
+  total_pagado: any;
+  numerofactura: any;
+  //fecha: string;
+  //estado: string;
 }
-
-const ELEMENT_DATA: Pagar[] = [
-  {proveedor: 'Electro Suministros', factura: '#PROV-4561', monto: '$150.00', fecha: '10/02/2025', estado: 'Pendiente'},
-  {proveedor: 'Electro Suministros', factura: '#PROV-4561', monto: '$150.00', fecha: '10/02/2025', estado: 'Pendiente'},
-  {proveedor: 'Electro Suministros', factura: '#PROV-4561', monto: '$150.00', fecha: '10/02/2025', estado: 'Pendiente'},
-  {proveedor: 'Electro Suministros', factura: '#PROV-4561', monto: '$150.00', fecha: '10/02/2025', estado: 'Pendiente'},
- 
-];

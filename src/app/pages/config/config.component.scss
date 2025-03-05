@@ -1,7 +1,7 @@
 .config-container{
     width: 80%;
     margin-left: 3.5rem;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 
     .form-card{
         background-color: white;
@@ -13,14 +13,13 @@
         h1{
             font-size: 1.5rem;
             color: #333;
-            margin-bottom: 0;
+            margin: 0;
         }
 
         p{
             font-size: 1rem;
             color: #666;
-            margin-bottom: 1rem;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
 
         .image{
@@ -33,6 +32,17 @@
         }
         h2{
             margin-bottom: 0;
+            font-size: 1.3rem;
+        }
+    }
+
+    .button-container{
+        margin-top: 1rem;
+
+        a{
+            color: #333;
+            text-decoration: none;
+            font-size: 1rem;
         }
     }
 

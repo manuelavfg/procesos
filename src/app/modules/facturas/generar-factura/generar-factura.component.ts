@@ -4,7 +4,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { APIService } from '../../../api.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatOption, MatSelectModule } from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import jspdf from 'jspdf';
@@ -24,68 +24,131 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 export class GenerarFacturaComponent {
 
   proveedores : any[] = [];
+  idproveedores:any[]=[]
+  clientes : any[] = [];
+  idclientes:any[]=[]
+
   tipos = ['COTIZACION', 'PROFORMA']
+  currentOptions: any[] = [];
   
   opcionSeleccionada: any;
   indiceSeleccionado: any
   opcionSeleccionada2: any;
   indiceSeleccionado2: any
+
   articuloForm =  new FormGroup({
-    codigofactura : new FormControl(''),
-    idproveedorfactura : new FormControl(''),
-    idcliente: new FormControl(1),
-    tipofactura : new FormControl(""),
-    idarticulofactura : new FormControl(1),
+	selectedType: new FormControl(),
+    codigofactura : new FormControl(),
+	numerofactura : new FormControl(),
+    idproveedorfactura : new FormControl(),
+	idcliente: new FormControl(),
+    tipofactura : new FormControl(),
+    idarticulofactura : new FormControl(),
   })
 
   
 
-	constructor(private api:APIService)
+	constructor(private api:APIService, private fb: FormBuilder)
 	{	
+		this.articuloForm = this.fb.group({
+			selectedType: ['1'],  // Valor inicial: Cliente
+			codigofactura: [],
+			numerofactura: [],
+			idproveedorfactura: [],
+			idcliente: [],
+			tipofactura: [''],
+			idarticulofactura: []
+		  });
 		let params =
 		{
 			limit:50
 		}
 
 		this.api.select("proveedores", "dropdown",params).subscribe({next: res=>{
-
-
 			for(let i of Object.values(res))
 				{
 					this.proveedores.push(i.nombreproveedores)
-					console.log(this.proveedores)
+					this.idproveedores.push(i.idproveedores)
+					console.log(this.idproveedores)
 				}
+		}})
 
-
+		this.api.select("clientes", "dropdown",params).subscribe({next: res=>{
+			for(let i of Object.values(res))
+				{
+					this.clientes.push(i.nombreclientes)
+					this.idclientes.push(i.idclientes)
+					console.log(this.idclientes)
+				}
 		}})
 
 	}
 
+	ngOnInit(): void {
+		this.loadInitialData();
+		
+		// Escuchar cambios en el radio button
+		this.articuloForm.get('selectedType')?.valueChanges.subscribe(value => {
+		  this.updateDropdownOptions(value);
+		  this.articuloForm.get('idproveedorfactura')?.reset(); // Reiniciar selección
+		});
+	  }
+
+	  loadInitialData(): void {
+		this.updateDropdownOptions('1');
+	  }
+
 	onInsert() 
 	{ 
-		this.articuloForm.value.idproveedorfactura = this.indiceSeleccionado
-		if(this.indiceSeleccionado2 == 1){this.articuloForm.value.tipofactura = "COTIZACION"}
-		else{
-			{this.articuloForm.value.tipofactura = "PROFORMA"
+		if(this.articuloForm.value.selectedType == 2)
+		{
+			this.articuloForm.value.idproveedorfactura = this.idproveedores[this.indiceSeleccionado]
+			if(this.indiceSeleccionado2 == 1){this.articuloForm.value.tipofactura = "COTIZACION"}
+			else{
+				{this.articuloForm.value.tipofactura = "PROFORMA"
+				}
+				
+				this.api.insert("factura","add",  this.articuloForm.value).subscribe(res =>{
+					
+					console.log(res);
+					
+				})
+			}
 		}
+		if(this.articuloForm.value.selectedType==1){
+			
+			this.articuloForm.value.idproveedorfactura = this.idproveedores[this.indiceSeleccionado]
 
-		this.api.insert("factura","add",  this.articuloForm.value).subscribe(res =>{
-			
-			console.log(res);
-			
-		})
+			if(this.indiceSeleccionado2 == 1){this.articuloForm.value.tipofactura = "COTIZACION"}
+			else{
+				{this.articuloForm.value.tipofactura = "PROFORMA"
+				}
+				
+				this.api.insert("factura","add2",  this.articuloForm.value).subscribe(res =>{
+					
+					console.log(res);
+					
+				})
+
+			}
 		console.log(this.articuloForm.value)
 	}}
 
-	public getDropdown()
-	{
+	public getDropdown() {
 		if (this.opcionSeleccionada) {
-			this.indiceSeleccionado = this.proveedores.indexOf(this.opcionSeleccionada)+1;
-			console.log(this.indiceSeleccionado)
-		  } else {
-			this.indiceSeleccionado = null;
-		  }
-	}
+		  // Determinar qué array usar según el radio button seleccionado
+		  const currentArray = this.articuloForm.get('selectedType')?.value === '1' 
+							  ? this.clientes 
+							  : this.proveedores;
+	  
+		  // Buscar el índice en el array correspondiente
+		  this.indiceSeleccionado = currentArray.indexOf(this.opcionSeleccionada);
+		  console.log('Índice seleccionado:', this.idproveedores[this.indiceSeleccionado]);
+		} else {
+		  this.indiceSeleccionado = null;
+		}
+	  }
+
 	public getDropdown2()
 	{
 		if (this.opcionSeleccionada2) {
@@ -96,5 +159,8 @@ export class GenerarFacturaComponent {
 		  }
 	}
 
+	updateDropdownOptions(type: string): void {
+		this.currentOptions = type === '1' ? this.clientes : this.proveedores;
+	  }
 
 }

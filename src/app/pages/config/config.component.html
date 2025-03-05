@@ -1,11 +1,5 @@
 <section class="config-container">
     <section class="form-card">
-        <h1>Tasa de cambio</h1>
-        <hr>
-        <div class="info-container">
-            <p><b>Tasa de Cambio: </b>{{tasa}}</p>
-            <p><b>IVA: </b>{{iva}}</p>
-        </div>
 
         <h1>Información fiscal</h1>
         <p>En esta sección podrá ver los datos de información de la empresa</p>
@@ -14,16 +8,24 @@
         <div class="info-container">
             <p><b>Nombre de la empresa: </b>{{nombre}}</p>
             <p><b>Logotipo: </b></p>
-                <div class="image"><img [src]="logoSrc" loading="lazy" alt="Logo"></div>
+                <figure class="image"></figure>
             <p><b>Correo electrónico: </b>{{correo}}</p>
             <p><b>Telefono: </b>{{telefono}}</p>
             <p><b>RIF: </b>{{rif}}</p>
             <p><b>Correlativo de factura: </b>{{crltvfactura}}</p>
             <p><b>Correlativo de presupuesto: </b>{{crltvpresupuesto}}</p>
 
+
+            <p><b>Tasa de Cambio: </b>{{tasa}}</p>
+            <p><b>IVA: </b>{{iva}}</p>
+
+
             <!-- <h2>Redes sociales</h2>
             <p><b>Instagram: </b> &#64;sumelzuca.ve </p> -->
         </div>
        
     </section>
+    <div class="button-container">
+        <button mat-raised-button><a routerLink="/editar-config">Editar configuración</a></button>
+    </div>
 </section>

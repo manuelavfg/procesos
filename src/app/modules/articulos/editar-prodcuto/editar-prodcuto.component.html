@@ -1,0 +1,44 @@
+<section class="editar-container">
+    <section class="form-card">
+        <h1>Editar producto</h1>
+        <p>En esta sección podrá editar los artículos</p>
+      <form (ngSubmit)="onInsert()"  [formGroup]="articuloForm" method="post">
+        <div class="form-container">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Producto</mat-label>
+                    <mat-select  [(value)]="opcionSeleccionada" formControlName = "idproveedor">
+                      <mat-option *ngFor="let articulo of articulos"  [value]="articulo">
+                        {{articulo}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>            
+
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Descripcion</mat-label>
+                    <input formControlName="descripcionarticulo" matInput placeholder="Ingrese Descripcion">
+                  </mat-form-field>
+
+    
+                  <mat-form-field appearance="outline">
+                    <mat-label>Unidad</mat-label>
+                    <input formControlName="tipoarticulo" matInput placeholder="Ingrese unidad">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Código</mat-label>
+                    <input formControlName="codigoarticulo" matInput placeholder="Ingrese codigo">
+                  </mat-form-field> 
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Precio</mat-label>
+                    <input formControlName="costoarticulo" matInput placeholder="Ingrese precio">
+                  </mat-form-field>
+                </div>
+                <div>
+                  <button mat-raised-button type="submit">Editar producto</button>                    
+                </div>
+      </form>
+    </section>
+</section>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { APIService } from '../../api.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-usuario',
@@ -7,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './usuario.component.scss'
 })
 export class UsuarioComponent {
+
 
 }

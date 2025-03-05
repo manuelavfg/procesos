@@ -5,6 +5,7 @@ import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { APIService } from '../../../api.service';
+import moment from 'moment';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -27,17 +28,21 @@ export interface ArticuloRecibo {
   styleUrl: './registrar-entrada.component.scss',
 })
 export class RegistrarEntradaComponent {
-
     facturas : any[] = [];
+    idfactura: any[] = [];
+
+    proveedores: any[]=[]
 
     productos: any[]=[]
     idproducto: any[]= []
+
 
     columnas: string[] = [
       'descripcionarticulo',
       'tipoarticulo',
       'existenciaarticulo',
       'costoarticulo',
+      'entradaarticulo',
     ];
     dataSource = new MatTableDataSource<ArticuloRecibo>();
 
@@ -50,6 +55,7 @@ export class RegistrarEntradaComponent {
       idarticulo : new FormControl(''),
       idarticulofactura : new FormControl(''),
       idfactura: new FormControl(''),
+      fechaentrada: new FormControl(),
       cantidadrecibo: new FormControl(''),
       idproveedor : new FormControl(''),
       idproveedorfactura : new FormControl(''),
@@ -70,13 +76,26 @@ export class RegistrarEntradaComponent {
             {
               this.productos.push(i.descripcionarticulo)
               this.idproducto.push(i.idarticulo)
-              console.log(this.productos)
-              console.log(this.idproducto)
             }
     
     
         }})
+        
+        this.api.select("factura", "dropdown",params).subscribe({next: res=>{
     
+    
+          for(let i of Object.values(res))
+            {
+              this.facturas.push(i.nombreproveedores+" Factura: "+i.numerofactura)
+              this.idfactura.push(i.idfactura)
+              this.proveedores.push(i.idproveedores)
+              console.log(this.facturas)
+              console.log(this.idfactura)
+            }
+    
+    
+        }})
+
       }
 
 
@@ -85,34 +104,59 @@ export class RegistrarEntradaComponent {
       agregarDato() 
       {
         let i = {idarticulo: this.idproducto[this.indiceSeleccionado2]}
+        let j = {idfactura: this.idfactura[this.indiceSeleccionado]}
+        let fecha:Date = this.articuloForm.value.fechaentrada
+        let fechaformateada = moment(fecha).format('DD-MM-YYYY')        
+
         this.api.select("articulo","factura", i).subscribe(res => 
         {
-          console.log("RESPUESTA DE LA API: " + res)
           let p:any
-		    for(let value of Object.values(res))
+		      for(let value of Object.values(res))
           {
               p = 
               {
                 descripcionarticulo: value.descripcionarticulo,
                 tipoarticulo: value.tipoarticulo,
-                codigoarticulo: value.codigoarticulo,
                 costoarticulo: value.costoarticulo,
                 existenciaarticulo: this.articuloForm.value.cantidadrecibo,
+                fechaentrada: fechaformateada,
+                idfactura: j.idfactura,
+                idarticulo: i.idarticulo,
               }
           }
           const datosActualizados = [...this.dataSource.data, p];
-          console.log(datosActualizados)
           this.dataSource.data = datosActualizados
+          console.log(this.dataSource.data)
 
         });
       }
 
       onInsert() 
       { 
-        this.articuloForm.value.idproveedor = this.indiceSeleccionado
-        this.articuloForm.value.idarticulo = this.indiceSeleccionado2
 
-        this.api.update("articulo","update",this.articuloForm.value)
+        console.log("submit")
+        
+        for(let i of this.dataSource.data)
+          {
+            this.api.insert("recibo","add", i).subscribe(res =>{
+              console.log(res)
+            })
+          }
+          let p = 
+          {
+            codigocuentaspagar: "CNT-00"+this.idfactura[this.indiceSeleccionado],
+            idproveedor: this.proveedores[this.indiceSeleccionado],
+            idfactura: this.idfactura[this.indiceSeleccionado]
+            
+          }
+          this.api.insert("cuentasporpagar", "add",p).subscribe(res=>
+            {
+              console.log(res)
+            })
+          this.api.update("factura","update", {idfactura: this.idfactura[this.indiceSeleccionado], isregistrado: 1}).subscribe(res=>
+            {
+              console.log(res)
+            })
 
       }
       
@@ -120,7 +164,7 @@ export class RegistrarEntradaComponent {
     public getDropdown()
     {
       if (this.opcionSeleccionada) {
-        this.indiceSeleccionado = this.facturas.indexOf(this.opcionSeleccionada)+1;
+        this.indiceSeleccionado = this.facturas.indexOf(this.opcionSeleccionada);
         console.log(this.indiceSeleccionado)
         } else {
         this.indiceSeleccionado = null;

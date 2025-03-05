@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LogInComponent } from './pages/login/log-in.component';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { RecuperarContrasenaComponent } from './pages/login/recuperar-contrasena/recuperar-contrasena.component';
+import { ReestablecerContrasenaComponent } from './pages/login/reestablecer-contrasena/reestablecer-contrasena.component';
+import { AuthCodigoComponent } from './pages/login/auth-codigo/auth-codigo.component';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -31,13 +34,14 @@ export const MY_DATE_FORMATS = {
 export class AppComponent {
   title = 'Sulmezuca';
   
+  showAuditoria = false
   usuario = true;
 	showNav = true;
 
 	public showNavBar = true;
 
 	toggleNavBar(component : Component) {
-		 if(component instanceof LogInComponent) {
+		 if(component instanceof LogInComponent || component instanceof AuthCodigoComponent || component instanceof RecuperarContrasenaComponent || component instanceof ReestablecerContrasenaComponent) {
 				this.usuario = false;
 				this.showNavBar = false;
 		 } else {

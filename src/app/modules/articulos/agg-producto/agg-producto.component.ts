@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 
 export class AggProductoComponent {
 
+	idproveedor: any[] = []
 	proveedores : any[] = [];
 	displayedColumns: string[] = ['descripcionarticulo', 'tipoarticulo', 'existenciaarticulo', 'codigoarticulo', 'costoarticulo'];
 	
@@ -41,7 +42,7 @@ export class AggProductoComponent {
 	
 	onInsert() 
 	{ 
-		this.articuloForm.value.idproveedor = this.indiceSeleccionado
+		this.articuloForm.value.idproveedor = this.idproveedor[this.indiceSeleccionado]
 		this.api.insert("articulo","add",  this.articuloForm.value).subscribe(res =>{
 			
 			console.log(res);
@@ -63,6 +64,7 @@ export class AggProductoComponent {
 			for(let i of Object.values(res))
 				{
 					this.proveedores.push(i.nombreproveedores)
+					this.idproveedor.push(i.idproveedores)
 					console.log(this.proveedores)
 				}
 
