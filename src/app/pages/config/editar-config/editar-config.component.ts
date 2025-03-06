@@ -4,7 +4,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOption, MatSelectModule } from '@angular/material/select';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { APIService } from '../../../api.service';
 
@@ -16,12 +16,12 @@ import { APIService } from '../../../api.service';
 })
 export class EditarConfigComponent {
   articuloForm =  new FormGroup({
-    nombreconfig : new FormControl(),
-    tasaconfig : new FormControl(),
-    rifconfig: new FormControl(),
-    correoconfig : new FormControl(),
-    ivaconfig : new FormControl(),
-    telefonoconfig : new FormControl(),
+    nombreconfig : new FormControl('',[Validators.required]),
+    tasaconfig : new FormControl('',[Validators.required]),
+    rifconfig: new FormControl('',[Validators.required]),
+    correoconfig : new FormControl('',[Validators.required,Validators.email]),
+    ivaconfig : new FormControl('',[Validators.required]),
+    telefonoconfig : new FormControl('',[Validators.required]),
     crltvfactura : new FormControl(),
     crltvpresupuesto : new FormControl(),
   })
@@ -32,6 +32,7 @@ export class EditarConfigComponent {
 
   onInsert()
   {
+    if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
     this.api.update("config","update", this.articuloForm.value).subscribe(res =>
   {
       console.log(res)

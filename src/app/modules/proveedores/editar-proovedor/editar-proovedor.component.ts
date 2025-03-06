@@ -5,7 +5,7 @@ import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { APIService } from '../../../api.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -22,12 +22,12 @@ export class EditarProovedorComponent {
   indiceSeleccionado: any
 
   articuloForm =  new FormGroup({
-    idproveedores: new FormControl(''),
-    nombreproveedores: new FormControl(''),
-    rifproveedores: new FormControl(''),
-    telefonoproveedores: new FormControl(''),
-    direccionproveedores: new FormControl(''),
-    correoproveedores: new FormControl(''),
+    idproveedores: new FormControl('',[Validators.required]),
+      nombreproveedores : new FormControl('',[Validators.required]),
+      correoproveedores: new FormControl('',[Validators.required,Validators.email]),
+      rifproveedores: new FormControl('',[Validators.required]),
+      direccionproveedores : new FormControl('',[Validators.required]),
+      telefonoproveedores : new FormControl('',[Validators.required]),
   })
 
   constructor(private api: APIService)
@@ -54,7 +54,7 @@ export class EditarProovedorComponent {
   
   onInsert()
   {
-
+    if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
   this.articuloForm.value.idproveedores = this.indiceSeleccionado
 
     this.api.update("proveedores", "update", this.articuloForm.value).subscribe({next: res=>

@@ -8,7 +8,7 @@ import { APIService } from '../../../api.service';
 import moment from 'moment';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MomentDateModule } from '@angular/material-moment-adapter';
@@ -53,11 +53,11 @@ export class SalidaComponent {
     indiceSeleccionado2: any
 
     articuloForm =  new FormGroup({
-      idarticulo : new FormControl(''),
-      idarticulofactura : new FormControl(''),
-      idfactura: new FormControl(''),
-      fechaentrada: new FormControl(),
-      cantidadrecibo: new FormControl(''),
+      idarticulo : new FormControl('',[Validators.required]),
+      idarticulofactura : new FormControl('',[Validators.required]),
+      idfactura: new FormControl('',[Validators.required]),
+      fechaentrada: new FormControl('',[Validators.required]),
+      cantidadrecibo: new FormControl('',[Validators.required]),
       idproveedor : new FormControl(''),
       idproveedorfactura : new FormControl(''),
       
@@ -103,11 +103,12 @@ export class SalidaComponent {
       {
         let i = {idarticulo: this.idproducto[this.indiceSeleccionado2]}
         let j = {idfactura: this.idfactura[this.indiceSeleccionado]}
-        let fecha:Date = this.articuloForm.value.fechaentrada
+        let fecha:Date = new Date(this.articuloForm.value.fechaentrada as string)
         let fechaformateada = moment(fecha).format('DD-MM-YYYY')        
 
         this.api.select("articulo","factura", i).subscribe(res => 
         {
+          if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
           let p:any
           for(let value of Object.values(res))
           {
@@ -131,8 +132,10 @@ export class SalidaComponent {
 
       onInsert() 
       { 
+        if(this.dataSource.data.length == 0){alert("Error: Factura Vacia");return}
         let p = 
         {
+          
           codigocuentascobrar: "CNT-00"+this.idfactura[this.indiceSeleccionado],
           idcliente: this.proveedores[this.indiceSeleccionado],
           idfactura: this.idfactura[this.indiceSeleccionado]

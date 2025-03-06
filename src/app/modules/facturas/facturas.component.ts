@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,11 +8,12 @@ import autoTable from 'jspdf-autotable'
 import { APIService } from '../../api.service';
 import { style } from '@angular/animations';
 import { max } from 'rxjs';
+import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
-  selector: 'app-facturas',
-  imports: [ MatPaginator, MatPaginatorModule, MatButtonModule, MatTableModule, MatIconModule ],
+  selector: 'app-facturasProveedores',
+  imports: [ MatPaginator, MatPaginatorModule, MatButtonModule, MatTableModule, MatIconModule, MatButtonToggleModule],
   templateUrl: './facturas.component.html',
   styleUrl: './facturas.component.scss',
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'ja-JP'}]
@@ -23,26 +24,47 @@ export class FacturasComponent implements AfterViewInit{
   limit = 50;
   offset = 0;
   displayedColumns: string[] = ['codigofactura', 'nombreproveedores', 'tipofactura'];
-  dataSource! : MatTableDataSource<Facturas>;
+  selectedMode: string = 'proveedores';
+  isProveedoresMode: boolean = true; // Modo inicial
+
+  currentDataSource!: MatTableDataSource<any>
+  dataSource! : MatTableDataSource<FacturasProveedores>;
+  dataSource2! : MatTableDataSource<FacturasClientes>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private api: APIService){}
+  constructor(private api: APIService,private cdr: ChangeDetectorRef){	
+	let p;
+	let params= 
+	{
+		limit : this.limit,
+		offset : this.offset,
+	}
 
-	ngAfterViewInit() {
-		let p;
-		let params= 
-		{
-			limit : this.limit,
-			offset : this.offset,
-		}
-
-
-		this.api.select("factura","list", params).subscribe(res =>
+	this.api.select("factura","dropdown2", params).subscribe(res =>
 		{
 			this.p = res;
-			this.dataSource = new MatTableDataSource(this.p)
-			this.dataSource.paginator = this.paginator;
+			console.log(res)
+			this.dataSource2 = new MatTableDataSource(this.p)
+			if (!this.isProveedoresMode) {
+				this.currentDataSource = this.dataSource2;
+				this.currentDataSource.paginator = this.paginator;
+			  }
 		})
+		
+		this.api.select("factura","dropdown", params).subscribe(res =>
+		{
+				this.p = res;
+				console.log(res)
+				this.dataSource = new MatTableDataSource(this.p)
+				if (this.isProveedoresMode) {
+					this.currentDataSource = this.dataSource;
+					this.currentDataSource.paginator = this.paginator;
+				  }
+		})}
+
+	ngAfterViewInit() {
+		this.selectedMode = 'proveedores';
+		this.cambiarModo({ value: 'proveedores' } as MatButtonToggleChange);
 	}
 
 	public printTable() {
@@ -239,16 +261,33 @@ export class FacturasComponent implements AfterViewInit{
 		});
 	}
 
-
+	cambiarModo(event: MatButtonToggleChange) {
+		this.isProveedoresMode = event.value === 'proveedores';
+  
+		if (this.isProveedoresMode) {
+		  this.currentDataSource = this.dataSource;
+		  this.displayedColumns = ["codigofactura",'nombreproveedores', 'tipofactura']; // Columnas de proveedores
+		} else {
+		  this.currentDataSource = this.dataSource2;
+		  this.displayedColumns = ["codigofactura",'nombreclientes', 'tipofactura']; // Columnas de clientes
+		}
+		this.cdr.detectChanges()
+	  }
 }
 
-export interface Facturas {
+export interface FacturasProveedores {
   idfactura:any,
-  idcliente:any,
-  idarticulofactura:any,
   codigofactura: any;
   idproveedorfactura: any;
   nombreproveedores: any;
   tipofactura: any;
 }
+
+export interface FacturasClientes {
+	idfactura:any,
+	codigofactura: any;
+	idcliente: any;
+	nombreclientes: any;
+	tipofactura: any;
+  }
 

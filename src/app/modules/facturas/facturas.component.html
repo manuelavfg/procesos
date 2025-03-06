@@ -3,7 +3,14 @@
     <hr>
 
     <div class="table-container">
-        <table mat-table [dataSource]="dataSource">
+      <div class="toggle-container">
+        <mat-button-toggle-group [(value)]="selectedMode" class="toggle-button" (change)="cambiarModo($event)" name="fontStyle" aria-label="Font Style">
+          <mat-button-toggle value="proveedores">Proveedores</mat-button-toggle>
+          <mat-button-toggle value="clientes">Clientes</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      
+        <table mat-table [dataSource]="currentDataSource">
           <!-- Position Column -->
           <ng-container matColumnDef="codigofactura">
             <th mat-header-cell *matHeaderCellDef> Codigo </th>
@@ -19,6 +26,11 @@
           <ng-container matColumnDef="nombreproveedores">
             <th mat-header-cell *matHeaderCellDef>Proveedor</th>
             <td mat-cell *matCellDef="let element"> {{element.nombreproveedores}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreclientes">
+            <th mat-header-cell *matHeaderCellDef>Clientes</th>
+            <td mat-cell *matCellDef="let element"> {{element.nombreclientes}} </td>
           </ng-container>
 
           <ng-container matColumnDef="tipofactura">
@@ -38,7 +50,7 @@
       </div>
 
       <div class="generate-bill">
-        <button  mat-raised-button><a href="/facturas/generar-factura">Registrar Factura</a></button>
+        <button  mat-raised-button style="margin-right: 10px;"><a href="/facturas/generar-factura">Registrar Factura</a></button>
         <button  mat-raised-button (click)="printTable()">Generar Reporte</button>
       </div>
 </section>

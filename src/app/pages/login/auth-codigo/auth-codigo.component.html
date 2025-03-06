@@ -1,19 +1,17 @@
 <section class="password-container">
     <section class="form-card">
         <h1>Recuperar Contraseña</h1>
-        <p>Ingresa tu email para recuperar tu contraseña</p>
+        <p>Ingresa tu codigo de verificacion</p>
 
           <div>
-            <form class="form-container" (ngSubmit)="onInsert()" [formGroup]="recoveryForm" action="">
+            <form class="form-container" (ngSubmit)="prueba()" [formGroup]="recoveryForm" action="">
               <mat-form-field appearance="outline">
                 
-                <mat-label>Correo</mat-label>
-                <input formControlName="correo" matInput placeholder="Ingrese correo">
+                <mat-label>Codigo</mat-label>
+                <input formControlName="correo" matInput placeholder="Ingrese codigo">
               </mat-form-field>
-              <button mat-raised-button type="submit">Enviar confirmación</button>
-            </form >
-            <button mat-raised-button><a routerLink="/reestablecer-contrasena">¿reestablecer></a></button>
-
+              <button mat-raised-button type="submit">Confirmar</button>
+            </form>
             </div>
     </section>
 

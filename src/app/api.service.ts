@@ -8,9 +8,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class APIService {
 
 
-	private hideElementSubject = new BehaviorSubject<boolean>(this.getInitialState());
+	private hideElementSubject= new BehaviorSubject<boolean>(this.getInitialState())
 	hideElement$ = this.hideElementSubject.asObservable();
   
+
 	private getInitialState(): boolean {
 	  return localStorage.getItem('hideElement') === 'true';
 	}
@@ -23,10 +24,22 @@ export class APIService {
 	usuario:any
 	p: any;
 	clave:any
-	constructor(private http: HttpClient ) { }
+	constructor(private http: HttpClient ) 
+	{
+	}
 	
 	recovery: any
+	correo: any
 
+	getcorreo(data:any)
+	{
+		this.correo = data;
+	}
+
+	sendcorreo()
+	{
+		return this.correo
+	}
 
 	getrecovery(data:any)
 	{

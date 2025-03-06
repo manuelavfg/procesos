@@ -3,14 +3,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { APIService } from '../../../api.service';
-import { RouterLinkWithHref } from '@angular/router';
+import { Router, RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-auth-codigo',
-  imports: [ MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, ReactiveFormsModule, CommonModule, RouterLinkWithHref],
+  imports: [ MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, ReactiveFormsModule, CommonModule],
 
   templateUrl: './auth-codigo.component.html',
   styleUrl: './auth-codigo.component.scss'
@@ -18,17 +18,16 @@ import { RouterLinkWithHref } from '@angular/router';
 export class AuthCodigoComponent {
 
   recoveryForm =  new FormGroup({
-    correo : new FormControl(),
+    correo : new FormControl('',[Validators.required,Validators.maxLength(6)]),
   })
 
-  constructor(private api:APIService){}
+  constructor(private api:APIService, private router: Router){}
 
   onInsert()
   {
       
     this.api.insert("usuario","recovery",this.recoveryForm.value).subscribe(res =>
     {
-        console.log(res)
         this.api.getrecovery(res)
     })
 
@@ -38,11 +37,17 @@ export class AuthCodigoComponent {
   {
     const valorString = localStorage.getItem('recovery');
     let valor = valorString ? JSON.parse(valorString) : null;
-    console.log(valor)
+    let p:any
+    let a = this.recoveryForm.value.correo
     this.api.insert("usuario", "checkHora", valor).subscribe(res=>
     {
+        p = res
+        if(p['success'] && a == valor['codigo'])
+        {
+          this.router.navigate(['/reestablecer-contrasena'])
+        }
+        else{alert(p['mensaje'])}
 
-        console.log(res)
 
     })
     }

@@ -4,7 +4,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { APIService } from '../../../api.service';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatOption, MatSelectModule } from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
 import jspdf from 'jspdf';
@@ -37,12 +37,12 @@ export class GenerarFacturaComponent {
   indiceSeleccionado2: any
 
   articuloForm =  new FormGroup({
-	selectedType: new FormControl(),
-    codigofactura : new FormControl(),
-	numerofactura : new FormControl(),
-    idproveedorfactura : new FormControl(),
-	idcliente: new FormControl(),
-    tipofactura : new FormControl(),
+	selectedType: new FormControl('',[Validators.required]),
+    codigofactura : new FormControl('',[Validators.required]),
+	numerofactura : new FormControl('',[Validators.required]),
+    idproveedorfactura : new FormControl('',[Validators.required]),
+	idcliente: new FormControl('',[Validators.required]),
+    tipofactura : new FormControl('',[Validators.required]),
     idarticulofactura : new FormControl(),
   })
 
@@ -51,13 +51,13 @@ export class GenerarFacturaComponent {
 	constructor(private api:APIService, private fb: FormBuilder)
 	{	
 		this.articuloForm = this.fb.group({
-			selectedType: ['1'],  // Valor inicial: Cliente
-			codigofactura: [],
-			numerofactura: [],
-			idproveedorfactura: [],
-			idcliente: [],
-			tipofactura: [''],
-			idarticulofactura: []
+			selectedType: new FormControl<string | null>('1', Validators.required),  // Valor inicial: Cliente
+			codigofactura: new FormControl<string | null>(null, Validators.required),
+			numerofactura: new FormControl<string | null>(null, Validators.required),
+			idproveedorfactura: new FormControl<string | null>(null, Validators.required),
+			idcliente: new FormControl<string | null>(null, Validators.required),
+			tipofactura: new FormControl<string | null>(''),
+			idarticulofactura: new FormControl<string | null>(null)
 		  });
 		let params =
 		{
@@ -89,7 +89,7 @@ export class GenerarFacturaComponent {
 		
 		// Escuchar cambios en el radio button
 		this.articuloForm.get('selectedType')?.valueChanges.subscribe(value => {
-		  this.updateDropdownOptions(value);
+		  this.updateDropdownOptions(value || '1');
 		  this.articuloForm.get('idproveedorfactura')?.reset(); // Reiniciar selección
 		});
 	  }
@@ -100,7 +100,9 @@ export class GenerarFacturaComponent {
 
 	onInsert() 
 	{ 
-		if(this.articuloForm.value.selectedType == 2)
+		if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
+
+		if(Number(this.articuloForm.value.selectedType) == 2)
 		{
 			this.articuloForm.value.idproveedorfactura = this.idproveedores[this.indiceSeleccionado]
 			if(this.indiceSeleccionado2 == 1){this.articuloForm.value.tipofactura = "COTIZACION"}
@@ -115,7 +117,7 @@ export class GenerarFacturaComponent {
 				})
 			}
 		}
-		if(this.articuloForm.value.selectedType==1){
+		if(Number(this.articuloForm.value.selectedType) === 1){
 			
 			this.articuloForm.value.idproveedorfactura = this.idproveedores[this.indiceSeleccionado]
 

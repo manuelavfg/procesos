@@ -1,6 +1,8 @@
 .factura-container{
     margin-top: 3rem;
     
+
+    
     h1{
       font-size: 2rem;
       color: #333;
@@ -16,14 +18,22 @@
     }
     
     .table-container {
-      margin-top: 2rem;
+      margin-top: 0.5rem;
       padding: 1rem;
       min-width: 1020px;
-    
+
       .estado-factura{
         color: #2a2a2a;
         font-weight: 550;
       }
+      
+      .toggle-container
+      {
+        display: flex;
+        padding-bottom: 0.5rem;
+        justify-content: flex-end;
+      }
+
 
       mat-paginator {
         background-color: #f7eaf9;
@@ -38,6 +48,7 @@
     
       button{
         a{
+          
           text-decoration: none;
           color: #333;
         }

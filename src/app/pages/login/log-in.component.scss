@@ -25,6 +25,11 @@
       display: flex;
       flex-direction: column;
 
+
+        mat-icon
+        {
+            margin-right: 0.5rem;
+        }
       h1{
           font-size: 2rem;
           color: #333;

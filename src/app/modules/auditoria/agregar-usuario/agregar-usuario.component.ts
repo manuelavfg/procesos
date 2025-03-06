@@ -4,7 +4,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOption, MatSelectModule } from '@angular/material/select';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { APIService } from '../../../api.service';
 
@@ -22,18 +22,19 @@ export class AgregarUsuarioComponent {
   opcionSeleccionada: any
   indiceSeleccionado: any
   articuloForm =  new FormGroup({
-    nombreusuario : new FormControl(),
-    cargousuario : new FormControl(),
-    contrasenausuario: new FormControl(),
-    correousuario : new FormControl(),
-    cedulausuario : new FormControl(),
-    telefonousuario : new FormControl(),
+    nombreusuario : new FormControl('',[Validators.required]),
+    cargousuario : new FormControl('',[Validators.required]),
+    contrasenausuario: new FormControl('',[Validators.required]),
+    correousuario : new FormControl('',[Validators.required,Validators.email]),
+    cedulausuario : new FormControl('',[Validators.required]),
+    telefonousuario : new FormControl('',[Validators.required]),
   })
 
   
   
   onInsert() 
   { 
+    if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
     this.articuloForm.value.cargousuario = this.idcargos[this.indiceSeleccionado]
     this.api.insert("usuario","add",  this.articuloForm.value).subscribe(res =>{
       

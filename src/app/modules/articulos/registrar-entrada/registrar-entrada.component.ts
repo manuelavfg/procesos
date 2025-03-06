@@ -8,7 +8,7 @@ import { APIService } from '../../../api.service';
 import moment from 'moment';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MomentDateModule } from '@angular/material-moment-adapter';
@@ -52,11 +52,11 @@ export class RegistrarEntradaComponent {
     indiceSeleccionado2: any
 
     articuloForm =  new FormGroup({
-      idarticulo : new FormControl(''),
-      idarticulofactura : new FormControl(''),
-      idfactura: new FormControl(''),
-      fechaentrada: new FormControl(),
-      cantidadrecibo: new FormControl(''),
+      idarticulo : new FormControl('',[Validators.required]),
+      idarticulofactura : new FormControl('',[Validators.required]),
+      idfactura: new FormControl('',[Validators.required]),
+      fechaentrada: new FormControl('',[Validators.required]),
+      cantidadrecibo: new FormControl('',[Validators.required]),
       idproveedor : new FormControl(''),
       idproveedorfactura : new FormControl(''),
       
@@ -103,9 +103,11 @@ export class RegistrarEntradaComponent {
 
       agregarDato() 
       {
+        if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
         let i = {idarticulo: this.idproducto[this.indiceSeleccionado2]}
         let j = {idfactura: this.idfactura[this.indiceSeleccionado]}
-        let fecha:Date = this.articuloForm.value.fechaentrada
+        let fechaValue = this.articuloForm.value.fechaentrada;
+        let fecha: Date = fechaValue ? new Date(fechaValue) : new Date();
         let fechaformateada = moment(fecha).format('DD-MM-YYYY')        
 
         this.api.select("articulo","factura", i).subscribe(res => 
@@ -133,7 +135,7 @@ export class RegistrarEntradaComponent {
 
       onInsert() 
       { 
-
+        if(this.dataSource.data.length == 0){alert("Error: Factura Vacia");return}
         console.log("submit")
         
         for(let i of this.dataSource.data)

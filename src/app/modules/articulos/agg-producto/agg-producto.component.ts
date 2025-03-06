@@ -4,7 +4,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { APIService } from '../../../api.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatOption, MatSelectModule } from '@angular/material/select';
 import jspdf from 'jspdf';
 import autoTable from 'jspdf-autotable'
@@ -30,18 +30,19 @@ export class AggProductoComponent {
 	opcionSeleccionada: any
  	indiceSeleccionado: any
 	articuloForm =  new FormGroup({
-		descripcionarticulo : new FormControl(''),
-		idproveedor : new FormControl(''),
-		tipoarticulo: new FormControl(''),
-		existenciaarticulo : new FormControl(''),
-		codigoarticulo : new FormControl(''),
-		costoarticulo : new FormControl(''),
+		descripcionarticulo : new FormControl('',[Validators.required]),
+		idproveedor : new FormControl('',[Validators.required]),
+		tipoarticulo: new FormControl('',[Validators.required]),
+		existenciaarticulo : new FormControl('',[Validators.required]),
+		codigoarticulo : new FormControl('',[Validators.required]),
+		costoarticulo : new FormControl('',[Validators.required]),
 	})
 
 	
 	
 	onInsert() 
 	{ 
+		if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
 		this.articuloForm.value.idproveedor = this.idproveedor[this.indiceSeleccionado]
 		this.api.insert("articulo","add",  this.articuloForm.value).subscribe(res =>{
 			

@@ -5,12 +5,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { APIService } from '../../api.service';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLinkWithHref } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-log-in',
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule,ReactiveFormsModule, CommonModule, RouterLinkWithHref],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule,ReactiveFormsModule, CommonModule, RouterLinkWithHref, MatIconModule],
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss'
 })
@@ -31,8 +32,8 @@ hide = true
   }
 
   loginForm =  new FormGroup({
-    correousuario : new FormControl(''),
-    contrasenausuarios : new FormControl(''),
+    correousuario : new FormControl('',[Validators.required,Validators.email]),
+    contrasenausuarios : new FormControl('',[Validators.required]),
   })
 
 

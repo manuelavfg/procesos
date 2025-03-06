@@ -20,16 +20,23 @@ export class SidenavComponent implements OnInit, OnDestroy {
   constructor(private api: APIService){}
 
   ngOnInit() {
-    if (typeof localStorage !== 'undefined') { // Verificación adicional
-      this.mostrarAuditoria = localStorage.getItem('hideElement') === 'true';
-    }
-    this.subscription = this.api.hideElement$.subscribe(value => {
-      this.mostrarAuditoria= value;
-    });
+
+      if (typeof window !== 'undefined') {
+        console.log('we are running on the client')
+        if (typeof localStorage !== 'undefined') { // Verificación adicional
+          this.mostrarAuditoria = localStorage.getItem('hideElement') === 'true';
+        }
+      }
+      this.subscription = this.api.hideElement$.subscribe((value: boolean) => {
+      this.mostrarAuditoria = value;
+        });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if(this.subscription !== undefined)
+    {
+      this.subscription.unsubscribe();
+    }
   }
 
   toggleDropdown() {
