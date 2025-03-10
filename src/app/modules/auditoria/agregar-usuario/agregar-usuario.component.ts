@@ -7,6 +7,7 @@ import { MatOption, MatSelectModule } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { APIService } from '../../../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-usuario',
@@ -17,34 +18,51 @@ import { APIService } from '../../../api.service';
 export class AgregarUsuarioComponent {
   idcargos: any[] = []
   cargos : any[] = [];
+  prefijos = ['V-','E-']
   displayedColumns: string[] = ['descripcionarticulo', 'tipoarticulo', 'existenciaarticulo', 'codigoarticulo', 'costoarticulo'];
+  
   
   opcionSeleccionada: any
   indiceSeleccionado: any
   articuloForm =  new FormGroup({
-    nombreusuario : new FormControl('',[Validators.required]),
+    nombreusuario : new FormControl('',[Validators.required, Validators.minLength(2), 
+        Validators.pattern(/^[A-Za-zÀ-ÿ\u00C0-\u017F\s'-]+$/)]),
+
     cargousuario : new FormControl('',[Validators.required]),
-    contrasenausuario: new FormControl('',[Validators.required]),
-    correousuario : new FormControl('',[Validators.required,Validators.email]),
-    cedulausuario : new FormControl('',[Validators.required]),
-    telefonousuario : new FormControl('',[Validators.required]),
+
+    contrasenausuario: new FormControl('',[Validators.required,
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/)]),
+
+    correousuario : new FormControl('',[Validators.required,Validators.email,
+        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/)]),
+
+    cedulausuario : new FormControl('',
+        [Validators.required, 
+        Validators.pattern('^\\d+$'),
+        Validators.maxLength(8),Validators.minLength(8)]),
+
+    telefonousuario : new FormControl('',[Validators.required,
+        Validators.pattern(/^(\+58[-\s.]?0?[24]\d{3}[-\s.]?\d{3}[-\s.]?\d{3}|0[24]\d{9})$/)]),
+          
+    prefijo: new FormControl('',[Validators.required])
   })
 
   
   
   onInsert() 
   { 
-    if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
+    if(!this.articuloForm.valid){this.api.mostrarError("Error: Formulario Invalido"); return;}
     this.articuloForm.value.cargousuario = this.idcargos[this.indiceSeleccionado]
     this.api.insert("usuario","add",  this.articuloForm.value).subscribe(res =>{
       
       console.log(res);
-      
+      this.api.mostrarExito("Operacion Exitosa")
+      this.router.navigate(['/auditoria']) 
     })
     console.log(this.articuloForm.value)
   }
   
-  constructor(private api:APIService)
+  constructor(private api:APIService, private router: Router)
   {	
     let params =
     {
@@ -56,6 +74,7 @@ export class AgregarUsuarioComponent {
 
       for(let i of Object.values(res))
         {
+          console.log(res)
           this.cargos.push(i.cargopermiso)
           this.idcargos.push(i.idpermiso)
           console.log(this.cargos)

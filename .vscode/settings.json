@@ -1,0 +1,16 @@
+{
+    "[yaml]": {
+        "editor.autoIndent": "full",
+        "editor.tabSize": 4
+    },
+    "[go]": {
+        "editor.insertSpaces": true
+    },
+    "[makefile]": {
+        "editor.insertSpaces": true
+    },
+    "[dockercompose]": {
+        "editor.tabSize": 4
+    },
+    "editor.detectIndentation": false
+}

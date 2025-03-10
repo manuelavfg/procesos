@@ -46,7 +46,7 @@ export class AuthCodigoComponent {
         {
           this.router.navigate(['/reestablecer-contrasena'])
         }
-        else{alert(p['mensaje'])}
+        else{this.api.mostrarError(p['mensaje'])}
 
 
     })

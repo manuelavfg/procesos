@@ -1,6 +1,6 @@
 <section class="bill-container">
     <section class="form-card">
-        <h1>Generar factura</h1>
+        <h1>Registrar Factura</h1>
         <p>Completa los datos de la factura para registrarla en el sistema.</p>
         <div>
             <div [formGroup]="articuloForm" style="padding-bottom: 20px;">  
@@ -28,20 +28,9 @@
                         <mat-option *ngFor="let tipo of tipos"  [value]="tipo">
                           {{tipo}}
                         </mat-option>
-                      </mat-select>
-                      
+                    </mat-select>                      
                     </mat-form-field>  
-                    
-                    
-                    <mat-form-field style="margin-right: 10px;" appearance="outline">
-                      <mat-label>Numero</mat-label>
-                      <input formControlName="numerofactura" matInput placeholder="Ingrese el numero de factura">
-                    </mat-form-field>
-        
-                    <mat-form-field appearance="outline">
-                      <mat-label>Código</mat-label>
-                      <input formControlName="codigofactura" matInput placeholder="Ingrese el codigo de factura">
-                    </mat-form-field>
+
                     <div>
                       <button mat-raised-button type="submit">Generar factura</button>
                     </div>

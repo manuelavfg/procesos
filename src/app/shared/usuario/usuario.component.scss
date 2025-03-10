@@ -1,19 +1,35 @@
-.user-info{
-    background-color: white;
-    border-radius: 15px;
-    padding: 0.9rem;
-    margin: 1rem;
-    width: 100%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.user-info {
+  background-color: white;
+  border-radius: 15px;
+  position: fixed;
+  top: 1rem;          // Fijar en parte superior
+  right: 1rem;        // Fijar en esquina derecha
+  padding: 0.9rem;
+  max-width: calc(100vw - 2rem); // Máximo ancho = ancho pantalla - márgenes
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row-reverse;    // Contenido crece hacia la IZQUIERDA
+  box-sizing: border-box;         // Padding incluido en el ancho
 
-    h1{
-        font-size: 1.1rem;
-        margin: 0;
+  .info-container {
+    margin-left: auto; // Empuja el contenido hacia la izquierda
+    padding-left: 2rem; // Espacio interno izquierdo
+    width: auto;       // Ancho según contenido
+    max-width: 80vw;   // Máximo 80% del ancho de pantalla
+
+    h1 {
+      font-size: 1.1rem;
+      margin: 0;
+      overflow-wrap: break-word; // Rompe palabras largas
+      text-align: right;         // Texto alineado a la derecha
     }
 
-    p{
-        font-size: 0.9rem;
-        color: rgb(141, 141, 141);
-        margin: 0;
+    p {
+      font-size: 0.9rem;
+      color: rgb(141, 141, 141);
+      margin: 0;
+      overflow-wrap: break-word; // Rompe palabras largas
+      text-align: right;         // Texto alineado a la derecha
     }
+  }
 }

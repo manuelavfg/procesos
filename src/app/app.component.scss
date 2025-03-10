@@ -1,5 +1,7 @@
 .container-fluid{
     display: flex;
+    justify-content: center;
+    padding-left: 20px;
 }
 
 router-outlet {
@@ -9,5 +11,5 @@ router-outlet {
 
 app-usuario{
     position: absolute;
-    left: 78%;
+    left: 80%;
 }

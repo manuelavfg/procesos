@@ -7,6 +7,7 @@ import { MatOption, MatSelectModule } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { APIService } from '../../../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-editar-config',
@@ -17,25 +18,32 @@ import { APIService } from '../../../api.service';
 export class EditarConfigComponent {
   articuloForm =  new FormGroup({
     nombreconfig : new FormControl('',[Validators.required]),
-    tasaconfig : new FormControl('',[Validators.required]),
-    rifconfig: new FormControl('',[Validators.required]),
-    correoconfig : new FormControl('',[Validators.required,Validators.email]),
-    ivaconfig : new FormControl('',[Validators.required]),
-    telefonoconfig : new FormControl('',[Validators.required]),
+    tasaconfig : new FormControl('',[Validators.required, Validators.pattern(/^(0|[1-9]\d*)([.,]\d{1,2})?$/)]),
+    rifconfig: new FormControl('',[Validators.required,Validators.pattern(/^[JVEPGC]-\d{8,9}-\d$/)]),
+    correoconfig : new FormControl('',[Validators.required,Validators.email,
+        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/)]),
+
+    ivaconfig : new FormControl('',[Validators.required, Validators.pattern(/^(0|[1-9]\d*)([.,]\d{1,2})?$/)]),
+
+    telefonoconfig : new FormControl('',[Validators.required,
+        Validators.pattern(/^(\+58[-\s.]?0?[24]\d{3}[-\s.]?\d{3}[-\s.]?\d{3}|0[24]\d{9})$/)]),
+          
     crltvfactura : new FormControl(),
     crltvpresupuesto : new FormControl(),
   })
 
-  constructor(private api: APIService)
+  constructor(private api: APIService, private router:Router)
   {
   }
 
   onInsert()
   {
-    if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
+    if(!this.articuloForm.valid){this.api.mostrarError("Error: Formulario Invalido"); return;}
     this.api.update("config","update", this.articuloForm.value).subscribe(res =>
   {
       console.log(res)
+      this.api.mostrarExito("Operacion Exitosa")
+      this.router.navigate(['/configuracion']) 
   })
   }
 

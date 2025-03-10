@@ -1,5 +1,5 @@
 .agg-container{
-    width: 80%;
+    width: 100%;
     display: grid;
     place-content: center;
     height: 90vh;
@@ -11,7 +11,6 @@
         padding: 2rem;
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
         h1{
             font-size: 1.5rem;
             color: #333;
@@ -26,7 +25,7 @@
 
         .form-container{
             display: grid;
-            grid-template-columns: 2fr 2fr;
+            grid-template-columns: 0.6fr 1fr;
             gap: 1rem;
         }
     }

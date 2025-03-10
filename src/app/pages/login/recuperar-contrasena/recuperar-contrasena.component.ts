@@ -9,16 +9,19 @@ import { APIService } from '../../../api.service';
 import { Router, RouterLinkWithHref } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-recuperar-contrasena',
   imports: [ MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, ReactiveFormsModule, CommonModule],
   templateUrl: './recuperar-contrasena.component.html',
-  styleUrl: './recuperar-contrasena.component.scss'
+  styleUrl: './recuperar-contrasena.component.scss',
 })
 export class RecuperarContrasenaComponent {
 
   recoveryForm =  new FormGroup({
-    correo : new FormControl('',[Validators.required,Validators.email]),
+    correo : new FormControl('',[Validators.required,Validators.email,
+        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/)]),
+
   })
 
   constructor(private api:APIService, private router: Router){}
@@ -29,32 +32,12 @@ export class RecuperarContrasenaComponent {
     this.api.insert("usuario","recovery",this.recoveryForm.value).subscribe({next: (res)=>{
       p = res
       this.api.getrecovery(res)
-      if(p['auth'] == false){alert(p['message']); return}
+      if(p['auth'] == false){this.api.mostrarError(p['message']); return}
       this.api.getcorreo(this.recoveryForm.value.correo)
       this.router.navigate(['/auth-codigo'])
   }})
 
   }
-
-  prueba()
-  {
-    const valorString = localStorage.getItem('recovery');
-    let valor = valorString ? JSON.parse(valorString) : null;
-    let p:any
-    let a = this.recoveryForm.value.correo
-    console.log(valor)
-    this.api.insert("usuario", "checkHora", valor).subscribe(res=>
-    {
-        console.log(res)
-        p = res
-        if(p[0]['success'])
-        {
-          console.log(valor['codigo'])
-        }
-
-
-    })
-    }
 }
 
 interface MiObjeto {

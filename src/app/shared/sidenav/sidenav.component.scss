@@ -1,14 +1,20 @@
 .sidenav-container {
-    width: 230px;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
+    position:fixed;
+    position: fixed;    /* Fija la posición */
+    left: 0;            /* Alinea a la izquierda */
+    top: 0;             /* Alinea arriba */
+    width: 200px;       /* Ancho de la sidenav */
+    height: 100vh;      /* Altura completa de la ventana */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra para efecto de elevación */
+    z-index: 1000;      /* Asegura que esté por encima de otros elementos */
+    overflow-y: auto;   /* Permite scroll si el contenido es largo */
     background-color: white;
 
     .img{
+      margin-top: 1rem; 
       width: 100%;
       height: 100px;
-      background-image: url('../../../assets/img/sumelzuca-logo.png');
+      background-image: url('/assets/img/sumelzucalogo.png');
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;

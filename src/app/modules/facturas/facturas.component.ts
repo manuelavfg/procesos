@@ -6,8 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import jspdf from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import { APIService } from '../../api.service';
-import { style } from '@angular/animations';
-import { max } from 'rxjs';
 import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 
@@ -39,8 +37,8 @@ export class FacturasComponent implements AfterViewInit{
 		limit : this.limit,
 		offset : this.offset,
 	}
-
-	this.api.select("factura","dropdown2", params).subscribe(res =>
+		this.selectedMode = 'proveedores';
+		this.api.select("factura","tableC", params).subscribe(res =>
 		{
 			this.p = res;
 			console.log(res)
@@ -51,7 +49,7 @@ export class FacturasComponent implements AfterViewInit{
 			  }
 		})
 		
-		this.api.select("factura","dropdown", params).subscribe(res =>
+		this.api.select("factura","tableP", params).subscribe(res =>
 		{
 				this.p = res;
 				console.log(res)
@@ -267,9 +265,13 @@ export class FacturasComponent implements AfterViewInit{
 		if (this.isProveedoresMode) {
 		  this.currentDataSource = this.dataSource;
 		  this.displayedColumns = ["codigofactura",'nombreproveedores', 'tipofactura']; // Columnas de proveedores
+		  this.currentDataSource.paginator = this.paginator;
+
 		} else {
 		  this.currentDataSource = this.dataSource2;
 		  this.displayedColumns = ["codigofactura",'nombreclientes', 'tipofactura']; // Columnas de clientes
+		  this.currentDataSource.paginator = this.paginator;
+
 		}
 		this.cdr.detectChanges()
 	  }

@@ -1,21 +1,52 @@
 <section class="agg-container">
-    <section class="form-card">
-        <h1>Agregar usuario</h1>
-        <p>En esta sección podrás agregar nuevos usuarios al sistema</p>
+    <section class="form-card" style="max-width: 65%;">
+            <h1>Agregar usuario</h1>
+            <p>En esta sección podrás agregar nuevos usuarios al sistema</p>
     
-        <div> 
           <form class="form-container" (ngSubmit)="onInsert()"  [formGroup]="articuloForm" method="post">
+            
+            <div>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                  <mat-label>Nombre Completo</mat-label>
+                  <input formControlName="nombreusuario" matInput placeholder="Ingrese nombre">
+                </mat-form-field>
+            </div>
+
+            <div class="cedula-container" style="display: flex; justify-content: flex-start;">
+                <mat-form-field style="max-width: 15%;" appearance="outline">
+                    <mat-select  [(value)]="opcionSeleccionada" formControlName = "prefijo">
+                        <mat-option *ngFor="let item of prefijos"  [value]="item">
+                            {{item}}
+                        </mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cédula de Identidad</mat-label>
+                        <input formControlName="cedulausuario" matInput placeholder="Ingrese cédula">
+                    </mat-form-field>
+                </div>
+
+                  
                   <mat-form-field appearance="outline">
-                    <mat-label>Nombre Completo</mat-label>
-                    <input formControlName="nombreusuario" matInput placeholder="Ingrese nombre">
+                    <mat-label>Teléfono</mat-label>
+                    <input formControlName="telefonousuario" matInput placeholder="Ingrese teléfono">
                   </mat-form-field>
-    
-                  <mat-form-field appearance="outline">
-                    <mat-label>Cédula de Identidad</mat-label>
-                    <input formControlName="cedulausuario" matInput placeholder="Ingrese cédula">
+                  
+
+                  
+                  
+                  <mat-form-field appearance="outline" style="max-width: 65%;">
+                    <mat-label>Correo Electrónico</mat-label>
+                    <input formControlName="correousuario" matInput placeholder="Ingrese correo">
                   </mat-form-field>
 
                   <mat-form-field appearance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input formControlName="contrasenausuario" matInput placeholder="Ingrese contraseña">
+                  </mat-form-field>
+                  
+                  <mat-form-field appearance="outline" style="max-width: 65%;">
                     <mat-label>Cargo</mat-label>
                     <mat-select  [(value)]="opcionSeleccionada" (selectionChange)="getDropdown()" formControlName = "cargousuario">
                       <mat-option *ngFor="let item of cargos"  [value]="item">
@@ -23,24 +54,8 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-
-                  <mat-form-field appearance="outline">
-                    <mat-label>Contraseña</mat-label>
-                    <input formControlName="contrasenausuario" matInput placeholder="Ingrese contraseña">
-                  </mat-form-field>
-
-                  <mat-form-field appearance="outline">
-                    <mat-label>Correo Electrónico</mat-label>
-                    <input formControlName="correousuario" matInput placeholder="Ingrese correo">
-                  </mat-form-field>
-
-                  <mat-form-field appearance="outline">
-                    <mat-label>Teléfono</mat-label>
-                    <input formControlName="telefonousuario" matInput placeholder="Ingrese teléfono">
-                  </mat-form-field>
-                  <button mat-raised-button type="submit">Agregar usuario</button>
-                </form>
-          </div>
+                      <button mat-raised-button type="submit">Agregar usuario</button>
+            </form>
     </section>
 </section>
 

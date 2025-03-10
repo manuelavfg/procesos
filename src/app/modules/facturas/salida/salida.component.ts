@@ -12,6 +12,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MomentDateModule } from '@angular/material-moment-adapter';
+import { Router } from '@angular/router';
 
 export interface ArticuloRecibo {
 	descripcionarticulo: any,  
@@ -20,18 +21,19 @@ export interface ArticuloRecibo {
 	costoarticulo: any,
 }
 
-
 @Component({
-  selector: 'app-registrar-entrada',
+  selector: 'app-salida',
   imports: [MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, CommonModule, MomentDateModule, MatDatepickerModule, MatTableModule],
-  templateUrl: './registrar-entrada.component.html',
-  styleUrl: './registrar-entrada.component.scss',
+  templateUrl: './salida.component.html',
+  styleUrl: './salida.component.scss'
 })
-export class RegistrarEntradaComponent {
+export class SalidaComponent {
+
     facturas : any[] = [];
     idfactura: any[] = [];
 
     proveedores: any[]=[]
+    idproveedores: any[]=[]
 
     productos: any[]=[]
     idproducto: any[]= []
@@ -56,13 +58,13 @@ export class RegistrarEntradaComponent {
       idarticulofactura : new FormControl('',[Validators.required]),
       idfactura: new FormControl('',[Validators.required]),
       fechaentrada: new FormControl('',[Validators.required]),
-      cantidadrecibo: new FormControl('',[Validators.required]),
+      cantidadrecibo: new FormControl('',[Validators.required,Validators.pattern(/^(0|[1-9]\d*)$/)]),
       idproveedor : new FormControl(''),
       idproveedorfactura : new FormControl(''),
       
     })
 
-      constructor(private api:APIService)
+      constructor(private api:APIService, private router: Router)
       {	
         let params =
         {
@@ -76,24 +78,21 @@ export class RegistrarEntradaComponent {
             {
               this.productos.push(i.descripcionarticulo)
               this.idproducto.push(i.idarticulo)
+
             }
     
     
         }})
         
-        this.api.select("factura", "dropdown",params).subscribe({next: res=>{
+        this.api.select("factura", "dropdown2",params).subscribe({next: res=>{
     
     
           for(let i of Object.values(res))
             {
-              this.facturas.push(i.nombreproveedores+" Factura: "+i.numerofactura)
+              this.facturas.push(i.nombreclientes+" Factura: "+i.numerofactura)
               this.idfactura.push(i.idfactura)
-              this.proveedores.push(i.idproveedores)
-              console.log(this.facturas)
-              console.log(this.idfactura)
+              this.proveedores.push(i.idcliente)
             }
-    
-    
         }})
 
       }
@@ -103,17 +102,16 @@ export class RegistrarEntradaComponent {
 
       agregarDato() 
       {
-        if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
         let i = {idarticulo: this.idproducto[this.indiceSeleccionado2]}
         let j = {idfactura: this.idfactura[this.indiceSeleccionado]}
-        let fechaValue = this.articuloForm.value.fechaentrada;
-        let fecha: Date = fechaValue ? new Date(fechaValue) : new Date();
+        let fecha:Date = new Date(this.articuloForm.value.fechaentrada as string)
         let fechaformateada = moment(fecha).format('DD-MM-YYYY')        
 
         this.api.select("articulo","factura", i).subscribe(res => 
         {
+          if(!this.articuloForm.valid){this.api.mostrarError("Error: Formulario Invalido"); return;}
           let p:any
-		      for(let value of Object.values(res))
+          for(let value of Object.values(res))
           {
               p = 
               {
@@ -135,8 +133,15 @@ export class RegistrarEntradaComponent {
 
       onInsert() 
       { 
-        if(this.dataSource.data.length == 0){alert("Error: Factura Vacia");return}
-        console.log("submit")
+        if(this.dataSource.data.length == 0){this.api.mostrarError("Error: Factura Vacia");return}
+        let p = 
+        {
+          
+          codigocuentascobrar: "CNT-00"+this.idfactura[this.indiceSeleccionado],
+          idcliente: this.proveedores[this.indiceSeleccionado],
+          idfactura: this.idfactura[this.indiceSeleccionado]
+          
+        }
         
         for(let i of this.dataSource.data)
           {
@@ -144,22 +149,16 @@ export class RegistrarEntradaComponent {
               console.log(res)
             })
           }
-          let p = 
+          this.api.insert("cuentasporcobrar", "add",p).subscribe(res=>
           {
-            codigocuentaspagar: "CNT-00"+this.idfactura[this.indiceSeleccionado],
-            idproveedor: this.proveedores[this.indiceSeleccionado],
-            idfactura: this.idfactura[this.indiceSeleccionado]
-            
-          }
-          this.api.insert("cuentasporpagar", "add",p).subscribe(res=>
-            {
               console.log(res)
-            })
+          })
           this.api.update("factura","update", {idfactura: this.idfactura[this.indiceSeleccionado], isregistrado: 1}).subscribe(res=>
-            {
-              console.log(res)
-            })
-
+          {
+                console.log(res)
+          })
+          this.api.mostrarExito("Operacion Exitosa")
+          this.router.navigate(['/factura']) 
       }
       
   
@@ -168,6 +167,7 @@ export class RegistrarEntradaComponent {
       if (this.opcionSeleccionada) {
         this.indiceSeleccionado = this.facturas.indexOf(this.opcionSeleccionada);
         console.log(this.indiceSeleccionado)
+        console.log(this.proveedores[this.indiceSeleccionado])
         } else {
         this.indiceSeleccionado = null;
         }
@@ -181,4 +181,6 @@ export class RegistrarEntradaComponent {
         this.indiceSeleccionado2 = null;
         }
     }
+
+
 }

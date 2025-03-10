@@ -19,7 +19,7 @@ export class ArticulosComponent implements AfterViewInit{
 	p:any;
 	limit = 50;
 	offset = 0;
-	displayedColumns: string[] = ['descripcionarticulo', 'tipoarticulo', 'existenciaarticulo', 'codigoarticulo', 'costoarticulo'];
+	displayedColumns: string[] = ['descripcionarticulo', 'tipoarticulo', 'existenciaarticulo', 'codigoarticulo', 'costoarticulo','entradaarticulo','salidaarticulo'];
 	dataSource! : MatTableDataSource<Articles>;
 	
 	onPageChange(event:PageEvent)

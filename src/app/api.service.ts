@@ -1,12 +1,30 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
+import { BienDialogComponent } from './shared/bien-dialog/bien-dialog.component';
 
 
 @Injectable({providedIn: 'root'})
 
 export class APIService {
 
+dialog = inject(MatDialog)
+
+     mostrarError(mensaje: string) {
+        this.dialog.open(ErrorDialogComponent, {
+          data: { message: mensaje },
+          width: '400px'
+        });
+      }
+
+      mostrarExito(mensaje: string) {
+        this.dialog.open(BienDialogComponent, {
+          data: { message: mensaje },
+          width: '400px'
+        });
+      }
 
 	private hideElementSubject= new BehaviorSubject<boolean>(this.getInitialState())
 	hideElement$ = this.hideElementSubject.asObservable();

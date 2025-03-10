@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, NgModule } from '@angular/core';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,36 +9,51 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLinkWithHref } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 
+
+
 @Component({
+    
   selector: 'app-log-in',
   imports: [MatFormFieldModule, MatInputModule, MatButtonModule,ReactiveFormsModule, CommonModule, RouterLinkWithHref, MatIconModule],
   templateUrl: './log-in.component.html',
-  styleUrl: './log-in.component.scss'
+  styleUrl: './log-in.component.scss',
+
+
 })
-export class LogInComponent {
+export class LogInComponent implements AfterViewInit {
 
-hide = true
+  hide = true
 
-  constructor(private api: APIService, private router: Router)
+  ngAfterViewInit(): void
   {
-
     if (typeof window !== 'undefined') {
       localStorage.clear()
     }
      else {
       console.log('You are on the server')
     }
+  }
+
+
+  constructor(private api: APIService, private router: Router)
+  {
+
+
 
   }
 
   loginForm =  new FormGroup({
-    correousuario : new FormControl('',[Validators.required,Validators.email]),
-    contrasenausuarios : new FormControl('',[Validators.required]),
+    correousuario : new FormControl('',[Validators.required,Validators.email,
+        Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/)]),
+
+        contrasenausuarios: new FormControl('',[Validators.required,
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/)]),
   })
 
 
 public login()
 {
+  if(!this.loginForm.valid){this.api.mostrarError("Error: Usuario o Contraseña incorrecta"); return;}
   this.api.insert("usuario","auth", this.loginForm.value).subscribe({next:(res)=>
   {
 
@@ -49,5 +64,7 @@ public login()
     this.router.navigate(['/home']) 
   }})
 }
+
+
 
 }

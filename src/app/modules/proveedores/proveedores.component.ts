@@ -7,6 +7,7 @@ import { APIService } from '../../api.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 
 export interface Proveedor
 {
@@ -38,7 +39,7 @@ export class ProveedoresComponent  {
 	@ViewChild(MatPaginator) paginator!: MatPaginator;
   
 
-  constructor(private api : APIService)
+  constructor(private api : APIService, private router: Router)
   {
     let p = 
     {

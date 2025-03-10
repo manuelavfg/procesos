@@ -37,6 +37,8 @@ constructor(private api: APIService)
       this.correo = a[0]['correoconfig']
       this.rif = a[0]['rifconfig']
       this.telefono = a[0]['telefonoconfig']
+
+      
   })
 }
 

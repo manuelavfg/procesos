@@ -11,6 +11,7 @@ import jspdf from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import { CommonModule } from '@angular/common';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -37,28 +38,19 @@ export class GenerarFacturaComponent {
   indiceSeleccionado2: any
 
   articuloForm =  new FormGroup({
-	selectedType: new FormControl('',[Validators.required]),
-    codigofactura : new FormControl('',[Validators.required]),
-	numerofactura : new FormControl('',[Validators.required]),
-    idproveedorfactura : new FormControl('',[Validators.required]),
-	idcliente: new FormControl('',[Validators.required]),
-    tipofactura : new FormControl('',[Validators.required]),
+	selectedType: new FormControl('1'),
+    codigofactura : new FormControl(''),
+	numerofactura : new FormControl(''),
+    idproveedorfactura : new FormControl(''),
+	idcliente: new FormControl(''),
+    tipofactura : new FormControl(''),
     idarticulofactura : new FormControl(),
   })
 
   
 
-	constructor(private api:APIService, private fb: FormBuilder)
+	constructor(private api:APIService, private router: Router)
 	{	
-		this.articuloForm = this.fb.group({
-			selectedType: new FormControl<string | null>('1', Validators.required),  // Valor inicial: Cliente
-			codigofactura: new FormControl<string | null>(null, Validators.required),
-			numerofactura: new FormControl<string | null>(null, Validators.required),
-			idproveedorfactura: new FormControl<string | null>(null, Validators.required),
-			idcliente: new FormControl<string | null>(null, Validators.required),
-			tipofactura: new FormControl<string | null>(''),
-			idarticulofactura: new FormControl<string | null>(null)
-		  });
 		let params =
 		{
 			limit:50
@@ -100,7 +92,7 @@ export class GenerarFacturaComponent {
 
 	onInsert() 
 	{ 
-		if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
+		if(!this.articuloForm.valid){this.api.mostrarError("Error: Formulario Invalido"); return;}
 
 		if(Number(this.articuloForm.value.selectedType) == 2)
 		{
@@ -131,7 +123,8 @@ export class GenerarFacturaComponent {
 					console.log(res);
 					
 				})
-
+                this.api.mostrarExito("Operacion Exitosa")
+                this.router.navigate(['/factura']) 
 			}
 		console.log(this.articuloForm.value)
 	}}

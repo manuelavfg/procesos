@@ -39,6 +39,16 @@
 						<th mat-header-cell *matHeaderCellDef> Precio </th>
 						<td mat-cell *matCellDef="let element"> {{element.costoarticulo}} </td>
 					</ng-container>
+
+                    <ng-container matColumnDef="entradaarticulo">
+						<th mat-header-cell *matHeaderCellDef> Fecha de entrada</th>
+						<td mat-cell *matCellDef="let element"> {{element.entradaarticulo}} </td>
+					</ng-container>
+
+                    <ng-container matColumnDef="salidaarticulo">
+						<th mat-header-cell *matHeaderCellDef> Fecha de salida </th>
+						<td mat-cell *matCellDef="let element"> {{element.salidaarticulo}} </td>
+					</ng-container>
 			
 					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -53,7 +63,5 @@
 			<div class="add-product">
 				<button  mat-raised-button><a href="/articulos/agregar-producto">Añadir producto</a></button>
 				<button  mat-raised-button><a href="/articulos/editar-producto">Editar producto</a></button>
-				<button  mat-raised-button><a href="/articulos/registrar-entrada">Registrar entrada</a></button>
-				<button  mat-raised-button><a href="/articulos/registrar-salida">Registrar salida</a></button>
 			</div>
 </section>

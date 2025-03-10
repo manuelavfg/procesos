@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { APIService } from '../../api.service';
 
 @Component({
   selector: 'app-home-page',
@@ -8,6 +9,19 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent {
+
+    nombre:any = ""
+
+    constructor(private api: APIService)
+    {
+        if (typeof window !== 'undefined' && localStorage !== undefined) 
+            {
+            let p = localStorage.getItem("cuenta")
+    
+            let a = p ? JSON.parse(p) : null;
+            this.nombre = a['nombreusuario']
+            }
+    }
 
   homepage = [
     {

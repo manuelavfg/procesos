@@ -9,6 +9,7 @@ import { MatOption, MatSelectModule } from '@angular/material/select';
 import jspdf from 'jspdf';
 import autoTable from 'jspdf-autotable'
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 
@@ -33,26 +34,26 @@ export class AggProductoComponent {
 		descripcionarticulo : new FormControl('',[Validators.required]),
 		idproveedor : new FormControl('',[Validators.required]),
 		tipoarticulo: new FormControl('',[Validators.required]),
-		existenciaarticulo : new FormControl('',[Validators.required]),
+		existenciaarticulo : new FormControl('',[Validators.required,Validators.pattern(/^(0|[1-9]\d*)$/)]),
 		codigoarticulo : new FormControl('',[Validators.required]),
-		costoarticulo : new FormControl('',[Validators.required]),
+		costoarticulo : new FormControl('',[Validators.required,Validators.pattern(/^\d+([.,]\d{1,2})?$/)]),
 	})
 
 	
 	
 	onInsert() 
 	{ 
-		if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
+		if(!this.articuloForm.valid){this.api.mostrarError("Error: Formulario Invalido"); return;}
 		this.articuloForm.value.idproveedor = this.idproveedor[this.indiceSeleccionado]
 		this.api.insert("articulo","add",  this.articuloForm.value).subscribe(res =>{
 			
 			console.log(res);
-			
+            this.api.mostrarExito("Operacion Exitosa")
+            this.router.navigate(['/articulos']) 
 		})
-		console.log(this.articuloForm.value)
 	}
 	
-	constructor(private api:APIService)
+	constructor(private api:APIService, private router: Router)
 	{	
 		let params =
 		{

@@ -18,17 +18,18 @@ export class AggProveedorComponent {
   constructor(private api: APIService){}
 
     articuloForm =  new FormGroup({
-      nombreproveedores : new FormControl('',[Validators.required]),
-      correoproveedores: new FormControl('',[Validators.required,Validators.email]),
-      rifproveedores: new FormControl('',[Validators.required]),
+      nombreproveedores : new FormControl('',[Validators.required, Validators.minLength(2), 
+        Validators.pattern(/^[A-Za-zÀ-ÿ\u00C0-\u017F\s'-]+$/)]),
+      correoproveedores: new FormControl('',[Validators.required,Validators.email,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/)]),
+      rifproveedores: new FormControl('',[Validators.required,Validators.pattern(/^[JVEPGC]-\d{8,9}-\d$/)]),
       direccionproveedores : new FormControl('',[Validators.required]),
-      telefonoproveedores : new FormControl('',[Validators.required]),
+      telefonoproveedores : new FormControl('',[Validators.required,Validators.pattern(/^(\+58[-\s.]?0?[24]\d{3}[-\s.]?\d{3}[-\s.]?\d{3}|0[24]\d{9})$/)]),
     })
 
 
     onInsert()
     {
-      if(!this.articuloForm.valid){alert("Error: Formulario Invalido"); return;}
+      if(!this.articuloForm.valid){this.api.mostrarError("Error: Formulario Invalido"); return;}
 
       this.api.insert("proveedores","add",  this.articuloForm.value).subscribe(res =>{
         
