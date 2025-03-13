@@ -1,0 +1,20 @@
+<mat-horizontal-stepper style="background-color:rgba(255, 0, 0, 0);">
+    <!-- Paso 1 -->
+    <mat-step style="width: 50%;">
+      <ng-template matStepLabel>Datos Personales</ng-template>
+      <app-generar-factura></app-generar-factura>
+    </mat-step>
+  
+    <!-- Paso 2 -->
+    <mat-step>
+      <ng-template matStepLabel>Datos de Contacto</ng-template>
+      <app-registrar-entrada></app-registrar-entrada>
+    </mat-step>
+    <!-- Paso 3 -->
+     
+    <mat-step>
+        <ng-template matStepLabel>Datos de Contacto</ng-template>
+        <app-registrar-entrada></app-registrar-entrada>
+      </mat-step>
+
+  </mat-horizontal-stepper>

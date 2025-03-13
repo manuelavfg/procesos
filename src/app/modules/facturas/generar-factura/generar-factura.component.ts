@@ -12,11 +12,14 @@ import autoTable from 'jspdf-autotable'
 import { CommonModule } from '@angular/common';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Router } from '@angular/router';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MomentDateModule } from '@angular/material-moment-adapter';
 
 
 @Component({
   selector: 'app-generar-factura',
-  imports: [ MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, CommonModule, MatOption, MatRadioModule],
+  imports: [ MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule,
+    MomentDateModule, MatDatepickerModule, CommonModule, MatOption, MatRadioModule],
   templateUrl: './generar-factura.component.html',
   styleUrl: './generar-factura.component.scss',
   providers: [provideNativeDateAdapter()],
@@ -27,6 +30,7 @@ export class GenerarFacturaComponent {
   proveedores : any[] = [];
   idproveedores:any[]=[]
   clientes : any[] = [];
+  hidden = true
   idclientes:any[]=[]
 
   tipos = ['COTIZACION', 'PROFORMA']
@@ -39,8 +43,9 @@ export class GenerarFacturaComponent {
 
   articuloForm =  new FormGroup({
 	selectedType: new FormControl('1'),
-    codigofactura : new FormControl(''),
-	numerofactura : new FormControl(''),
+    codigofactura : new FormControl('1234'),
+	numerofactura : new FormControl('1234'),
+    fechaemision: new FormControl(''),
     idproveedorfactura : new FormControl(''),
 	idcliente: new FormControl(''),
     tipofactura : new FormControl(''),
@@ -124,7 +129,7 @@ export class GenerarFacturaComponent {
 					
 				})
                 this.api.mostrarExito("Operacion Exitosa")
-                this.router.navigate(['/factura']) 
+                this.router.navigate(['/facturas']) 
 			}
 		console.log(this.articuloForm.value)
 	}}

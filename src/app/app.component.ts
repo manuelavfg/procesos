@@ -34,6 +34,7 @@ export const MY_DATE_FORMATS = {
 export class AppComponent {
   title = 'Sulmezuca';
   
+
   showAuditoria = false
   usuario = true;
 	showNav = true;

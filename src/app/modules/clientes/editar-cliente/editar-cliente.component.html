@@ -5,18 +5,23 @@
     
         <form class="form-container" (ngSubmit)="onInsert()"  [formGroup]="articuloForm" method="post">
 
-          
-          
-          <div class="form-container">
             
-                      <mat-form-field appearance="outline">
-                        <mat-label>Cliente</mat-label>
-                        <mat-select  [(value)]="opcionSeleccionada" (selectionChange)="getDropdown()" formControlName = "idclientes">
-                          <mat-option *ngFor="let nombre of nombres"  [value]="nombre">
-                            {{nombre}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field> 
+            <mat-form-field appearance="outline">
+                <mat-label>Cliente</mat-label>
+                <input type="text"
+                       placeholder="Cliente"
+                       aria-label="text"
+                       matInput
+                       [formControl]="cliente"
+                       [matAutocomplete]="auto">
+
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+                  <mat-option *ngFor="let option of filteredOptions | async; let i = index" [value]="option" [id]="'option-' + i">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field> 
+
             <mat-form-field appearance="outline">
               <mat-label>Nombre cliente</mat-label>
               <input formControlName="nombreclientes" matInput placeholder="Ingrese nombre">
@@ -24,7 +29,7 @@
 
             <mat-form-field appearance="outline">
               <mat-label>RIF / NIT</mat-label>
-              <input formControlName="rifclientes" matInput placeholder="Ingrese identificación">
+              <input readonly formControlName="rifclientes" matInput placeholder="Ingrese identificación">
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -42,7 +47,6 @@
               <input formControlName="correoclientes" matInput placeholder="Ingrese correo">
             </mat-form-field>
             <button mat-raised-button type="submit">Guardar cambios</button>
-          </div>
         </form>
     </section>
 </section>

@@ -5,20 +5,26 @@
 
     <div> 
       <form class="form-container" (ngSubmit)="onInsert()"  [formGroup]="articuloForm" method="post">
-             
-              <mat-form-field appearance="outline">
-                <mat-label>Usuario</mat-label>
-                <mat-select  [(value)]="opcionSeleccionada2" (selectionChange)="getDropdown2()" formControlName = "idusuario">
-                  <mat-option *ngFor="let item of usuarios"  [value]="item">
-                    {{item}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
 
-              <mat-form-field appearance="outline">
-                <mat-label>Nombre Completo</mat-label>
-                <input formControlName="nombreusuario" matInput placeholder="Ingrese nombre">
-              </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input type="text"
+                   placeholder="Usuario"
+                   aria-label="text"
+                   matInput
+                   [formControl]="usuario"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+              <mat-option *ngFor="let option of filteredOptions | async; let i = index" [value]="option" [id]="'option-' + i">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input formControlName="nombreusuario" matInput placeholder="Ingrese nombre">
+          </mat-form-field>
 
 
               <mat-form-field appearance="outline">

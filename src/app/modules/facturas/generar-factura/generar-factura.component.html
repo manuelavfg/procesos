@@ -11,6 +11,7 @@
             </div>
 
           <form class="form-container" (ngSubmit)="onInsert()" [formGroup]="articuloForm" method="post">
+
             <mat-form-field style="margin-right: 10px;" appearance="outline">
               <mat-label>{{ articuloForm.value.selectedType === '1' ? 'Cliente' : 'Proveedor' }}</mat-label>
               <mat-select [(value)]="opcionSeleccionada" 
@@ -28,12 +29,30 @@
                         <mat-option *ngFor="let tipo of tipos"  [value]="tipo">
                           {{tipo}}
                         </mat-option>
-                    </mat-select>                      
-                    </mat-form-field>  
+                    </mat-select>                 
+                </mat-form-field>  
+                    
 
-                    <div>
-                      <button mat-raised-button type="submit">Generar factura</button>
-                    </div>
+                    <mat-form-field *ngIf="articuloForm.value.selectedType !== '1'" appearance="outline">
+                        <mat-label>Numero</mat-label>
+                        <input formControlName="numerofactura" matInput placeholder="Ingrese Numero">
+                      </mat-form-field>
+
+                        <mat-form-field *ngIf="articuloForm.value.selectedType !== '1'" appearance="outline">
+                            <mat-label>Fecha de emision</mat-label>
+                            <input style="width: 180%;" matInput formControlName="fechaemision" [matDatepicker]="datepicker" />
+                            <mat-hint>DD/MM/AA</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker>
+                                <mat-datepicker-actions>
+                                    <button mat-button matDatepickerCancel>Cancel</button>
+                                    <button mat-raised-button matDatepickerApply>Apply</button>
+                                </mat-datepicker-actions>
+                            </mat-datepicker>
+                        </mat-form-field>
+                    
+                    <button mat-raised-button type="submit">Generar factura</button>
+
             </form>
           </div>
     </section>

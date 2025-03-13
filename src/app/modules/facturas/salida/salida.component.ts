@@ -55,8 +55,8 @@ export class SalidaComponent {
 
     articuloForm =  new FormGroup({
       idarticulo : new FormControl('',[Validators.required]),
-      idarticulofactura : new FormControl('',[Validators.required]),
-      idfactura: new FormControl('',[Validators.required]),
+      idarticulofactura : new FormControl(''),
+      idfacturarecibo: new FormControl('',[Validators.required]),
       fechaentrada: new FormControl('',[Validators.required]),
       cantidadrecibo: new FormControl('',[Validators.required,Validators.pattern(/^(0|[1-9]\d*)$/)]),
       idproveedor : new FormControl(''),
@@ -136,13 +136,12 @@ export class SalidaComponent {
         if(this.dataSource.data.length == 0){this.api.mostrarError("Error: Factura Vacia");return}
         let p = 
         {
-          
-          codigocuentascobrar: "CNT-00"+this.idfactura[this.indiceSeleccionado],
+        
           idcliente: this.proveedores[this.indiceSeleccionado],
           idfactura: this.idfactura[this.indiceSeleccionado]
           
         }
-        
+        this.articuloForm.value.idarticulo = this.idproducto[this.indiceSeleccionado2]    
         for(let i of this.dataSource.data)
           {
             this.api.insert("recibo","add", i).subscribe(res =>{
@@ -158,7 +157,7 @@ export class SalidaComponent {
                 console.log(res)
           })
           this.api.mostrarExito("Operacion Exitosa")
-          this.router.navigate(['/factura']) 
+          this.router.navigate(['/facturas']) 
       }
       
   

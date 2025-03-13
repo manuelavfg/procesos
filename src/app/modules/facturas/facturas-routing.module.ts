@@ -4,6 +4,7 @@ import { FacturasComponent } from './facturas.component';
 import { GenerarFacturaComponent } from './generar-factura/generar-factura.component';
 import { RegistrarEntradaComponent } from './registrar-entrada/registrar-entrada.component';
 import { SalidaComponent } from './salida/salida.component';
+import { FacturacionComponent } from './facturacion/facturacion.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,9 @@ const routes: Routes = [
     },  
     {
         path: 'generar-factura', component: GenerarFacturaComponent
+    },
+    {
+        path: 'facturacion', component: FacturacionComponent
     }
 
 ];

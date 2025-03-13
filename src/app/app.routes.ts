@@ -46,5 +46,8 @@ export const routes: Routes = [
     {
         path:'auth-codigo', loadComponent:()=> import('./pages/login/auth-codigo/auth-codigo.component').then(m=>m.AuthCodigoComponent),
     },
+    {
+        path:'facturacion', loadComponent:()=> import('./modules/facturas/facturacion/facturacion.component').then(m=>m.FacturacionComponent),
+    },
 
 ];

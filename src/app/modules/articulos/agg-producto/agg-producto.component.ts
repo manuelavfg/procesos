@@ -35,7 +35,7 @@ export class AggProductoComponent {
 		idproveedor : new FormControl('',[Validators.required]),
 		tipoarticulo: new FormControl('',[Validators.required]),
 		existenciaarticulo : new FormControl('',[Validators.required,Validators.pattern(/^(0|[1-9]\d*)$/)]),
-		codigoarticulo : new FormControl('',[Validators.required]),
+		codigoarticulo : new FormControl(''),
 		costoarticulo : new FormControl('',[Validators.required,Validators.pattern(/^\d+([.,]\d{1,2})?$/)]),
 	})
 
@@ -44,7 +44,8 @@ export class AggProductoComponent {
 	onInsert() 
 	{ 
 		if(!this.articuloForm.valid){this.api.mostrarError("Error: Formulario Invalido"); return;}
-		this.articuloForm.value.idproveedor = this.idproveedor[this.indiceSeleccionado]
+        this.articuloForm.value.idproveedor = this.idproveedor[this.indiceSeleccionado]
+
 		this.api.insert("articulo","add",  this.articuloForm.value).subscribe(res =>{
 			
 			console.log(res);
@@ -67,7 +68,6 @@ export class AggProductoComponent {
 				{
 					this.proveedores.push(i.nombreproveedores)
 					this.idproveedor.push(i.idproveedores)
-					console.log(this.proveedores)
 				}
 
 
@@ -75,6 +75,17 @@ export class AggProductoComponent {
 
 	}
 	
+
+    public getDropdown()
+    {
+      if (this.opcionSeleccionada) {
+        this.indiceSeleccionado = this.proveedores.indexOf(this.opcionSeleccionada);
+        console.log(this.idproveedor[this.indiceSeleccionado])
+        } else {
+        this.indiceSeleccionado = null;
+        }
+    }
+
 	public printTable() {
 		const doc = new jspdf('p', 'mm', 'a4');
 	

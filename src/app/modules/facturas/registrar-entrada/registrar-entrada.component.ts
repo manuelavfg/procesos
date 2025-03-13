@@ -24,7 +24,8 @@ export interface ArticuloRecibo {
 
 @Component({
   selector: 'app-registrar-entrada',
-  imports: [MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, CommonModule, MomentDateModule, MatDatepickerModule, MatTableModule],
+  imports: [MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, CommonModule, 
+    MomentDateModule, MatDatepickerModule, MatTableModule],
   templateUrl: './registrar-entrada.component.html',
   styleUrl: './registrar-entrada.component.scss',
 })
@@ -144,28 +145,27 @@ export class RegistrarEntradaComponent {
             this.api.insert("recibo","add", i).subscribe(res =>{
               console.log(res)
             })
-            this.api.update('articulo',"registrar",this.articuloForm.value).subscribe(res=>
-              {
+            this.articuloForm.value.idarticulo = this.idproducto[this.indiceSeleccionado2]    
+        this.api.update('articulo',"registrar",this.articuloForm.value).subscribe(res=>
+            {
                   console.log(res)
-              })
+            })
           }
           let p = 
           {
-            codigocuentaspagar: "CNT-00"+this.idfactura[this.indiceSeleccionado],
             idproveedor: this.proveedores[this.indiceSeleccionado],
-            idfactura: this.idfactura[this.indiceSeleccionado]
-            
+            idfactura: this.idfactura[this.indiceSeleccionado]            
           }
-          this.api.insert("cuentasporpagar", "add",p).subscribe(res=>
+          this.api.update("factura","update", {idfactura: this.idfactura[this.indiceSeleccionado], isregistrado: 0}).subscribe(res=>
             {
-              console.log(res)
+                console.log(res)
             })
-          this.api.update("factura","update", {idfactura: this.idfactura[this.indiceSeleccionado], isregistrado: 1}).subscribe(res=>
-            {
-              console.log(res)
-            })
+            this.api.insert("cuentasporpagar", "add",p).subscribe(res=>
+              {
+                console.log(res)
+              })
             this.api.mostrarExito("Operacion Exitosa")
-            this.router.navigate(['/factura']) 
+            this.router.navigate(['/facturas']) 
 
       }
       

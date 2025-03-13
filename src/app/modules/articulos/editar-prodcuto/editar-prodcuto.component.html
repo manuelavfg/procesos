@@ -5,14 +5,22 @@
       <form (ngSubmit)="onInsert()"  [formGroup]="articuloForm" method="post">
         <div class="form-container">
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Producto</mat-label>
-                    <mat-select  [(value)]="opcionSeleccionada" formControlName = "idarticulo">
-                      <mat-option *ngFor="let articulo of articulos"  [value]="articulo">
-                        {{articulo}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>            
+            <mat-form-field appearance="outline">
+                <mat-label>Producto</mat-label>
+                <input type="text"
+                       placeholder="Proveedor"
+                       aria-label="text"
+                       matInput
+                       [formControl]="producto"
+                       [matAutocomplete]="auto">
+
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+                  <mat-option *ngFor="let option of filteredOptions | async; let i = index" [value]="option" [id]="'option-' + i">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field> 
+ 
 
 
                   <mat-form-field appearance="outline">
@@ -26,10 +34,6 @@
                     <input formControlName="tipoarticulo" matInput placeholder="Ingrese unidad">
                   </mat-form-field>
 
-                  <mat-form-field appearance="outline">
-                    <mat-label>Código</mat-label>
-                    <input formControlName="codigoarticulo" matInput placeholder="Ingrese codigo">
-                  </mat-form-field> 
 
                   <mat-form-field appearance="outline">
                     <mat-label>Precio</mat-label>

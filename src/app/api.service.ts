@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
 import { BienDialogComponent } from './shared/bien-dialog/bien-dialog.component';
+import { ReportsDialogComponent } from './shared/reports-dialog/reports-dialog.component';
 
 
 @Injectable({providedIn: 'root'})
@@ -12,26 +13,43 @@ export class APIService {
 
 dialog = inject(MatDialog)
 
-     mostrarError(mensaje: string) {
+    mostrarError(mensaje: string) {
         this.dialog.open(ErrorDialogComponent, {
           data: { message: mensaje },
           width: '400px'
         });
-      }
+    }
 
-      mostrarExito(mensaje: string) {
+    mostrarExito(mensaje: string) {
         this.dialog.open(BienDialogComponent, {
           data: { message: mensaje },
           width: '400px'
         });
-      }
+    }
+
+
+    mostrarReporte(mensaje: string) 
+    {
+        this.dialog.open(ReportsDialogComponent, {
+          data: { message: mensaje },
+          width: '400px'
+        });
+    }
+
+
 
 	private hideElementSubject= new BehaviorSubject<boolean>(this.getInitialState())
 	hideElement$ = this.hideElementSubject.asObservable();
   
 
 	private getInitialState(): boolean {
-	  return localStorage.getItem('hideElement') === 'true';
+        if (typeof window !== 'undefined') {
+            console.log('we are running on the client')
+            return localStorage.getItem('hideElement') === 'true';
+        } else {
+            console.log('we are running on the server');
+            return false
+        }
 	}
   
 	setHideElement(value: boolean): void {
@@ -40,10 +58,15 @@ dialog = inject(MatDialog)
 	}
 
 	usuario:any
-	p: any;
 	clave:any
+    config:any
 	constructor(private http: HttpClient ) 
 	{
+        this.select('config','list',{limit:50}).subscribe(res=>{
+            let p:any
+            p = res
+            localStorage.setItem("config",JSON.stringify(p))
+        })
 	}
 	
 	recovery: any
@@ -58,6 +81,13 @@ dialog = inject(MatDialog)
 	{
 		return this.correo
 	}
+
+    sendconfig(){
+        let a:any
+        a = localStorage.getItem('config')
+        this.config = JSON.parse(a)
+        return this.config
+    }
 
 	getrecovery(data:any)
 	{

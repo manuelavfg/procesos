@@ -1,17 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
-import { MatOption, MatSelectModule } from '@angular/material/select';
+import { MatOption, MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { APIService } from '../../../api.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { startWith, map, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-editar-usuario',
-  imports: [ MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, CommonModule, MatOption],
+  imports: [ MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatAutocompleteModule, MatSelectModule, ReactiveFormsModule, CommonModule, MatOption],
   templateUrl: './editar-usuario.component.html',
   styleUrl: './editar-usuario.component.scss'
 })
@@ -19,7 +23,7 @@ export class EditarUsuarioComponent {
   idcargos: any[] = []
   cargos : any[] = [];
 
-  idusuarios: any[] = []
+  datos : any
   usuarios : any[] = [];
 
   displayedColumns: string[] = ['descripcionarticulo', 'tipoarticulo', 'existenciaarticulo', 'codigoarticulo', 'costoarticulo'];
@@ -27,11 +31,14 @@ export class EditarUsuarioComponent {
   opcionSeleccionada: any
   indiceSeleccionado: any
 
-  opcionSeleccionada2: any
-  indiceSeleccionado2: any
+  id:any
 
+  filteredOptions: any;
+  usuario = new FormControl('',[Validators.required]);
+
+  
   articuloForm =  new FormGroup({
-    idusuario : new FormControl('',[Validators.required]),
+    idusuario : new FormControl(''),
     nombreusuario : new FormControl('',[Validators.required, Validators.minLength(2), 
         Validators.pattern(/^[A-Za-zÀ-ÿ\u00C0-\u017F\s'-]+$/)]),
 
@@ -44,22 +51,44 @@ export class EditarUsuarioComponent {
         Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/)
     ]),
 
-    cedulausuario : new FormControl('',
-        [Validators.required, 
-        Validators.pattern('^\\d+$'),
-        Validators.maxLength(8),Validators.minLength(8)]),
-
     telefonousuario : new FormControl('',[Validators.required,
         Validators.pattern(/^(\+58[-\s.]?0?[24]\d{3}[-\s.]?\d{3}[-\s.]?\d{3}|0[24]\d{9})$/)]),
   })
 
   
+
+
+  ngOnInit() {
+    this.filteredOptions = this.usuario.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+  }
+
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.usuarios.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   
   onInsert() 
   {  
     if(!this.articuloForm.valid){this.api.mostrarError("Error: Formulario Invalido"); return;}
+    this.articuloForm.value.idusuario = this.id
     this.articuloForm.value.cargousuario = this.idcargos[this.indiceSeleccionado]
-    this.articuloForm.value.idusuario = this.idusuarios[this.indiceSeleccionado2]
     this.api.update("usuario","update",  this.articuloForm.value).subscribe(res =>{
       
       console.log(res);
@@ -86,6 +115,7 @@ export class EditarUsuarioComponent {
           this.idcargos.push(i.idpermiso)
           console.log(this.cargos)
         }
+        
 
 
     }})
@@ -93,11 +123,17 @@ export class EditarUsuarioComponent {
     this.api.select("usuario", "list",params).subscribe({next: res=>{
 
 
+        this.datos = res;
+
       for(let i of Object.values(res))
         {
           this.usuarios.push(i.nombreusuario)
-          this.idusuarios.push(i.idusuario)
-          console.log(this.usuarios)
+
+          console.log(this.datos)
+          this.filteredOptions = this.usuario.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filter(value || '')),
+          );
         }
 
 
@@ -115,14 +151,36 @@ export class EditarUsuarioComponent {
       }
   }
 
-  public getDropdown2()
-  {
-    if (this.opcionSeleccionada2) {
-      this.indiceSeleccionado2 = this.usuarios.indexOf(this.opcionSeleccionada2);
-      console.log(this.idusuarios[this.indiceSeleccionado2])
-      } else {
-      this.indiceSeleccionado2 = null;
-      }
+  onOptionSelected(event: MatAutocompleteSelectedEvent) {
+    // Obtener el valor seleccionado
+    const selectedValue = event.option.value;
+
+    // Obtener el índice de la opción seleccionada
+    const selectedIndex = this.datos[(this.usuarios.indexOf(selectedValue))]['idusuario'];
+    this.id = selectedIndex
+    console.log('Valor seleccionado:', selectedValue);
+    console.log('Índice seleccionado:', selectedIndex);
+
+    const usuarioSeleccionado = this.datos[this.usuarios.indexOf(selectedValue)];
+
+    this.articuloForm.patchValue({
+      nombreusuario: usuarioSeleccionado.nombreusuario,
+      contrasenausuario: usuarioSeleccionado.contrasenausuario,
+      correousuario: usuarioSeleccionado.correousuario,
+      telefonousuario: usuarioSeleccionado.telefonousuario,
+      cargousuario: usuarioSeleccionado.cargousuario
+    });
+
   }
+
+//   public getDropdown2()
+//   {
+//     if (this.opcionSeleccionada2) {
+//       this.indiceSeleccionado2 = this.usuarios.indexOf(this.opcionSeleccionada2);
+//       console.log(this.idusuarios[this.indiceSeleccionado2])
+//       } else {
+//       this.indiceSeleccionado2 = null;
+//       }
+//   }
 
 }

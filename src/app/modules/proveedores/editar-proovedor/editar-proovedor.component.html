@@ -4,21 +4,32 @@
       <h1>Editar proveedor</h1>
       <p>Actualiza la información de este proveedor.</p>
       <form class="form-container" (ngSubmit)="onInsert()"  [formGroup]="articuloForm" method="post">
-        <div class="form-container">
-                <mat-form-field appearance="outline">
-                    <mat-label>Proveedor</mat-label>
-                    <mat-select  [(value)]="opcionSeleccionada" (selectionChange)="getDropdown()" formControlName = "idproveedores">
-                      <mat-option *ngFor="let nombre of nombres"  [value]="nombre">
-                        {{nombre}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>    
+            <mat-form-field appearance="outline">
+                <mat-label>Proveedor</mat-label>
+                <input type="text"
+                       placeholder="Proveedor"
+                       aria-label="text"
+                       matInput
+                       [formControl]="proveedor"
+                       [matAutocomplete]="auto">
+
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+                  <mat-option *ngFor="let option of filteredOptions | async; let i = index" [value]="option" [id]="'option-' + i">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field> 
 
                   <mat-form-field appearance="outline">
                     <mat-label>Nombre</mat-label>
                     <input formControlName="nombreproveedores" matInput placeholder="Ingrese nombre">
                   </mat-form-field>
-    
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>RIF / NIT</mat-label>
+                    <input readonly formControlName="rifproveedores" matInput placeholder="Ingrese identificación">
+                  </mat-form-field>
+
                   <mat-form-field appearance="outline">
                     <mat-label>Teléfono</mat-label>
                     <input formControlName="telefonoproveedores" matInput placeholder="Ingrese teléfono">
@@ -35,7 +46,6 @@
                   </mat-form-field>
                   
                   <button mat-raised-button type="submit">Editar proveedor</button>
-                </div>
       </form>
     </section>
                 

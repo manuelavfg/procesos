@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ɵbypassSanitizationTrustResourceUrl } from '@angular/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -23,17 +23,33 @@ export class EditarConfigComponent {
     correoconfig : new FormControl('',[Validators.required,Validators.email,
         Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/)]),
 
+    direccionconfig: new FormControl("", [Validators.required,Validators.minLength(8)]),
+
     ivaconfig : new FormControl('',[Validators.required, Validators.pattern(/^(0|[1-9]\d*)([.,]\d{1,2})?$/)]),
 
     telefonoconfig : new FormControl('',[Validators.required,
         Validators.pattern(/^(\+58[-\s.]?0?[24]\d{3}[-\s.]?\d{3}[-\s.]?\d{3}|0[24]\d{9})$/)]),
-          
-    crltvfactura : new FormControl(),
-    crltvpresupuesto : new FormControl(),
   })
 
   constructor(private api: APIService, private router:Router)
   {
+    let p;
+    this.api.select('config','list',{limit:50}).subscribe({next:(res=>{
+
+        let p: any
+        p = res
+
+        this.articuloForm.patchValue({
+            nombreconfig: p[0]['nombreconfig'],
+            rifconfig: p[0]['rifconfig'],
+            tasaconfig: p[0]['tasaconfig'],
+            correoconfig: p[0]['correoconfig'],
+            ivaconfig: p[0]['ivaconfig'],
+            telefonoconfig: p[0]['telefonoconfig'],
+        })
+
+    })})
+    
   }
 
   onInsert()

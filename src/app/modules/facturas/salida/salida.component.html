@@ -22,7 +22,7 @@
           
           <mat-form-field appearance="outline">
             <mat-label>Factura</mat-label>
-            <mat-select  [(value)]="opcionSeleccionada" (selectionChange)="getDropdown()" formControlName = "idfactura">
+            <mat-select  [(value)]="opcionSeleccionada" (selectionChange)="getDropdown()" formControlName = "idfacturarecibo">
               <mat-option *ngFor="let factura of facturas"  [value]="factura">
                 {{factura}}
               </mat-option>
