@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { APIService } from '../../api.service';
+import { APIService } from '../../services/api.service';
 
 @Component({
   selector: 'app-home-page',

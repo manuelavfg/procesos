@@ -3,7 +3,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { APIService } from '../../api.service';
+import { APIService } from '../../services/api.service';
 import { RouterLinkWithHref } from '@angular/router';
 
 @Component({

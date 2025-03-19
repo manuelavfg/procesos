@@ -2,6 +2,13 @@
     <h1>Clientes</h1>
     <hr>
 
+    <div class="search-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Buscar artículo</mat-label>
+          <input matInput [(ngModel)]="searchTerm" (keyup)="applyFilter()" placeholder="Texto a buscar">
+        </mat-form-field>
+      </div>
+
     <div class="table-container">
       <table mat-table [dataSource]="dataSource">
                   
@@ -43,5 +50,6 @@
       <div class="add-product">
         <button  mat-raised-button><a href="/clientes/registrar-cliente">Registrar nuevo cliente</a></button>
         <button  mat-raised-button><a href="/clientes/editar-cliente">Editar cliente</a></button>
+        <button  mat-raised-button  style="margin-right: 10px">Generar Reporte</button>
       </div>
 </section>

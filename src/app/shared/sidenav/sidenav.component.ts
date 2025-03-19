@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon'
 import {MatButtonModule} from '@angular/material/button'
 import { CommonModule } from '@angular/common';
-import e from 'express';
-import { APIService } from '../../api.service';
+import { APIService } from '../../services/api.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -17,7 +17,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   mostrarAuditoria: boolean = false;
   private subscription!: Subscription;
 
-  constructor(private api: APIService){}
+  constructor(private api: APIService, public router: Router){}
 
   ngOnInit() {
 

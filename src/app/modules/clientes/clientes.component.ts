@@ -1,12 +1,14 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { APIService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { APIService } from '../../api.service';
+import { FormsModule, NgModel } from '@angular/forms';
+import { Router } from '@angular/router';
 
 export interface Clientes {
   nombreclientes: string;
@@ -19,7 +21,7 @@ export interface Clientes {
 
 @Component({
   selector: 'app-clientes',
-  imports: [ MatTableModule, MatPaginatorModule, MatButtonModule, MatIconModule, CommonModule, MatFormFieldModule, MatInputModule ],
+  imports: [ MatTableModule, MatPaginatorModule, MatButtonModule, FormsModule , MatIconModule, CommonModule, MatFormFieldModule, MatInputModule ],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.scss'
 })
@@ -55,6 +57,26 @@ export class ClientesComponent implements AfterViewInit {
 		})
 	}
 	
+
+    searchTerm: string = '';
+    
+      // Carga datos desde la API
+      loadData() {
+        let p = {searchTerm: this.searchTerm}
+        this.api.select("clientes","search",p).subscribe(res=>{
+            let a:any = res
+            this.dataSource.data = a
+			this.dataSource.paginator = this.paginator;
+
+        })
+
+      }
+    
+      // Aplica el filtro (llama a la API)
+      applyFilter() {
+        console.log(this.searchTerm)
+        this.loadData(); // Recarga datos con el término de búsqueda
+      }
 
 
 }

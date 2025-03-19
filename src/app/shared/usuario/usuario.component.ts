@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { APIService } from '../../api.service';
+import { APIService } from '../../services/api.service';
 import { Subscription } from 'rxjs';
 
 @Component({

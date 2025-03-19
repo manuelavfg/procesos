@@ -5,11 +5,8 @@
 		<div class="search-container">
 			<mat-form-field appearance="outline">
 			  <mat-label>Buscar artículo</mat-label>
-			  <input matInput>
+			  <input matInput [(ngModel)]="searchTerm" (keyup)="applyFilter()" placeholder="Texto a buscar">
 			</mat-form-field>
-			<div class="search-button">
-			  <button><mat-icon>search</mat-icon></button>
-			</div>
 		  </div>
 
 		<div class="table-container">
@@ -61,7 +58,9 @@
 			</div>
 
 			<div class="add-product">
-				<button  mat-raised-button><a href="/articulos/agregar-producto">Añadir producto</a></button>
-				<button  mat-raised-button><a href="/articulos/editar-producto">Editar producto</a></button>
+				<button  mat-raised-button style="color: black;" (click)="this.router.navigate(['/articulos/agregar-producto'])" >Añadir producto</button>
+				<button  mat-raised-button style="color: black;" (click)="this.router.navigate(['/articulos/editar-producto'])">Editar producto</button>
+                <button  mat-raised-button  style="margin-right: 10px">Generar Reporte</button>
+
 			</div>
 </section>

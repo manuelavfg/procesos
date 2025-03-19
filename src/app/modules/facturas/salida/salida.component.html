@@ -1,86 +1,98 @@
-<section class="salida-container">
-  <section class="form-card">
-      <h1>Registrar salida</h1>
-      <p>Completa los datos para retirar del stock.</p>
+<section class="entrada-container">
+    <section class="form-card">
+        <!-- FORMULARIO (Izquierda) -->
+        <div class="form-section">
+            <div style="padding-top: 0;padding-bottom: 15px;">
+                <button mat-raised-button (click)="retroceder()"> <mat-icon>arrow_back</mat-icon> Retroceder</button>
+            </div>
+            <div style="display: flex; gap:2rem; margin-bottom: 0.5rem;">
+            <div style="flex: 0 0 435px; padding-left: 16px;">
+                <h1>Registrar salida</h1>
+            </div>
+        </div>
 
-      <div class="form-container">
-        <form class="form-container" (ngSubmit)="onInsert()" [formGroup]="articuloForm" method="post">
-
+        <form class="form-container" [formGroup]="articuloForm" method="post">
           <mat-form-field appearance="outline">
             <mat-label>Producto</mat-label>
-            <mat-select  [(value)]="opcionSeleccionada2" (selectionChange)="getDropdown2()" formControlName = "idarticulo">
-              <mat-option *ngFor="let producto of productos"  [value]="producto">
+            <mat-select [(value)]="opcionSeleccionada2" (selectionChange)="getDropdown2()" formControlName="idarticulo">
+              <mat-option *ngFor="let producto of productos" [value]="producto">
                 {{producto}}
               </mat-option>
             </mat-select>
-          </mat-form-field>            
-          
-          <mat-form-field appearance="outline">
-            <mat-label>Cantidad a salir</mat-label>
-            <input matInput formControlName="cantidadrecibo" placeholder="Ingrese número">
           </mat-form-field>
-          
+  
           <mat-form-field appearance="outline">
-            <mat-label>Factura</mat-label>
-            <mat-select  [(value)]="opcionSeleccionada" (selectionChange)="getDropdown()" formControlName = "idfacturarecibo">
-              <mat-option *ngFor="let factura of facturas"  [value]="factura">
-                {{factura}}
-              </mat-option>
-            </mat-select>
+            <mat-label>Cantidad</mat-label>
+            <input type="number" matInput formControlName="cantidadrecibo" placeholder="Ingrese número">
           </mat-form-field>
-          
+  
+
+  
           <mat-form-field appearance="outline">
-            <mat-label>Fecha de Salida</mat-label>
-            <input matInput formControlName="fechaentrada" [matDatepicker]="datepicker" />
-            <mat-hint>DD/MM/AA</mat-hint>
+            <mat-label>Fecha de salida</mat-label>
+            <input matInput formControlName="entradaarticulo" [matDatepicker]="datepicker" />
+            <mat-hint>DD/MM/AAAA</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
             <mat-datepicker #datepicker>
-              <mat-datepicker-actions>
-                <button mat-button matDatepickerCancel>Cancel</button>
-                <button mat-raised-button matDatepickerApply>Apply</button>
-              </mat-datepicker-actions>
+                <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancelar</button>
+                    <button mat-raised-button matDatepickerApply>Seleccionar</button>
+                </mat-datepicker-actions>
             </mat-datepicker>
-          </mat-form-field>
+        </mat-form-field>
 
-          <div class="button-container">
-            <button mat-raised-button type="submit">Registrar entrada</button>
-          </div>
-        </form>
-        <div class="button-container">
-          <button mat-raised-button (click)="agregarDato()">Añadir producto a lista</button>
+        <mat-checkbox (change)="onCheckboxChange($event)" formControlName="esexento" [(ngModel)]="isChecked"  color="primary">
+            Exento
+        </mat-checkbox>
+
+        <div>
+            <button style="width: 250px;" mat-raised-button (click)="agregarDato()">Añadir a factura</button>
         </div>
-      </div>
-    </section>
-    <div class="table-container">
-      <table mat-table [dataSource]="dataSource">
-                  
-        <ng-container matColumnDef="descripcionarticulo">
-          <th mat-header-cell *matHeaderCellDef> Descripción </th>
-          <td mat-cell *matCellDef="let element">{{element.descripcionarticulo}}</td>
-        </ng-container>
+        </form>
+</div>
+    <mat-divider style="height: auto; padding: 0 0 0 0;" [vertical]="true"></mat-divider>
     
-        <ng-container matColumnDef="tipoarticulo">
-          <th mat-header-cell *matHeaderCellDef> Unidad </th>
-          <td mat-cell *matCellDef="let element">{{element.tipoarticulo}}</td>
-        </ng-container>
-    
-        <ng-container matColumnDef="existenciaarticulo">
-          <th mat-header-cell *matHeaderCellDef> Existencia </th>
-          <td mat-cell *matCellDef="let element">{{element.existenciaarticulo}}</td>
-        </ng-container>
+      <!-- TABLA (Derecha) -->
+      <div class="table-section">
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="descripcionarticulo">
+              <th style="width: 20%;" mat-header-cell *matHeaderCellDef> Descripción </th>
+              <td mat-cell *matCellDef="let element">{{element.descripcionarticulo}}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="tipoarticulo">
+              <th style="width: 20%;"  mat-header-cell *matHeaderCellDef> Unidad </th>
+              <td mat-cell *matCellDef="let element">{{element.tipoarticulo}}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="cantidadrecibo">
+              <th style="width: 20%;"  mat-header-cell *matHeaderCellDef> Cantidad </th>
+              <td mat-cell *matCellDef="let element">{{element.cantidadrecibo}}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="costoarticulo">
+              <th style="width: 20%;"  mat-header-cell *matHeaderCellDef> Precio </th>
+              <td mat-cell *matCellDef="let element">{{element.costoarticulo}}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="entradaarticulo">
+              <th style="width: 20%;"  mat-header-cell *matHeaderCellDef> Fecha de Salida </th>
+              <td mat-cell *matCellDef="let element">{{element.entradaarticulo}}</td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+          </table>
+        </div>
+        
+        <button mat-raised-button 
+        (click)="avanzar()" 
+        class="icon-right" style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-left: auto; width: auto; margin-right: 1rem;">
+            <span>Siguente</span>
+            <mat-icon style="order: 2;">arrow_forward</mat-icon>
+        </button>
 
-        <ng-container matColumnDef="costoarticulo">
-          <th mat-header-cell *matHeaderCellDef> Precio </th>
-          <td mat-cell *matCellDef="let element">{{element.costoarticulo}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="entradaarticulo">
-          <th mat-header-cell *matHeaderCellDef> Fecha de entrada </th>
-          <td mat-cell *matCellDef="let element">{{element.fechaentrada}}</td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnas"></tr>
-      </table>
     </div>
-
+    </section>
+  </section>

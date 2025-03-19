@@ -4,13 +4,13 @@
         <p>Completa los datos de la factura para registrarla en el sistema.</p>
         <div>
             <div [formGroup]="articuloForm" style="padding-bottom: 20px;">  
-              <mat-radio-group formControlName="selectedType" aria-label="Select an option">
+              <mat-radio-group formControlName="selectedType" (change)="enviaMensaje()" aria-label="Select an option">
                 <mat-radio-button value="1">Cliente</mat-radio-button>
                 <mat-radio-button value="2">Proveedor</mat-radio-button>
               </mat-radio-group>
             </div>
-
-          <form class="form-container" (ngSubmit)="onInsert()" [formGroup]="articuloForm" method="post">
+            
+          <form class="form-container" [formGroup]="articuloForm" method="post">
 
             <mat-form-field style="margin-right: 10px;" appearance="outline">
               <mat-label>{{ articuloForm.value.selectedType === '1' ? 'Cliente' : 'Proveedor' }}</mat-label>
@@ -51,9 +51,9 @@
                             </mat-datepicker>
                         </mat-form-field>
                     
-                    <button mat-raised-button type="submit">Generar factura</button>
-
-            </form>
+                        
+                    </form>
+                    <button style="margin-left: 65%; margin-top: 20px;" mat-raised-button (click)="avanzar()" >Siguente <mat-icon style="order: 2; margin-left: 10px;">arrow_forward</mat-icon> </button>
           </div>
     </section>
 </section>

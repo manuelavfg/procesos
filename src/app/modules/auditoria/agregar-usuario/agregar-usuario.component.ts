@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatOption, MatSelectModule } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { APIService } from '../../../api.service';
+import { APIService } from '../../../services/api.service';
 import { Router } from '@angular/router';
 
 @Component({

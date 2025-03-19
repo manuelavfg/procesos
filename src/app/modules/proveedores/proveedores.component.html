@@ -1,16 +1,13 @@
 <section class="proveedores-container">
   <h1>Proveedores</h1>
   <hr>
-
+  
   <div class="search-container">
     <mat-form-field appearance="outline">
       <mat-label>Buscar artículo</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="searchTerm" (keyup)="applyFilter()" placeholder="Texto a buscar">
     </mat-form-field>
-    <div class="search-button">
-      <button><mat-icon>search</mat-icon></button>
-    </div>
-    </div>
+  </div>
 
   <div class="table-container">
       <table mat-table [dataSource]="dataSource">

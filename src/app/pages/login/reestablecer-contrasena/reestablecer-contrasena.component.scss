@@ -6,6 +6,16 @@
     margin-left: 3.5rem;
     margin-top: 2rem;
 
+    .image{
+        width: 100%;
+        height: 150px;
+        background-image: url('/assets/img/sumelzucalogo.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-bottom: 1rem;
+    }
+
     .form-card{
         background-color: white;
         margin-top: 2rem;

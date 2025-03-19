@@ -3,7 +3,7 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { APIService } from '../../../api.service';
+import { APIService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-detalles-del-proovedor',

@@ -5,7 +5,7 @@ import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOption, MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { APIService } from '../../../api.service';
+import { APIService } from '../../../services/api.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({

@@ -5,7 +5,7 @@ import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { APIService } from '../../../api.service';
+import { APIService } from '../../../services/api.service';
 import { Router, RouterLinkWithHref } from '@angular/router';
 
 @Component({

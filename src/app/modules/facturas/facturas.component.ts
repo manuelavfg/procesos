@@ -1,17 +1,19 @@
 import { Component, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import jspdf from 'jspdf';
-import autoTable from 'jspdf-autotable'
-import { APIService } from '../../api.service';
+import { APIService } from '../../services/api.service';
 import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { Router } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-facturasProveedores',
-  imports: [ MatPaginator, MatPaginatorModule, MatButtonModule, MatTableModule, MatIconModule, MatButtonToggleModule],
+  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, MatButtonToggleModule, FormsModule, MatIconModule, MatFormFieldModule, MatInputModule, CommonModule],
   templateUrl: './facturas.component.html',
   styleUrl: './facturas.component.scss',
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'ja-JP'}]
@@ -25,12 +27,12 @@ export class FacturasComponent implements AfterViewInit{
   selectedMode: string = 'proveedores';
   isProveedoresMode: boolean = true; // Modo inicial
 
-  currentDataSource!: MatTableDataSource<any>
-  dataSource! : MatTableDataSource<FacturasProveedores>;
-  dataSource2! : MatTableDataSource<FacturasClientes>;
+  currentDataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<FacturasProveedores>();
+  dataSource2 = new MatTableDataSource<FacturasClientes>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private api: APIService,private cdr: ChangeDetectorRef){	
+  constructor(private api: APIService,private cdr: ChangeDetectorRef, public router: Router){	
 	let p;
 	let params= 
 	{
@@ -86,6 +88,43 @@ export class FacturasComponent implements AfterViewInit{
 		}
 		this.cdr.detectChanges()
 	  }
+
+
+
+
+      searchTerm: string = '';
+    
+      // Carga datos desde la API
+      loadData() {
+        if(this.selectedMode == "proveedores")
+            {
+                let p = {searchTerm: this.searchTerm}
+                this.api.select("articulo","search",p).subscribe(res=>{
+                    let a:any = res
+                    this.dataSource.data = a
+                    this.dataSource.paginator = this.paginator;
+                })
+            }
+        else
+        {
+            let p = {searchTerm: this.searchTerm}
+            this.api.select("articulo","search",p).subscribe(res=>{
+                let a:any = res
+                this.dataSource.data = a
+                this.dataSource.paginator = this.paginator;
+            })
+        }
+
+      }
+    
+      // Aplica el filtro (llama a la API)
+      applyFilter() {
+        console.log(this.searchTerm)
+        this.loadData(); // Recarga datos con el término de búsqueda
+      }
+
+
+
 }
 
 export interface FacturasProveedores {

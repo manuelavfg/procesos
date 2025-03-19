@@ -3,11 +3,12 @@ import {MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/pag
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { APIService } from '../../api.service';
+import { APIService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 export interface Proveedor
 {
@@ -18,7 +19,7 @@ export interface Proveedor
 
 @Component({
   selector: 'app-proveedores',
-  imports: [ MatTableModule, MatPaginatorModule, MatButtonModule, MatIconModule, CommonModule, MatFormFieldModule, MatInputModule ],
+  imports: [ MatTableModule, MatPaginatorModule, FormsModule ,MatButtonModule, MatIconModule, CommonModule, MatFormFieldModule, MatInputModule ],
   templateUrl: './proveedores.component.html',
   styleUrl: './proveedores.component.scss'
 })
@@ -55,5 +56,25 @@ export class ProveedoresComponent  {
     
   }
 
+
+  searchTerm: string = '';
+    
+  // Carga datos desde la API
+  loadData() {
+    let p = {searchTerm: this.searchTerm}
+    this.api.select("proveedores","search",p).subscribe(res=>{
+        let a:any = res
+        this.dataSource.data = a
+        this.dataSource.paginator = this.paginator;
+
+    })
+
+  }
+
+  // Aplica el filtro (llama a la API)
+  applyFilter() {
+    console.log(this.searchTerm)
+    this.loadData(); // Recarga datos con el término de búsqueda
+  }
 
 }

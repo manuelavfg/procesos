@@ -3,7 +3,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { APIService } from '../../../api.service';
+import { APIService } from '../../../services/api.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatOption, MatSelectModule } from '@angular/material/select';
 import jspdf from 'jspdf';

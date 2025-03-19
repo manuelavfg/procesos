@@ -1,6 +1,13 @@
 <section class="auditoria-container">
     <h1>Auditoría</h1>
     <hr>
+    
+    <div class="search-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Buscar artículo</mat-label>
+          <input matInput [(ngModel)]="searchTerm" (keyup)="applyFilter()" placeholder="Texto a buscar">
+        </mat-form-field>
+      </div>
 
 		<div class="table-container">
       <table mat-table [dataSource]="dataSource">

@@ -15,14 +15,14 @@ export class ReporteService {
     {
             let p = this.api.sendconfig()
             const doc = new jspdf('p', 'mm', 'a4');
-            doc.setFont("Calibri", "normal");
+            doc.setFont("Calibri");
             console.log(p)
             const empresa = { 
                 nombre: p[0]['nombreconfig'],
                 rif: p[0]['rifconfig'],
-                direccion: "Sector La Picola, Av. 15K con calle 43\nC.C La Cascada, Oficina 10-PA. Maracaibo, Zulia.",
+                direccion: p[0]['dirconfig'],
                 telefono: "(+58) "+p[0]['telefonoconfig'],
-                email: p[0]['emailconfig'],
+                email: p[0]['correoconfig'],
                 logo: '/assets/img/sumelzucalogo.png' // URL del logo
             };
 
@@ -86,9 +86,11 @@ export class ReporteService {
                 let xPosition = 120;
                 // Detalles de la empresa
                 doc.setFontSize(10);
-                doc.text(`${empresa.nombre}`, xPosition, yPosition), {align: "rigth"};
-                doc.text(`Dirección: ${empresa.direccion}`, xPosition, yPosition+incremento), {align: "rigth", maxWidth: 40};
-                doc.text(`Email: ${empresa.email} / Telf: ${empresa.telefono}`, xPosition, yPosition + incremento*3), {align: "rigth"};
+                const textoNotas = `Dirección: ${empresa.direccion}`
+                doc.text(`${empresa.nombre}`, xPosition, yPosition), {align: "right"};
+                doc.text(textoNotas, xPosition,  yPosition+incremento, { align: "justify" , maxWidth: 75});
+
+                doc.text(`Email: ${empresa.email} / Telf: ${empresa.telefono}`, xPosition, yPosition + incremento*3), {align: "right"};
         
                 // 3. LADO DERECHO (INFORMACIÓN DE LA FACTURA)
                 doc.setFontSize(14);
@@ -125,8 +127,8 @@ export class ReporteService {
                                 [i.descripcionarticulo,
                                 i.tipoarticulo,
                                 i.cantidadrecibo,
-                                i.preciorecibo,
-                                (i.cantidadrecibo * i.preciorecibo)
+                                "$"+i.preciorecibo,
+                               "$"+(i.cantidadrecibo * i.preciorecibo)
                                 ]
                             );
                             console.log(datos)

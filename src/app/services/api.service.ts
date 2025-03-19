@@ -2,9 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
-import { BienDialogComponent } from './shared/bien-dialog/bien-dialog.component';
-import { ReportsDialogComponent } from './shared/reports-dialog/reports-dialog.component';
+import { ErrorDialogComponent } from '../shared/error-dialog/error-dialog.component';
+import { BienDialogComponent } from '../shared/bien-dialog/bien-dialog.component';
+import { ReportsDialogComponent } from '../shared/reports-dialog/reports-dialog.component';
 
 
 @Injectable({providedIn: 'root'})
@@ -62,11 +62,6 @@ dialog = inject(MatDialog)
     config:any
 	constructor(private http: HttpClient ) 
 	{
-        this.select('config','list',{limit:50}).subscribe(res=>{
-            let p:any
-            p = res
-            localStorage.setItem("config",JSON.stringify(p))
-        })
 	}
 	
 	recovery: any
@@ -83,6 +78,11 @@ dialog = inject(MatDialog)
 	}
 
     sendconfig(){
+        this.select('config','list',{limit:50}).subscribe(res=>{
+            let p:any
+            p = res
+            localStorage.setItem("config",JSON.stringify(p))
+        })
         let a:any
         a = localStorage.getItem('config')
         this.config = JSON.parse(a)
@@ -112,7 +112,6 @@ dialog = inject(MatDialog)
 		
 		
 		let url: string = "https://localhost/SUMELZUCA/Controlador/api.php/"+tabla+"/"+metodo+"?"+httpParams;
-		console.log(url)
 		return this.http.get(url);
 	}	
 	
@@ -134,7 +133,7 @@ dialog = inject(MatDialog)
 		
 		
 		let url: string = "https://localhost/SUMELZUCA/Controlador/api.php/"+tabla+"/"+metodo+"?"+httpParams;
-		console.log(url);
+
 		return this.http.post(url, params);
 	}
 	

@@ -3,7 +3,7 @@ import { AfterViewInit, Component, NgModule } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { APIService } from '../../api.service';
+import { APIService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLinkWithHref } from '@angular/router';

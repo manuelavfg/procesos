@@ -1,55 +1,54 @@
 <section class="sidenav-container">
-  <div class="img"></div>
+        <div (click)="this.router.navigate(['/home'])" class="img" style="cursor: pointer;"> </div>
   
   <nav>
     <ul>
       <li>
-        <a href="/home">
+        <a (click)="this.router.navigate(['/home'])">
           <mat-icon>home</mat-icon> 
           Inicio
         </a>
       </li>
       <li>
-        <a href="/articulos">
+        <a (click)="this.router.navigate(['/articulos'])">
           <mat-icon>dvr</mat-icon> 
           Artículos
         </a>
       </li>
       <li>
-        <a href="/facturas">
+        <a (click)="this.router.navigate(['/facturas'])">
           <mat-icon>note</mat-icon> 
           Factura
         </a>
       </li>
-      <li><a href="/proveedores">
+      <li><a (click)="this.router.navigate(['/proveedores'])">
         <mat-icon>supervised_user_circle</mat-icon> 
         Proveedores
       </a>
     </li>
       <li>
-        <a href="/clientes">
+        <a (click)="this.router.navigate(['/clientes'])">
           <mat-icon>supervised_user_circle</mat-icon> 
           Clientes
         </a>
       </li>
       <li>
         <div class="dropdown">
-          <mat-icon>expand_more</mat-icon>
-          <button class="dropdown-btn" (click)="toggleDropdown()">Cuentas</button>
+          <button class="dropdown-btn" (click)="toggleDropdown()"><mat-icon>expand_more</mat-icon>Cuentas</button>
         </div>
         <ul class="dropdown-menu" [class.show]="dropdownOpen">
-          <li class="dropdown-list"><a href="/cuentas-por-pagar">Cuentas por pagar</a></li>
-          <li class="dropdown-list"><a href="/cuentas-por-cobrar">Cuentas por cobrar</a></li>
+          <li class="dropdown-list"><a (click)="this.router.navigate(['/cuentas-por-pagar'])">Cuentas por pagar</a></li>
+          <li class="dropdown-list"><a (click)="this.router.navigate(['/cuentas-por-cobrar'])">Cuentas por cobrar</a></li>
         </ul>
       </li>
       <li *ngIf="mostrarAuditoria">
-        <a href="/auditoria">
+        <a (click)="this.router.navigate(['/auditoria'])">
           <mat-icon>supervisor_account</mat-icon> 
           Auditoría
         </a>
       </li>
       <li>
-        <a href="/configuracion">
+        <a (click)="this.router.navigate(['/configuracion'])">
           <mat-icon>settings</mat-icon>
           Configuración</a>
       </li>
