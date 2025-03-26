@@ -67,8 +67,18 @@ export class FacturasComponent implements AfterViewInit{
 	}
 
     abrirReporte()
-    {
-        this.api.mostrarReporte("asdasdasd")
+    { 
+        let p:any;
+        let params= 
+        {
+            limit : this.limit,
+        }
+        if(this.selectedMode == 'proveedores')
+            {
+                p = {label:"Factura", tabla:'factura', metodo:'tableP', params:params, busqueda:'codigofactura'}
+            }
+        else{ p = {label:"Factura", tabla:'factura', metodo:'tableC', params:params, busqueda:'codigofactura'}}
+        this.api.mostrarReporte(p)
     }
 
 

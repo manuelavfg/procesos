@@ -21,10 +21,12 @@ export interface ArticuloRecibo {
     idarticulo:any
 	descripcionarticulo: any,  
 	tipoarticulo: any,
-	existenciaarticulo: any,
+	cantidadrecibo: any,
 	costoarticulo: any,
+    entradaarticulo:any,
+    esexento:any,
+    escompra:any
 }
-
 
 
 @Component({
@@ -79,9 +81,12 @@ export class FacturacionComponent
                     cantidadrecibo: i.cantidadrecibo,
                     costoarticulo: i.costoarticulo,
                     idarticulo: i.idarticulo,
-                    idfactura: a
+                    idfactura: a,
+                    escompra: i.escompra,
+                    esexento: i.esexento
                 }
                 this.api.insert("recibo","add", j).subscribe()
+                i.entradaarticulo = moment(i.entradaarticulo, 'DD-MM-YYYY').format('YYYY-MM-DD')
                 this.api.update('articulo',"salida", i).subscribe()
             }
 
@@ -100,6 +105,7 @@ export class FacturacionComponent
 
     generarEntrada()
     {
+
         let a:any
         let b:any
         if(this.dataTabla.data.length == 0){this.api.mostrarError("Error: Factura Vacia");return}
@@ -117,9 +123,13 @@ export class FacturacionComponent
                     cantidadrecibo: i.cantidadrecibo,
                     costoarticulo: i.costoarticulo,
                     idarticulo: i.idarticulo,
-                    idfactura: a
+                    idfactura: a,
+                    escompra: i.escompra,
+                    esexento: i.esexento
                 }
+                i.entradaarticulo
                 this.api.insert("recibo","add", j).subscribe()
+                i.entradaarticulo = moment(i.entradaarticulo, 'DD-MM-YYYY').format('YYYY-MM-DD')
                 this.api.update('articulo',"registrar", i).subscribe()
             }
 

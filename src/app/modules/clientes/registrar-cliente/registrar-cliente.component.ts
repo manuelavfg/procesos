@@ -24,7 +24,7 @@ export class RegistrarClienteComponent
 		rifclientes: new FormControl('',[Validators.required,Validators.pattern(/^[JVEPGC]-\d{8,9}-\d$/)]),
 		telefonoclientes: new FormControl('',[Validators.required,
             Validators.pattern(/^(\+58[-\s.]?0?[24]\d{3}[-\s.]?\d{3}[-\s.]?\d{3}|0[24]\d{9})$/)]),
-		direccionclientes : new FormControl(''),
+		direccionclientes : new FormControl('', [Validators.required]),
 		correoclientes : new FormControl('',[Validators.required,Validators.email,
             Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/)
         ]),
@@ -34,7 +34,11 @@ export class RegistrarClienteComponent
   
   onInsert()
   {
-    if(this.articuloForm.valid){this.api.mostrarError("Formulario invalido")}
+        const regex = /^[JVEPGC]-\d{8,9}-\d$/;
+        console.log(regex.test('J-50206515-6'));
+      console.log(this.articuloForm.value.rifclientes)
+    if(!this.articuloForm.valid){this.api.mostrarError("Formulario invalido"); return}
+    this.api.mostrarExito("Operacion Exitosa")
     this.api.insert("clientes", "add", this.articuloForm.value).subscribe({next: res=>
       {
 

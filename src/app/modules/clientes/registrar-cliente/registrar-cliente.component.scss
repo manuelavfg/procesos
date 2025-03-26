@@ -1,35 +1,63 @@
-.client-container{
-    width: 80%;
-    display: grid;
+.client-container {
+    display: flex;
     place-content: center;
     height: 90vh;
     margin-left: 3.5rem;
-    margin-top: 2rem;
+    margin-top: 4rem;
 
-    .form-card{
+    .form-card {
         background-color: white;
         margin-top: 2rem;
         padding: 2rem;
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        max-width: 800px;       // Limita el ancho máximo
+        width: 100%;            // Ocupa el 100% del contenedor hasta el máximo
+        box-sizing: border-box; // Evita overflow por padding
+        max-height: 500px;
 
-        h1{
+
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;  // Centrado horizontal
+        }
+
+        button[mat-raised-button] {
+            margin-top: 10px;
+            width: auto;         // Ancho según contenido
+            padding: 0 2rem;     // Espaciado horizontal
+        }
+
+
+        h1 {
             font-size: 1.5rem;
             color: #333;
             margin-bottom: 0;
         }
 
-        p{
+        p {
             font-size: 1rem;
             color: #666;
             margin-bottom: 1rem;
         }
 
-        .form-container{
+        .form-container {
             display: grid;
-            grid-template-columns: 2fr 2fr;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 1rem;
+
+
+            .email-field {
+                grid-column: span 2; // Ocupa 2 columnas
+                
+                mat-form-field {
+                    width: 100%;
+                }
+            }
+
+
         }
     }
-
 }

@@ -35,7 +35,7 @@ export class ClientesComponent implements AfterViewInit {
   dataSource! : MatTableDataSource<Clientes>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
-  constructor(private api: APIService)
+  constructor(private api: APIService, public router: Router)
   {	
     
   }    
@@ -78,6 +78,17 @@ export class ClientesComponent implements AfterViewInit {
         this.loadData(); // Recarga datos con el término de búsqueda
       }
 
+      abrirReporte()
+      { 
+          let p:any;
+          let params= 
+          {
+              limit : this.limit,
+          }
+
+           p = {label:"Clientes", tabla:'clientes', metodo:'list', params:params, busqueda:'nombreclientes'}
+          this.api.mostrarReporte(p)
+      }
 
 }
 

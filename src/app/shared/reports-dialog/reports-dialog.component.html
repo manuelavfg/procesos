@@ -1,39 +1,100 @@
-<h2 mat-dialog-title>Generar Reporte</h2>
+<h2 mat-dialog-title style="justify-content: center; display: flex; margin-top: 20px;">Generar Reporte</h2>
 <mat-dialog-content class="mat-typography">
-    <h3>Seleccionar {{label}}</h3>
-    <mat-form-field appearance="outline">
-        <!-- seccion de seleccion principal -->
-        <mat-label>{{label}}</mat-label>
+    
+        <!-- seccion de filtrado/tipo de reporte -->
+         <div style=" justify-content: center; display: flex; flex-direction: column; align-items: center;">
+             <h3>Seleccionar tipo de reporte</h3>
+             <mat-form-field style="width: 300px;" appearance="outline">  
+                 <mat-label>Tipo de Reporte</mat-label>
+                 <mat-select (selectionChange)="onSelectionChange($event)">
+                     <mat-option *ngFor="let option of data.options" [value]="option">
+                         {{option}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="filteroption" style=" margin-bottom: 20px ;justify-content: center; display: flex; flex-direction: column; align-items: center;">
+                <h3>Seleccionar {{data.label}}</h3>
+                <mat-form-field style="width: 300px;" appearance="outline">
+                    <mat-label>{{data.label}}</mat-label>
         <input type="text"
-               placeholder= {{label}}
+        placeholder= {{data.label}}
                aria-label="text"
+               matAutocompletePosition="below"
                matInput
-               [formControl]="opcion1"
+               [formControl]="busqueda"
                [matAutocomplete]="auto">
 
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected()">
-          <mat-option *ngFor="let option of filteredOptions | async; let i = index" [value]="option" [id]="'option-' + i">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-    </mat-form-field> 
-        <!-- seccion de filtrado/tipo de reporte -->
-         <h3>Seleccionar tipo de reporte</h3>
-    <mat-form-field appearance="outline">
-        <mat-label></mat-label>
-            <mat-select>
-                <mat-option>
-                    Enciclopedia
+               <mat-autocomplete matAutocompletePosition="below" posi autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+                   <mat-option *ngFor="let option of filteredOptions | async; let i = index" [value]="option" [id]="'option-' + i">
+                  {{option}}
                 </mat-option>
-                <mat-option>
-                    ASDASDMJI
-                </mat-option>
-            </mat-select>
-    </mat-form-field>
-        <!-- seccion de opciones -->
+              </mat-autocomplete>
+            </mat-form-field> 
+        </div>
+        
+            <!-- Sección de filtrado adicional -->
+    <div style="margin-top: 25px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">
+        <mat-radio-group [(ngModel)]="filtradoActivo" style="margin-bottom: 15px; display: flex; gap: 20px;">
+            <mat-radio-button value="con" style="margin-right: 15px;">Con filtrado avanzado</mat-radio-button>
+            <mat-radio-button value="sin">Sin filtrado avanzado</mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="filtradoActivo === 'con' " style="margin-top: 20px;">
+            <mat-form-field style="width: 100%; margin-bottom: 15px;">
+                <mat-label>Tipo de filtro</mat-label>
+                <mat-select [(value)]="selectedTipoFiltro" style="width: 300px;">
+                    <mat-option value="fecha">Rango de fechas</mat-option>
+                    <mat-option value="opciones">Filtro por opciones</mat-option>
+                    <mat-option value="numerico">Rango numérico</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Controles condicionales -->
+            <div *ngIf="selectedTipoFiltro === 'fecha'" 
+                 style="display: flex; gap: 20px; margin-top: 15px; justify-content: center;">
+                <mat-form-field style="width: 200px;">
+                    <input matInput [matDatepicker]="pickerInicio" 
+                           placeholder="Fecha inicio (DD-MM-AAAA)"
+                           [formControl]="fechaInicio">
+                    <mat-datepicker-toggle matSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerInicio></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field style="width: 200px;">
+                    <input matInput [matDatepicker]="pickerFin" 
+                           placeholder="Fecha fin (DD-MM-AAAA)"
+                           [formControl]="fechaFin">
+                    <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFin></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="selectedTipoFiltro === 'opciones'" style="margin-top: 15px;">
+                <mat-form-field style="width: 300px;">
+                    <mat-label>Seleccione opción</mat-label>
+                    <mat-select>
+                        <mat-option>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="selectedTipoFiltro === 'numerico'" 
+                 style="display: flex; gap: 20px; margin-top: 15px; justify-content: center;">
+                <mat-form-field style="width: 200px;">
+                    <input matInput type="number" placeholder="Valor mínimo">
+                </mat-form-field>
+                <mat-form-field style="width: 200px;">
+                    <input matInput type="number" placeholder="Valor máximo">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
 
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="center">
     <button mat-button mat-dialog-close>Cancelar</button>
     <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="Print()" >Generar</button>
 </mat-dialog-actions>

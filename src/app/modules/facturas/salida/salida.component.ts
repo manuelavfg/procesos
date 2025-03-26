@@ -24,7 +24,9 @@ export interface ArticuloRecibo {
 	tipoarticulo: any,
 	cantidadrecibo: any,
 	costoarticulo: any,
-    entradaarticulo:any
+    entradaarticulo:any,
+    escompra:any,
+    esexento:any
 }
 
 @Component({
@@ -138,6 +140,8 @@ export class SalidaComponent {
                 entradaarticulo: fechaformateada,
                 idfactura: j.idfactura,
                 idarticulo: i.idarticulo,
+                escompra: +false,
+                esexento: +(this.articuloForm.value.esexento ?? false)
               }
           }
           const datosActualizados = [...this.dataSource.data, p];

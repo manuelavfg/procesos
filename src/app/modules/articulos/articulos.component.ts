@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
+import { off } from 'node:process';
 
 @Component({
 	selector: 'app-articulos',
@@ -84,6 +85,21 @@ export class ArticulosComponent implements AfterViewInit{
         this.loadData(); // Recarga datos con el término de búsqueda
       }
     
+
+      abrirReporte()
+      { 
+          let p:any;
+          let params= 
+          {
+              limit : this.limit,
+              offset : this.offset,
+          }
+
+           p = {label:"Articulos", tabla:'articulo', metodo:'list', params:params, busqueda:'descripcionarticulo', 
+                options:['Reporte General','Reporte de Entradas','Reporte de Salidas']}
+          this.api.mostrarReporte(p)
+      }
+
 }
 
 

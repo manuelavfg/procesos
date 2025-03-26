@@ -60,7 +60,7 @@
 			<div class="add-product">
 				<button  mat-raised-button style="color: black;" (click)="this.router.navigate(['/articulos/agregar-producto'])" >Añadir producto</button>
 				<button  mat-raised-button style="color: black;" (click)="this.router.navigate(['/articulos/editar-producto'])">Editar producto</button>
-                <button  mat-raised-button  style="margin-right: 10px">Generar Reporte</button>
+                <button  mat-raised-button (click)="abrirReporte()" style="margin-right: 10px">Generar Reporte</button>
 
 			</div>
 </section>

@@ -34,7 +34,7 @@ export class AggProductoComponent {
 		descripcionarticulo : new FormControl('',[Validators.required]),
 		idproveedor : new FormControl('',[Validators.required]),
 		tipoarticulo: new FormControl('',[Validators.required]),
-		existenciaarticulo : new FormControl('',[Validators.required,Validators.pattern(/^(0|[1-9]\d*)$/)]),
+		existenciaarticulo : new FormControl(''),
 		codigoarticulo : new FormControl(''),
 		costoarticulo : new FormControl('',[Validators.required,Validators.pattern(/^\d+([.,]\d{1,2})?$/)]),
 	})
@@ -43,6 +43,7 @@ export class AggProductoComponent {
 	
 	onInsert() 
 	{ 
+        console.log(this.articuloForm.value)
 		if(!this.articuloForm.valid){this.api.mostrarError("Error: Formulario Invalido"); return;}
         this.articuloForm.value.idproveedor = this.idproveedor[this.indiceSeleccionado]
 

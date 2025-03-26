@@ -29,7 +29,7 @@ export class AggProveedorComponent {
 
     onInsert()
     {
-      if(!this.articuloForm.valid){this.api.mostrarError("Error: Formulario Invalido"); return;}
+      if(!this.articuloForm.valid){this.api.mostrarError("Formulario Invalido"); return;}
 
       this.api.insert("proveedores","add",  this.articuloForm.value).subscribe(res =>{
         

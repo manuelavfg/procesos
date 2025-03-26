@@ -23,7 +23,9 @@ export interface ArticuloRecibo {
 	tipoarticulo: any,
 	cantidadrecibo: any,
 	costoarticulo: any,
-    entradaarticulo:any
+    entradaarticulo:any,
+    esexento:boolean,
+    escompra:boolean
 }
 
 
@@ -129,20 +131,25 @@ export class RegistrarEntradaComponent {
           let p:any
 		      for(let value of Object.values(res))
           {
+              let a = value.descripcionarticulo;
+              if(this.articuloForm.value.esexento){a = a+"(E)"}
               p = 
               {
-                descripcionarticulo: value.descripcionarticulo,
+                descripcionarticulo: a,
                 tipoarticulo: value.tipoarticulo,
                 costoarticulo: value.costoarticulo,
                 cantidadrecibo: this.articuloForm.value.cantidadrecibo,
                 entradaarticulo: fechaformateada,
                 idfactura: j.idfactura,
                 idarticulo: i.idarticulo,
+                escompra: +true,
+                esexento: +(this.articuloForm.value.esexento ?? false)
               }
           }
           const datosActualizados = [...this.dataSource.data, p];
           this.dataSource.data = datosActualizados
           console.log(datosActualizados)
+          console.log(this.dataSource.data)
 
         });
       }
@@ -151,33 +158,36 @@ export class RegistrarEntradaComponent {
       { 
         if(this.dataSource.data.length == 0){this.api.mostrarError("Error: Factura Vacia");return}
 
-        
-        for(let i of this.dataSource.data)
-          {
-            this.api.insert("recibo","add", i).subscribe(res =>{
+        console.log(this.articuloForm.value.entradaarticulo = moment(this.articuloForm.value.entradaarticulo).format('YYYY-MM-DD').toString())
 
-            })
-            this.articuloForm.value.idarticulo = this.idproducto[this.indiceSeleccionado2]    
-            this.api.update('articulo',"registrar",this.articuloForm.value).subscribe(res=>
-            {
+        // console.log(this.dataSource.data)
+        // for(let i of this.dataSource.data)
+        //   {
+        //     this.api.insert("recibo","add", i).subscribe(res =>{
 
-            })
-          }
-          let p = 
-          {
-            idproveedor: this.proveedores[this.indiceSeleccionado],
-            idfactura: this.idfactura[this.indiceSeleccionado]            
-          }
-          this.api.update("factura","update", {idfactura: this.idfactura[this.indiceSeleccionado], isregistrado: 0}).subscribe(res=>
-            {
+        //     })
+        //     this.articuloForm.value.idarticulo = this.idproducto[this.indiceSeleccionado2]    
+        //     this.articuloForm.value.entradaarticulo = moment(this.articuloForm.value.entradaarticulo).format('YYYY-MM-DD').toString()
+        //     this.api.update('articulo',"registrar",this.articuloForm.value).subscribe(res=>
+        //     {
 
-            })
-            this.api.insert("cuentasporpagar", "add",p).subscribe(res=>
-              {
+        //     })
+        //   }
+        //   let p = 
+        //   {
+        //     idproveedor: this.proveedores[this.indiceSeleccionado],
+        //     idfactura: this.idfactura[this.indiceSeleccionado]            
+        //   }
+        //   this.api.update("factura","update", {idfactura: this.idfactura[this.indiceSeleccionado], isregistrado: 0}).subscribe(res=>
+        //     {
 
-              })
-            this.api.mostrarExito("Operacion Exitosa")
-            this.router.navigate(['/facturas']) 
+        //     })
+        //     this.api.insert("cuentasporpagar", "add",p).subscribe(res=>
+        //       {
+
+        //       })
+        //     this.api.mostrarExito("Operacion Exitosa")
+        //     this.router.navigate(['/facturas']) 
 
       }
       

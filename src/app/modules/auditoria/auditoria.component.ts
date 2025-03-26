@@ -7,8 +7,9 @@ import { APIService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { off } from 'node:process';
 
 @Component({
   selector: 'app-auditoria',
@@ -60,7 +61,7 @@ export class AuditoriaComponent implements AfterViewInit{
     this.api.select("usuario","search",p).subscribe(res=>{
         let a:any = res
         this.dataSource.data = a
-        this.dataSource.paginator = this.paginator;
+        this.dataSource.paginator = this.paginator; 
 
     })
 
@@ -72,6 +73,18 @@ export class AuditoriaComponent implements AfterViewInit{
     this.loadData(); // Recarga datos con el término de búsqueda
   }
 
+  abrirReporte()
+  { 
+      let p:any;
+      let params= 
+      {
+          limit : this.limit,
+          offset : this.offset,
+      }
+
+       p = {label:"Usuario", tabla:'usuario', metodo:'list', params:params, busqueda:'nombreusuario'}
+      this.api.mostrarReporte(p)
+  }
 
 }
 

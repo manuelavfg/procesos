@@ -48,8 +48,8 @@
     </div>
 
       <div class="add-product">
-        <button  mat-raised-button><a href="/clientes/registrar-cliente">Registrar nuevo cliente</a></button>
-        <button  mat-raised-button><a href="/clientes/editar-cliente">Editar cliente</a></button>
-        <button  mat-raised-button  style="margin-right: 10px">Generar Reporte</button>
+        <button  mat-raised-button style="color: black;" (click)="this.router.navigate(['/clientes/registrar-cliente'])">Registrar Cliente</button>
+        <button  mat-raised-button style="color: black;" (click)="this.router.navigate(['/clientes/editar-cliente'])">Editar Cliente</button>
+        <button  mat-raised-button  style="margin-right: 10px" (click)="abrirReporte()">Generar Reporte</button>
       </div>
 </section>

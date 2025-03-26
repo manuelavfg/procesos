@@ -76,8 +76,6 @@ export class EditarClienteComponent
         // Obtener el índice de la opción seleccionada
         const selectedIndex = this.datos[(this.nombres.indexOf(selectedValue))]['idclientes'];
         this.id = selectedIndex
-        console.log('Valor seleccionado:', selectedValue);
-        console.log('Índice seleccionado:', selectedIndex);
     
         const clienteSeleccionado = this.datos[this.nombres.indexOf(selectedValue)];
     

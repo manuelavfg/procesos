@@ -28,10 +28,11 @@ dialog = inject(MatDialog)
     }
 
 
-    mostrarReporte(mensaje: string) 
+    mostrarReporte(data:any) 
     {
         this.dialog.open(ReportsDialogComponent, {
-          data: { message: mensaje },
+            
+          data: data,
           width: '400px'
         });
     }
@@ -165,5 +166,6 @@ dialog = inject(MatDialog)
 		return this.http.put(url,params);
 		
 	}
+
 	
 }

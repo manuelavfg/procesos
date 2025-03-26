@@ -71,6 +71,19 @@ export class ProveedoresComponent  {
 
   }
 
+  abrirReporte()
+  { 
+      let p:any;
+      let params= 
+      {
+          limit : this.limit,
+      }
+
+       p = {label:"Proveedores", tabla:'proveedores', metodo:'list', params:params, busqueda:'nombreproveedores'}
+      this.api.mostrarReporte(p)
+  }
+
+
   // Aplica el filtro (llama a la API)
   applyFilter() {
     console.log(this.searchTerm)
