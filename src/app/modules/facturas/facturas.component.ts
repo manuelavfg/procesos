@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { ReporteService } from '../../services/reporte.service';
 
 @Component({
   imports: [MatTableModule, MatPaginatorModule, MatButtonModule, MatButtonToggleModule, FormsModule, MatIconModule, MatFormFieldModule, MatInputModule, CommonModule],
@@ -32,7 +33,7 @@ export class FacturasComponent implements AfterViewInit{
   dataSource2 = new MatTableDataSource<FacturasClientes>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private api: APIService,private cdr: ChangeDetectorRef, public router: Router){	
+  constructor(private api: APIService,private cdr: ChangeDetectorRef, public router: Router, private reporte: ReporteService) {	
 	let p;
 	let params= 
 	{
@@ -66,6 +67,15 @@ export class FacturasComponent implements AfterViewInit{
 		this.selectedMode = 'proveedores';
 	}
 
+    ImprimirFactura(){
+        
+    }
+
+    onButtonClick(fila: any) {
+        this.reporte.printFactura(fila)
+        // Aquí puedes realizar acciones con los datos de la fila
+      }
+
     abrirReporte()
     { 
         let p:any;
@@ -75,9 +85,19 @@ export class FacturasComponent implements AfterViewInit{
         }
         if(this.selectedMode == 'proveedores')
             {
-                p = {label:"Factura", tabla:'factura', metodo:'tableP', params:params, busqueda:'codigofactura'}
+                p = {label:"Factura", tabla:'factura', metodo:'tableP', busqueda:'codigofactura', params:params,
+                    tabla2:'proveedores', metodo2:'list', busqueda2:'nombreproveedores',
+                    options: ["Reporte General"],
+                    filtrado:['Proveedores','Fecha de Emision'],  
+                    valores:['opciones2','fecha']}
             }
-        else{ p = {label:"Factura", tabla:'factura', metodo:'tableC', params:params, busqueda:'codigofactura'}}
+        else{ p = {label:"Factura", tabla:'factura', metodo:'tableC', busqueda:'codigofactura', params:params,
+                   tabla2:'clientes', metodo2:'list', busqueda2:'nombreclientes',
+                   options: ["Reporte General"],
+                   filtrado:['Cliente','Fecha de Emision'],  
+                   valores:['opcioness','fecha']}
+            }
+
         this.api.mostrarReporte(p)
     }
 
@@ -143,6 +163,7 @@ export interface FacturasProveedores {
   idproveedorfactura: any;
   nombreproveedores: any;
   tipofactura: any;
+  fechaemision:any
 }
 
 export interface FacturasClientes {
@@ -151,5 +172,6 @@ export interface FacturasClientes {
 	idcliente: any;
 	nombreclientes: any;
 	tipofactura: any;
+    fechaemision:any
   }
 

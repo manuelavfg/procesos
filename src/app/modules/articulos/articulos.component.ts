@@ -95,8 +95,11 @@ export class ArticulosComponent implements AfterViewInit{
               offset : this.offset,
           }
 
-           p = {label:"Articulos", tabla:'articulo', metodo:'list', params:params, busqueda:'descripcionarticulo', 
-                options:['Reporte General','Reporte de Entradas','Reporte de Salidas']}
+           p = {label:"Articulos", tabla:'articulo', metodo:'list', busqueda:'descripcionarticulo' ,params:params,
+                tabla2:'proveedores', metodo2:'list', busqueda2:'nombreproveedores' ,  
+                options:['Reporte General','Reporte de Compras','Reporte de Ventas'],
+                filtrado:['Proveedor','Articulo','Cantidad en Inventario','Ultima Entrada de Articulo','Ultima Salida de Articulo']
+                ,valores:['opciones2','opciones','numerico','fecha','fecha']}
           this.api.mostrarReporte(p)
       }
 

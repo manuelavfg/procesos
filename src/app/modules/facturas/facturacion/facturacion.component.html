@@ -1,12 +1,12 @@
-<mat-horizontal-stepper [linear]="true" #stepper style="margin-right: 7rem; background-color:rgba(255, 0, 0, 0);">
+<mat-stepper [linear]="true" #stepper style="margin-right: 7rem; background-color:rgba(255, 0, 0, 0);">
     <!-- Paso 1 -->
-    <mat-step style="max-width: 50%; width: 50%; min-width: 50%;">
+    <mat-step [stepControl]="paso1" style="max-width: 50%; width: 50%; min-width: 50%;">
       <ng-template matStepLabel>Datos de Cliente/Proveedor</ng-template>
       <app-generar-factura (datosDestinatario)="avanzarGenerar($event)" (mensajeEnviado)="recibirMensaje($event)"></app-generar-factura>
     </mat-step>
   
     <!-- Paso 2 -->
-    <mat-step>
+    <mat-step >
       <ng-template matStepLabel>Datos de Factura</ng-template>
       <app-salida *ngIf="esproveedor == '1'" (datosDestinatario)="avanzarTabla($event)" (retrocederStepper)="retroceder()" (mensajeEnviado)="recibirMensaje($event)"></app-salida>
 
@@ -47,7 +47,7 @@
                     </div>
                     <div class="info-item">
                       <span class="label">Fecha Emisión:</span>
-                      <span class="value">{{ dataDestinatario.fecha | date:'dd/MM/yyyy' }}</span>
+                      <span class="value">{{ dataDestinatario.fecha}}</span>
                     </div>
                     <div class="info-item">
                       <span class="label">Tipo Factura:</span>
@@ -107,4 +107,4 @@
           </div>
     </mat-step>
 
-  </mat-horizontal-stepper>
+  </mat-stepper>

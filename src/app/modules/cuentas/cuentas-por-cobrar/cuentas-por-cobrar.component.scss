@@ -1,4 +1,20 @@
 .cuentas-container{
+
+    .estado-chip {
+        border: 1px solid transparent !important;
+        &:hover {
+            border-color: #ccc !important;
+        }
+    }
+    
+    .estado-menu {
+        .mat-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    }
+
     margin-top: 3rem;
     
     h1{

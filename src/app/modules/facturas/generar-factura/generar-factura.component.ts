@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { EventEmitter } from '@angular/core';
+import moment from 'moment';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class GenerarFacturaComponent {
   tipos = ['COTIZACION', 'PROFORMA']
   currentOptions: any[] = [];
   
-  @Output() mensajeEnviado = new EventEmitter<string>();
+  @Output() mensajeEnviado = new EventEmitter<any>();
 
 
   opcionSeleccionada: any;
@@ -50,10 +51,10 @@ export class GenerarFacturaComponent {
 	selectedType: new FormControl('1'),
     codigofactura : new FormControl(''),
 	numerofactura : new FormControl(''),
-    fechaemision: new FormControl(''),
+    fechaemision: new FormControl(),
     idproveedorfactura : new FormControl(''),
 	idcliente: new FormControl(''),
-    tipofactura : new FormControl(''),
+    tipofactura : new FormControl('',[Validators.required]),
   })
 
   
@@ -168,7 +169,7 @@ export class GenerarFacturaComponent {
 
     enviaMensaje()
     {
-        const x = this.articuloForm.value.selectedType || "chorizo"
+        const x = [this.articuloForm.value.selectedType, this.articuloForm]
 		this.mensajeEnviado.emit(x)
     }
 
@@ -176,10 +177,13 @@ export class GenerarFacturaComponent {
 	@Output() datosDestinatario = new EventEmitter<any>
 
     avanzar() {
+        
         let a
+        console.log(this.articuloForm.value.fechaemision)
+        this.articuloForm.value.fechaemision = moment.now()
         if(this.articuloForm.value.selectedType == "2"){
-            a = [this.output[this.indiceSeleccionado],this.articuloForm.value.fechaemision,this.articuloForm.value.tipofactura, this.articuloForm.value.numerofactura]}
-        else{ a = [this.output2[this.indiceSeleccionado], this.articuloForm.value.tipofactura]}
+            a = [this.output[this.indiceSeleccionado],this.articuloForm.value.fechaemision,this.articuloForm.value.tipofactura, this.articuloForm.value.numerofactura], this.articuloForm.valid}
+        else{ a = [this.output2[this.indiceSeleccionado], this.articuloForm.value.tipofactura, this.articuloForm.valid]}
         this.datosDestinatario.emit(a)
     }
 

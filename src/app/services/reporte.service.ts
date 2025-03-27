@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { APIService } from './api.service';
 import jspdf from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import moment from 'moment';
 
 @Injectable({
     providedIn: 'root'
@@ -20,10 +21,10 @@ export class ReporteService {
                 return ["Codigo","N° Factura", "Fecha Emision", "Cliente", "RIF", 'Tipo']
 
             case "clientes":
-                return ["Nombre","Rif", "Telefono", "Direccion", "Correo","Ventas","Total"]
+                return ["Nombre","RIF", "Telefono","Ventas Realizada","Monto Total"]
 
             case "proveedores":
-                return ["Nombre","Rif", "Telefono", "Direccion", "Correo", 'Compras', "Total"]
+                return ["Nombre","RIF", "Telefono", 'Compras Realizada', "Monto Total"]
 
             case "articulo":
                 return ["Codigo","Descripcion", "Unidad", "Proveedor", "Precio", "Existencia",'Compras','Ventas']
@@ -36,7 +37,90 @@ export class ReporteService {
         }
     }
 
-    selectEncabezadoDetallado(tabla:any)
+
+    deteminarTabla(items:any, filtrado:any, tabla:any)
+    {
+        let opciones:any[] = []
+        let datos: any[] = [];
+        let headers: any[] = [];
+        switch(tabla)
+        {
+            case "articulo":
+                if(filtrado=== "compra")
+                    {
+                        headers = ["Codigo","N° Factura", "Fecha Emision", "Cliente", "RIF", 'Cantidad', 'Precio', 'Total']
+                        for (let i of items) {
+                            datos.push([
+                                i.codigofactura,
+                                i.numerofactura,
+                                i.fechaemision,
+                                i.nombreproveedores,
+                                i.rifproveedores,
+                                i.existenciaarticulo,
+                                i.existenciaarticulo,
+                                i.costoarticulo,
+                                i.compras,
+                                i.ventas,
+                            ]);
+                        }
+                    }
+        
+                if(filtrado === "ventas")
+                        {
+                            headers = ["Codigo","N° Factura", "Fecha Emision", "Cliente", "RIF", 'Cantidad', 'Precio', 'Total']
+                            for (let i of items) {
+                                datos.push([
+                                    i.codigofactura,
+                                    i.numerofactura,
+                                    i.fechaemision,
+                                    i.nombreclientes,
+                                    i.rifclientes,
+                                    i.existenciaarticulo,
+                                    i.existenciaarticulo,
+                                    i.costoarticulo,
+                                    i.compras,
+                                    i.ventas,
+                                ]);
+                            }
+                    }
+                break
+
+            case "proveedores":
+                headers = ["Codigo Factura","N° Factura", "Codigo Articulo", 'Descripcion','Compras', "Monto Total"]
+                for (let i of items) {
+                    datos.push(
+                        [
+                            i.codigofactura,
+                            i.numerofactura,
+                            i.codigoarticulo,
+                            i.descripcionarticulo,
+                            i.compras,
+                            i.total
+                        ]
+                    );
+                }
+                break
+                case "clientes":
+                    headers = ["Codigo Factura","N° Factura", "Codigo Articulo", 'Descripcion','Ventas', "Monto Total"]
+                    for (let i of items) {
+                        datos.push(
+                            [
+                                i.codigofactura,
+                                i.numerofactura,
+                                i.codigoarticulo,
+                                i.descripcionarticulo,
+                                i.compras,
+                                i.total
+                            ]
+                        );
+                    }
+                    break
+        }
+            opciones = [headers, datos]
+            return opciones
+    }
+
+    selectEncabezadoDetallado(tabla:any, filtrado:any)
     {
 
         switch(tabla)
@@ -51,6 +135,7 @@ export class ReporteService {
                 return ["Nombre","Rif", "Telefono", "Direccion", "Correo", 'Compras', "Total"]
 
             case "articulo":
+                if(filtrado == "fecha"){return ["Fecha Entrada", "Cliente", "RIF", 'Cantidad', 'Precio', 'Total']}
                 return ["Codigo","N° Factura", "Fecha Emision", "Cliente", "RIF", 'Cantidad', 'Precio', 'Total']
 
             case "usuario":
@@ -487,9 +572,7 @@ export class ReporteService {
                                 [
                                 i.nombreproveedores,
                                 i.rifproveedores,
-                                i.telefonoproveedores,
-                                i.direccionproveedores,
-                                i.correoproveedores,
+                                i.telefonoproveedores,  
                                 i.facturas,
                                 i.total
                                 ]
@@ -595,11 +678,18 @@ export class ReporteService {
         
     }
 
-    public printListadoDetalladoA(tabla:any, metodo:any, params:any)
+    public printListadoDetalladoA(tabla:any, metodo:any, params:any, titulo:any, subtitulo:any, busqueda:any, busqueda2:any)
 {       
+    console.log(params)
+    if(params.inicio !== 0 && params.fin !== 0)
+        {
+           params.inicio = moment(params.inicio , 'DD-MM-YYYY').format('YYYY-MM-DD')
+           params.fin = moment(params.fin , 'DD-MM-YYYY').format('YYYY-MM-DD')
+            
+        }
+
     let p = this.api.sendconfig()
     const doc = new jspdf();
-    const headers:any = this.selectEncabezadoDetallado(tabla)
     // Configuraciones iniciales
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 10; // Márgen izquierdo
@@ -624,82 +714,77 @@ export class ReporteService {
     const rif = p[0]['rifconfig'];
     doc.text(rif, centerX+50, currentY);
     currentY += 6;
-    
-    // 4. Fecha actual
+
+
+    doc.setFontSize(16);
+    doc.setFont('calibri', 'bold');
+    const  tituloReporte = titulo+" por " + subtitulo;
+    let ancho = doc.getTextWidth(tituloReporte);
+    let centroX = (pageWidth - ancho +20) / 2;
+    doc.text(tituloReporte, centroX, currentY);
+    currentY += 5;
+
+    doc.setFontSize(12);
+    doc.setFont('calibri', 'normal');
     const today = new Date();
     const formattedDate = `${today.getDate().toString().padStart(2, '0')}/${
       (today.getMonth() + 1).toString().padStart(2, '0')}/${
       today.getFullYear()}`;
     doc.text(`${formattedDate}`, centerX+51.5, currentY);
     currentY += 10;
+
     
+
+
     // 5. Línea divisora
     doc.setLineWidth(0.3);
     doc.line(margin, currentY, pageWidth - margin, currentY);
     currentY += 5;
     
 
-
-    const datos: any[] = [];
+    let datos: any[] = [];
     this.api.select(tabla,metodo,params).subscribe({next:(res)=>{
+        if(res == null){console.log("no hay datos"); return}
         const articles = Object.values(res);
-        // 6. Detalles del artículo principal
-        if(articles.length > 0) {
-            const mainArticle = articles[0];
-            const rectWidth = pageWidth - 2*margin;
-            const rectHeight = 35;
-            
-            // Estilo del rectángulo
-            doc.setDrawColor(0, 0, 0);
-            doc.setLineWidth(0.3);
-            doc.rect(margin, currentY, rectWidth, rectHeight);
-            
-            // Configurar fuente Calibri
-            doc.setFont('calibri');
-            const verticalStart = currentY + 8;
-            const lineSpacing = 8;
-            
-            // Primera línea (Descripción)
-            doc.setFontSize(11);
-            doc.text(`Descripción: `, margin + 5, verticalStart);
-            doc.text(`${mainArticle.descripcionarticulo}`, margin + 35, verticalStart);
-
-            // Segunda línea (Código y Proveedor)
-            doc.text(`Código: `, margin + 5, verticalStart + lineSpacing);
-            doc.text(`Proveedor: `, margin + 85, verticalStart + lineSpacing);
-            
-            doc.text(`${mainArticle.codigoarticulo}`, margin + 25, verticalStart + lineSpacing);
-            doc.text(`${mainArticle.nombreproveedores}`, margin + 115, verticalStart + lineSpacing);
-
-            // Tercera línea (Tipo, Costo y Existencia)
-            doc.text(`Tipo: `, margin + 5, verticalStart + (lineSpacing * 2));
-            doc.text(`Costo: `, margin + 85, verticalStart + (lineSpacing * 2));
-            doc.text(`Existencia: `, margin + 145, verticalStart + (lineSpacing * 2));
-            
-            doc.text(`${mainArticle.tipoarticulo}`, margin + 25, verticalStart + (lineSpacing * 2));
-            doc.text(`$${mainArticle.costoarticulo?.toFixed(2) || '0.00'}`, margin + 105, verticalStart + (lineSpacing * 2));
-            doc.text(`${mainArticle.existenciaarticulo?.toString() || '0'}`, margin + 175, verticalStart + (lineSpacing * 2));
-
-            currentY += rectHeight + 10;
-        }
-
-// ... (resto del código igual)
-
-        // 7. Preparar datos para la tabla
-        for (let i of articles) {
-            datos.push([
-                i.codigoarticulo,
-                i.descripcionarticulo,
-                i.tipoarticulo,
-                i.nombreproveedores,
-                i.costoarticulo,
-                i.existenciaarticulo,
-                i.compras,
-                i.ventas,
-            ]);
-        }
+        let filtrado:any
+        
+        
+        
+        
+        let opciones = this.deteminarTabla(articles, metodo,tabla)
+        
+        
+        
+        let headers = opciones[0]
+        datos = opciones[1]
         
         // 8. Crear tabla con AutoTable
+        if(params.filtrado === "fecha")
+            {
+                filtrado = "Periodo del "+params.inicio+" al "+params.fin
+            }
+        else if(params.filtrado === "id")
+            {
+                console.log(busqueda)
+                filtrado = articles[0][busqueda]
+            }
+        else if(params.filtrado !== "id" && params.filtrado !== "fecha")
+            {
+                console.log(busqueda)
+                filtrado = articles[0][busqueda2]
+            }
+        {
+
+        }
+
+        doc.setFontSize(12);
+        doc.setFont('calibri', 'bold');
+        let filtro = "Parametro de filtrado: "+filtrado;
+        ancho = doc.getTextWidth(filtro);
+        centroX = (pageWidth - ancho +20) / 2;
+        doc.text(filtro, centroX, currentY+2);
+        console.log(currentY)
+        currentY += 5;
         autoTable(doc,{
             startY: currentY,
             head: [headers],

@@ -1,6 +1,6 @@
 import { Component, ViewChild, viewChildren, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -52,23 +52,27 @@ export interface ArticuloRecibo {
 export class FacturacionComponent 
 {
 
-    constructor(private api: APIService, public router: Router){}
+    constructor(private api: APIService, public router: Router){ this.paso1 = this.p}
 
     esproveedor:any = "1"
     data: any
     dataDestinatario: any = {}
     dataTabla:any
 
-
-
+    paso1: FormGroup
+    paso2:any
+    paso3:any
+    
+    p:any
 
     generarSalida()
     {
         let a:any
         let b:any
-        if(this.dataTabla.data.length == 0){this.api.mostrarError("Error: Factura Vacia");return}
+        if(this.dataTabla.data.length == 0 || this.dataTabla.data == undefined){this.api.mostrarError("Error: Factura Vacia");return}
 
-        console.log(a)
+        this.dataDestinatario.fecha = moment(this.dataDestinatario.fecha, 'DD-MM-YYYY').format('YYYY-MM-DD')
+        console.log(this.dataDestinatario.fecha)
 
         this.api.insert("factura","add2",this.dataDestinatario).subscribe({next:(res)=>{
             a = res
@@ -108,10 +112,10 @@ export class FacturacionComponent
 
         let a:any
         let b:any
-        if(this.dataTabla.data.length == 0){this.api.mostrarError("Error: Factura Vacia");return}
+        if(this.dataTabla.data.length == 0 || this.dataTabla.data == undefined){this.api.mostrarError("Factura Vacia");return}
 
         console.log(a)
-
+        this.dataDestinatario.fecha = moment(this.dataDestinatario.fecha, 'DD-MM-YYYY').format('YYYY-MM-DD')
         this.api.insert("factura","add",this.dataDestinatario).subscribe({next:(res)=>{
             a = res
             
@@ -153,7 +157,8 @@ export class FacturacionComponent
 
     recibirMensaje(mensaje: any)
     {
-        this.esproveedor = mensaje
+        this.esproveedor = mensaje[0]
+        this.p = mensaje[1]
         console.log("Mensaje recibido:", this.esproveedor);
     }
 
@@ -166,6 +171,7 @@ export class FacturacionComponent
     @ViewChild('stepper') stepper!: MatStepper; // Tipo correcto
 
     avanzarGenerar(a: any) {
+        console.log(a[2])
         this.stepper.next();
         let mensaje = a[0]
         
@@ -198,7 +204,7 @@ export class FacturacionComponent
                 telefono: mensaje.telefonoclientes || 'No especificado',
                 rif: mensaje.rifclientes,
                 direccion: mensaje.direccionclientes,
-                fecha: moment.now(),
+                fecha: moment().format('DD-MM-YYYY'),
                 tipo: tipo
             };
             console.log(this.dataDestinatario)
@@ -207,7 +213,6 @@ export class FacturacionComponent
     }
 
     avanzarTabla(mensaje:any) {
-        
         this.stepper.next();
         this.dataTabla = mensaje
         console.log(this.dataTabla);

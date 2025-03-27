@@ -77,9 +77,13 @@ export class ProveedoresComponent  {
       let params= 
       {
           limit : this.limit,
+          offset: this.offset
       }
 
-       p = {label:"Proveedores", tabla:'proveedores', metodo:'list', params:params, busqueda:'nombreproveedores'}
+      p = {label:"Proveedores", tabla:'proveedores', metodo:'list', busqueda:'nombreproveedores', params:params,
+        tabla2:'articulo', metodo2:'list', busqueda2:'descripcionarticulo',
+        options:['Reporte General','Reporte de Compras'],
+        filtrado:['Proveedor','Articulo','Fecha de Compra'],  valores:['opciones','opciones2','fecha']}
       this.api.mostrarReporte(p)
   }
 

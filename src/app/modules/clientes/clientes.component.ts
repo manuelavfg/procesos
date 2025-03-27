@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
+import { off } from 'process';
 
 export interface Clientes {
   nombreclientes: string;
@@ -84,13 +85,18 @@ export class ClientesComponent implements AfterViewInit {
           let params= 
           {
               limit : this.limit,
+              offset : this.offset,
           }
 
-           p = {label:"Clientes", tabla:'clientes', metodo:'list', params:params, busqueda:'nombreclientes'}
+           p = {label:"Clientes", tabla:'clientes', metodo:'drop', busqueda:'nombreclientes', params:params,
+                tabla2:'articulo', metodo2:'drop', busqueda2:'descripcionarticulo',
+                options:['Reporte General','Reporte de Ventas'],
+                filtrado:['Cliente','Articulo','Fecha de Venta'],  valores:['opciones','opciones2','fecha']}
+
+            console.log(p)
+            
           this.api.mostrarReporte(p)
       }
 
 }
-
-
 
